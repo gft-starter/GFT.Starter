@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using APIPRojeto.Models;
+using APIPRojeto.Repositorires;
 
 namespace APIPRojeto.Controllers
 {
@@ -13,15 +14,18 @@ namespace APIPRojeto.Controllers
     public class OwnerController : ControllerBase
     {
         static List<Owner> owners = new List<Owner>();
+        private readonly OwnerRepository ownerRepository;
 
-        // GET: api/Owner
-        [HttpGet]
-        public IActionResult Owners()
+        public OwnerController()
         {
-            return Ok(owners);
+            ownerRepository = new OwnerRepository();
+        }
+        [HttpGet]
+        public IActionResult Owner()
+        {
+            return Ok(ownerRepository.Get());
         }
 
-        // GET: api/Owner/5
         [HttpGet("{id}")]
         public IActionResult Owner(Guid Id)
         {
@@ -32,36 +36,36 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostOwner([FromBody] Owner owner)
         {
-            owners.Add(owner);
+            ownerRepository.Insert(owner);
 
             return Ok(owner);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCar(Guid Id, [FromBody] Owner owner)
+        public IActionResult UpdateOwner(Guid Id, [FromBody] Owner owner)
         {
             var obj = FindOwner(Id);
 
-            obj.Name = owner.Name;
+            obj.CPF = owner.CPF;
+            obj.Gender = owner.Gender;
 
-            return Ok(obj);
+            return Ok(ownerRepository.Update(obj));
         }
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult DeleteOwner(Guid Id)
         {
             var obj = FindOwner(Id);
 
             if (obj != null)
-                return Ok(owners.Remove(obj));
+                return Ok(ownerRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         public Owner FindOwner(Guid Id)
         {
-            return owners.Find(x => x.Id == Id);
+            return ownerRepository.Find(Id);
         }
     }
 }

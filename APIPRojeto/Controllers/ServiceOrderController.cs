@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIPRojeto.Models;
+using APIPRojeto.Repositorires;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,15 +14,17 @@ namespace APIPRojeto.Controllers
     public class ServiceOrderController : ControllerBase
     {
         static List<ServiceOrder> serviceOrders = new List<ServiceOrder>();
-
-        // GET: api/Owner
+        private readonly ServiceOrderRepository serviceOrderRepository;
+        public ServiceOrderController()
+        {
+            serviceOrderRepository = new ServiceOrderRepository();
+        }
         [HttpGet]
         public IActionResult ServiceOrders()
         {
-            return Ok(serviceOrders);
+            return Ok(serviceOrderRepository.Get());
         }
 
-        // GET: api/Owner/5
         [HttpGet("{id}")]
         public IActionResult ServiceOrder(Guid Id)
         {
@@ -32,7 +35,7 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostServiceOrder([FromBody] ServiceOrder serviceOrder)
         {
-            serviceOrders.Add(serviceOrder);
+            serviceOrderRepository.Insert(serviceOrder);
 
             return Ok(serviceOrder);
         }
@@ -44,12 +47,23 @@ namespace APIPRojeto.Controllers
 
             obj.Quantity = serviceOrder.Quantity;
 
-            return Ok(obj);
+            return Ok(serviceOrderRepository.Update(obj));
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteServiceOrder(Guid Id)
+        {
+            var obj = FindServiceOrder(Id);
+
+            if (obj != null)
+                return Ok(serviceOrderRepository.Remove(obj));
+
+            return NotFound(obj);
         }
 
         public ServiceOrder FindServiceOrder(Guid Id)
         {
-            return serviceOrders.Find(x => x.Id == Id);
+            return serviceOrderRepository.Find(Id);
         }
     }
 }

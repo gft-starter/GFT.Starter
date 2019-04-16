@@ -4,14 +4,16 @@ using APIPRojeto.Repositorires.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace APIPRojeto.EF.Migrations
 {
     [DbContext(typeof(LataVelhaContext))]
-    partial class LataVelhaContextModelSnapshot : ModelSnapshot
+    [Migration("20190416135719_AdicionandoOwner")]
+    partial class AdicionandoOwner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,38 +63,6 @@ namespace APIPRojeto.EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Owner");
-                });
-
-            modelBuilder.Entity("APIPRojeto.Models.Service", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Service");
-                });
-
-            modelBuilder.Entity("APIPRojeto.Models.ServiceOrder", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("CarId");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<Guid>("ServiceId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServiceOrder");
                 });
 
             modelBuilder.Entity("APIPRojeto.Models.Car", b =>
