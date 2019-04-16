@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using APIPRojeto.Models;
+using APIPRojeto.Repositories;
 
 namespace APIPRojeto.Controllers
 {
@@ -12,7 +13,7 @@ namespace APIPRojeto.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
-        static List<Owner> owners = new List<Owner>();
+        static OwnerRepository owners = new OwnerRepository();
 
         // GET: api/Owner
         [HttpGet]
@@ -61,7 +62,7 @@ namespace APIPRojeto.Controllers
 
         public Owner FindOwner(Guid Id)
         {
-            return owners.Find(x => x.Id == Id);
+            return owners.Find(Id);
         }
     }
 }
