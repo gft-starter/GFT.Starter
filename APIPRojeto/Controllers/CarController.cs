@@ -14,6 +14,10 @@ namespace APIPRojeto.Controllers
     {
         static List<Car> cars = new List<Car>();
         private readonly CarRepository carRepository;
+        public CarController()
+        {
+            carRepository = new CarRepository();
+        }
         [HttpGet]
         public IActionResult Cars()
         {
