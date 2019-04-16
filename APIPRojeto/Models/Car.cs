@@ -14,5 +14,8 @@ namespace APIPRojeto.Models
         public string Color { get; set; }
         public int Year { get; set; }
         public Guid OwnerId { get; set; }
+        public virtual Owner Owner { get; set; }
+
+
     }
 }
