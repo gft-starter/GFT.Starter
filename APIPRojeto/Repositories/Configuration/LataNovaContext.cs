@@ -12,6 +12,7 @@ namespace APIPRojeto.Repositories.Configuration
         public DbSet<Car> Cars { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Service> Services { get; set; }
+        public DbSet<ServiceOrder> ServiceOrders { get; set; }
 
         public LataNovaContext()
         {
