@@ -6,6 +6,7 @@ namespace APIPRojeto.Repositories.Configuration
     public class LataVelhaContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
+        public DbSet<Owner> Owners { get; set; }
 
         public LataVelhaContext()
         {
