@@ -17,7 +17,7 @@ namespace APIPRojeto.Repository.Configuration
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = @"Server=PCSOR455;Database=LataVelha;Trusted_Connection=True";
+                var connectionString = @"Server=BRPC003891\SQLEXPRESS;Database=LataVelha;Trusted_Connection=True";
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
