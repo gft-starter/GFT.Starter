@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace APIPRojeto.Repositorio.Configuration
 {
-    public class LataVelhaContext : Dbcontext
+    public class LataVelhaContext : DbContext
     {
         public LataVelhaContext()
         {
@@ -18,10 +18,11 @@ namespace APIPRojeto.Repositorio.Configuration
             if (!optionsBuilder.IsConfigured)
             {
                 var connectionString = @"Server=BRPC003897; Database=LataVelha; Trusted_Connection=True";
-                optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder.UseSqlServer(connectionString);
 
             }
-        }
+           }
+ 
          
     }
 }
