@@ -17,7 +17,5 @@ namespace APIPRojeto.Repositories.Configuration
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
-
-        override 
     }
 }
