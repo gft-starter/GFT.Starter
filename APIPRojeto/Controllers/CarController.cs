@@ -15,7 +15,7 @@ namespace APIPRojeto.Controllers
         static List<Car> cars = new List<Car>();
         private readonly CarRepository carRepository;
 
-        private CarController()
+        public CarController()
         {
             carRepository = new CarRepository();
         }
@@ -36,7 +36,7 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostCar([FromBody] Car car)
         {
-            cars.Add(car);
+            carRepository.Add(car);
 
             return Ok(car);
         }
@@ -47,8 +47,9 @@ namespace APIPRojeto.Controllers
             var obj = FindCar(Id);
 
             obj.Year = car.Year;
+            obj.Color = car.Color;
 
-            return Ok(obj);
+            return Ok(carRepository.Update(obj));
         }
 
         [HttpDelete("{id}")]
@@ -57,14 +58,14 @@ namespace APIPRojeto.Controllers
             var obj = FindCar(Id);
 
             if (obj != null)
-                return Ok(cars.Remove(obj));
+                return Ok(carRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         public Car FindCar(Guid Id)
         {
-            return cars.Find(x => x.Id == Id);
+            return carRepository.Find(Id);
         }
     }
 }
