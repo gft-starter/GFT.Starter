@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIPRojeto.Models;
+using APIPRojeto.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIPRojeto.Controllers
@@ -12,11 +13,17 @@ namespace APIPRojeto.Controllers
     public class CarController : ControllerBase
     {
         static List<Car> cars = new List<Car>();
+        private readonly CarRepository carRepository;
+
+        public CarController()
+        {
+            carRepository = new CarRepository();
+        }
 
         [HttpGet]
         public IActionResult Cars()
         {
-            return Ok(cars);
+            return Ok(carRepository.Get());
         }
 
         [HttpGet("{id}")]
