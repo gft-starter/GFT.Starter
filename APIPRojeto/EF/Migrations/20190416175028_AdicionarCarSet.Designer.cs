@@ -4,14 +4,16 @@ using APIPRojeto.Repositorio.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace APIPRojeto.EF.Migrations
 {
     [DbContext(typeof(LataVelhaContext))]
-    partial class LataVelhaContextModelSnapshot : ModelSnapshot
+    [Migration("20190416175028_AdicionarCarSet")]
+    partial class AdicionarCarSet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,37 +40,7 @@ namespace APIPRojeto.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
-
                     b.ToTable("Cars");
-                });
-
-            modelBuilder.Entity("APIPRojeto.Models.Owner", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("BirthDate");
-
-                    b.Property<string>("CPF");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Owners");
-                });
-
-            modelBuilder.Entity("APIPRojeto.Models.Car", b =>
-                {
-                    b.HasOne("APIPRojeto.Models.Owner", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

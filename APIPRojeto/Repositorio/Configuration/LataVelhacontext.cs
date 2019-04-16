@@ -12,6 +12,8 @@ namespace APIPRojeto.Repositorio.Configuration
     {
         public DbSet <Car> Cars { get; set; }
 
+        public DbSet<Owner> Owners { get; set; }
+
         public LataVelhaContext()
         {
 
@@ -21,7 +23,7 @@ namespace APIPRojeto.Repositorio.Configuration
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = @"Server=BRPC003897; Database=LataVelha; Trusted_Connection=True";
+                var connectionString = @"Server=BRPC003897\SQLEXPRESS; Database=LataVelha; Trusted_Connection=True";
                 optionsBuilder.UseSqlServer(connectionString);
 
             }
