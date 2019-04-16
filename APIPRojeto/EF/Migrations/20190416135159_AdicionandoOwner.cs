@@ -31,7 +31,7 @@ namespace APIPRojeto.EF.Migrations
                 name: "FK_Cars_Owner_OwnerId",
                 table: "Cars",
                 column: "OwnerId",
-                principalTable: "Owner",
+                principalTable: "Owners",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

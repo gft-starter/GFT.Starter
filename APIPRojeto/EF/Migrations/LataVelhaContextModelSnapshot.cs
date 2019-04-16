@@ -68,7 +68,7 @@ namespace APIPRojeto.EF.Migrations
 
             modelBuilder.Entity("APIPRojeto.Models.Car", b =>
                 {
-                    b.HasOne("APIPRojeto.Models.Owner", "Owner")
+                    b.HasOne("APIPRojeto.Models.Owner", "Owners")
                         .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
