@@ -1,13 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using APIPRojeto.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace APIPRojeto.Repositorires.Configuration
 {
     public class LataVelhaContext : DbContext 
     {
+        public DbSet<Car> Cars { get; set; }
         public LataVelhaContext()
         {
 
@@ -17,7 +16,7 @@ namespace APIPRojeto.Repositorires.Configuration
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = @"localhost\\SQLEXPRESS;Database=LataVelha;Trusted_Connection=true";
+                var connectionString = @"Server=BRPC003801\\SQLEXPRESS;Database=LataVelha;Trusted_Connection=true";
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
