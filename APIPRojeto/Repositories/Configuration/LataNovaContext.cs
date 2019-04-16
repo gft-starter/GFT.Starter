@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using APIPRojeto.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,11 @@ namespace APIPRojeto.Repositories.Configuration
 {
     public class LataNovaContext : DbContext
     {
-        protected LataNovaContext()
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Owner> Owners { get; set; }
+        public DbSet<Service> Services { get; set; }
+
+        public LataNovaContext()
         {
         }
 
@@ -19,8 +24,7 @@ namespace APIPRojeto.Repositories.Configuration
                 var connectionString = @"Server=BRPC003931\SQLEXPRESS150;Database=LataNova;Trusted_Connection=True";
                 optionsBuilder.UseSqlServer(connectionString);
             }
-
-            base.OnConfiguring(optionsBuilder);
+            
         }
     }
 }

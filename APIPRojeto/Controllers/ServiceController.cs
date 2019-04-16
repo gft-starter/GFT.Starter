@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIPRojeto.Models;
+using APIPRojeto.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,7 @@ namespace APIPRojeto.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        static List<Service> services = new List<Service>();
+        static ServiceRepository services = new ServiceRepository();
 
         // GET: api/Owner
         [HttpGet]
@@ -61,7 +62,7 @@ namespace APIPRojeto.Controllers
 
         public Service FindService(Guid Id)
         {
-            return services.Find(x => x.Id == Id);
+            return services.Find(Id);
         }
     }
 }
