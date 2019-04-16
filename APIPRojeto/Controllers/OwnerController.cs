@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using APIPRojeto.Models;
+using APIPRojeto.Repositories;
 
 namespace APIPRojeto.Controllers
 {
@@ -13,12 +14,18 @@ namespace APIPRojeto.Controllers
     public class OwnerController : ControllerBase
     {
         static List<Owner> owners = new List<Owner>();
+        private readonly OwnerRepository ownerRepository;
+
+        public OwnerController()
+        {
+            ownerRepository = new OwnerRepository();
+        }
 
         // GET: api/Owner
         [HttpGet]
         public IActionResult Owners()
         {
-            return Ok(owners);
+            return Ok(ownerRepository.Get());
         }
 
         // GET: api/Owner/5
@@ -32,7 +39,7 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostOwner([FromBody] Owner owner)
         {
-            owners.Add(owner);
+            ownerRepository.Add(owner);
 
             return Ok(owner);
         }
@@ -44,7 +51,7 @@ namespace APIPRojeto.Controllers
 
             obj.Name = owner.Name;
 
-            return Ok(obj);
+            return Ok(ownerRepository.Update(owner));
         }
 
         // DELETE: api/ApiWithActions/5
@@ -54,14 +61,14 @@ namespace APIPRojeto.Controllers
             var obj = FindOwner(Id);
 
             if (obj != null)
-                return Ok(owners.Remove(obj));
+                return Ok(ownerRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         public Owner FindOwner(Guid Id)
         {
-            return owners.Find(x => x.Id == Id);
+            return ownerRepository.Find(Id);
         }
     }
 }
