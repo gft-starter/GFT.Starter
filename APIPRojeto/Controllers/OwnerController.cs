@@ -13,12 +13,18 @@ namespace APIPRojeto.Controllers
     public class OwnerController : ControllerBase
     {
         static List<Owner> owners = new List<Owner>();
+        private readonly OwnerRepository ownerRepository;
+
+        public OwnerController()
+        {
+            ownerRepository = new OwnerRepository();
+        }
 
         // GET: api/Owner
         [HttpGet]
         public IActionResult Owners()
         {
-            return Ok(owners);
+            return Ok(ownerRepository.Get());
         }
 
         // GET: api/Owner/5
