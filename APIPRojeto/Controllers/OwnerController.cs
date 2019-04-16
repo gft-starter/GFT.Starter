@@ -60,14 +60,14 @@ namespace APIPRojeto.Controllers
             var obj = FindOwner(Id);
 
             if (obj != null)
-                return Ok(owners.Remove(obj));
+                return Ok(ownerRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         public Owner FindOwner(Guid Id)
         {
-            return owners.Find(x => x.Id == Id);
+            return ownerRepository.Find(Id);
         }
     }
 }
