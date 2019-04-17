@@ -47,6 +47,7 @@ namespace APIPRojeto.Controllers
 
             obj.Description = service.Description;
             obj.Name = service.Name;
+            obj.Value = service.Value;
 
             return Ok(serviceRepository.Update(obj));
         }
