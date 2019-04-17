@@ -36,6 +36,8 @@ namespace APIPRojeto.EF.Migrations
 
                     b.Property<int>("Year");
 
+                    b.Property<Owner>("Owner");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");

@@ -38,8 +38,11 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostCar([FromBody] Car car)
         {
-            cars.Add(car);
-
+            if (car == null)
+            {
+                return new NotFoundResult();
+            }
+            carRepository.Add(car);
             return Ok(car);
         }
 
@@ -64,9 +67,9 @@ namespace APIPRojeto.Controllers
             return NotFound(obj);
         }
 
-        public Car FindCar(Guid Id)
+        public Car FindCar(Guid Id) 
         {
-            return cars.Find(x => x.Id == Id);
+            return carRepository.Find(Id);
         }
     }
 }
