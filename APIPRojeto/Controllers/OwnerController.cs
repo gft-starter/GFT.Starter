@@ -38,7 +38,7 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostOwner([FromBody] Owner owner)
         {
-            owners.Add(owner);
+            ownerRepository.Add(owner);
 
             return Ok(owner);
         }

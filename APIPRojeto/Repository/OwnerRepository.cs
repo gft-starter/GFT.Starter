@@ -18,7 +18,7 @@ namespace APIPRojeto.Controllers
 
         public IEnumerable<Owner> Get() => _db
             .Owners
-            .Include(o=> o.Id);
+            .ToList();
 
         public Owner Find(Guid id) => _db
             .Owners
