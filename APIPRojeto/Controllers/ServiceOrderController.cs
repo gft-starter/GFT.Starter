@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIPRojeto.Models;
+using APIPRojeto.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,16 +13,20 @@ namespace APIPRojeto.Controllers
     [ApiController]
     public class ServiceOrderController : ControllerBase
     {
-        static List<ServiceOrder> serviceOrders = new List<ServiceOrder>();
+        static List<Car> serviceOrders = new List<Car>();
+        private readonly ServiceOrderRepository serviceOrderRepository;
 
-        // GET: api/Owner
-        [HttpGet]
-        public IActionResult ServiceOrders()
+        public ServiceOrderController()
         {
-            return Ok(serviceOrders);
+            serviceOrderRepository = new ServiceOrderRepository();
         }
 
-        // GET: api/Owner/5
+        [HttpGet]
+        public IActionResult ServiceOrder()
+        {
+            return Ok(serviceOrderRepository.Get());
+        }
+
         [HttpGet("{id}")]
         public IActionResult ServiceOrder(Guid Id)
         {
@@ -32,7 +37,7 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostServiceOrder([FromBody] ServiceOrder serviceOrder)
         {
-            serviceOrders.Add(serviceOrder);
+            serviceOrderRepository.Add(serviceOrder);
 
             return Ok(serviceOrder);
         }
@@ -44,12 +49,23 @@ namespace APIPRojeto.Controllers
 
             obj.Quantity = serviceOrder.Quantity;
 
-            return Ok(obj);
+            return Ok(serviceOrderRepository.Update(obj));
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteServiceOrder(Guid Id)
+        {
+            var obj = FindServiceOrder(Id);
+
+            if (obj != null)
+                return Ok(serviceOrderRepository.Remove(obj));
+
+            return NotFound(obj);
         }
 
         public ServiceOrder FindServiceOrder(Guid Id)
         {
-            return serviceOrders.Find(x => x.Id == Id);
+            return serviceOrderRepository.Find(Id);
         }
     }
 }
