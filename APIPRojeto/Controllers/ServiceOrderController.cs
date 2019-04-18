@@ -14,14 +14,14 @@ namespace APIPRojeto.Controllers
     {
         static List<ServiceOrder> serviceOrders = new List<ServiceOrder>();
 
-        // GET: api/Owner
+        
         [HttpGet]
         public IActionResult ServiceOrders()
         {
             return Ok(serviceOrders);
         }
 
-        // GET: api/Owner/5
+        
         [HttpGet("{id}")]
         public IActionResult ServiceOrder(Guid Id)
         {
