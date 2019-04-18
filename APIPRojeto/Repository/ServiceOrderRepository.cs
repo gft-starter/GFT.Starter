@@ -20,12 +20,14 @@ namespace APIPRojeto.Repository
         public IEnumerable<ServiceOrder> Get() => _db
             .ServiceOrders
             .Include(so => so.Car)
+            .Include(so => so.Car.Owner)
             .Include(so => so.Service)
             .ToList();
 
         public ServiceOrder Find(Guid id) => _db
             .ServiceOrders
             .Include(so => so.Car)
+            .Include(so => so.Car.Owner)
             .Include(so =>so.Service)
             .Where(so => so.Id == id)
             .FirstOrDefault();
@@ -39,6 +41,7 @@ namespace APIPRojeto.Repository
         public ServiceOrder FindService(Guid id) => _db
             .ServiceOrders
             .Include(so => so.Service)
+            .Include(so => so.Car)
             .Where(so => so.ServiceId == id)
             .FirstOrDefault();
 
