@@ -92,6 +92,10 @@ namespace APIPRojeto.EF.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("ServiceId");
+
                     b.ToTable("ServiceOrder");
                 });
 
@@ -100,6 +104,19 @@ namespace APIPRojeto.EF.Migrations
                     b.HasOne("APIPRojeto.Models.Owner", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("APIPRojeto.Models.ServiceOrder", b =>
+                {
+                    b.HasOne("APIPRojeto.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("APIPRojeto.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

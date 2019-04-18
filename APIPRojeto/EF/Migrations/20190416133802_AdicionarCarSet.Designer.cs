@@ -21,6 +21,7 @@ namespace APIPRojeto.EF.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            
             modelBuilder.Entity("APIPRojeto.Models.Car", b =>
                 {
                     b.Property<Guid>("Id")

@@ -65,21 +65,21 @@ namespace APIPRojeto.EF.Migrations
                     b.ToTable("Owner");
                 });
 
-            modelBuilder.Entity("APIPRojeto.Models.Service", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+            //modelBuilder.Entity("APIPRojeto.Models.Service", b =>
+            //    {
+            //        b.Property<Guid>("Id")
+            //            .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+            //        b.Property<string>("Description");
 
-                    b.Property<string>("Name");
+            //        b.Property<string>("Name");
 
-                    b.Property<string>("Value");
+            //        b.Property<string>("Value");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.ToTable("Service");
-                });
+            //        b.ToTable("Service");
+            //    });
 
             modelBuilder.Entity("APIPRojeto.Models.ServiceOrder", b =>
                 {
