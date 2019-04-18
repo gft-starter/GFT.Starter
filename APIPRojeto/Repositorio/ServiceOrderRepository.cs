@@ -9,24 +9,21 @@ namespace APIPRojeto.Repositorio
 {
 
 
-    public class ServiceOrderRepository
-        
+    public class ServiceOrderRepository : BaseRepository
+
     {
-        private readonly LataVelhaContext _db;
+        private readonly LataVelhaContext Db;
 
-        public ServiceOrderRepository()
-        {
-            _db = new LataVelhaContext();
-        }
+        
 
-        public IEnumerable<ServiceOrder> Get() => _db
+        public IEnumerable<ServiceOrder> Get() => Db
             .ServiceOrders
             .Include(c => c.Car)
             .Include(c => c.Car.Owner)
             .Include(c => c.Service)
             .ToList();
 
-        public ServiceOrder Find(Guid id) => _db
+        public ServiceOrder Find(Guid id) => Db
             .ServiceOrders
             .Include(c => c.Car)
             .Include(c => c.Car.Owner)
@@ -38,8 +35,8 @@ namespace APIPRojeto.Repositorio
         {
             if (ServiceOrders != null)
             {
-                _db.Add(ServiceOrders);
-                _db.SaveChanges();
+                Db.Add(ServiceOrders);
+                Db.SaveChanges();
 
             }
         }

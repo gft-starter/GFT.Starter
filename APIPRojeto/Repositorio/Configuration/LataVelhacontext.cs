@@ -27,7 +27,9 @@ namespace APIPRojeto.Repositorio.Configuration
         {
             if (!optionsBuilder.IsConfigured)
             {
+                
                 var connectionString = @"Server=BRPC003897\SQLEXPRESS; Database=LataVelha; Trusted_Connection=True";
+                //CONNECTION STRING DO AZURE DEVE SER COLOCADO NESTE LOCAL
                 optionsBuilder.UseSqlServer(connectionString);
 
             }

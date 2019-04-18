@@ -9,22 +9,22 @@ namespace APIPRojeto.Repositorio
 {
 
 
-    public class CarRepository
-        
+    public class CarRepository : BaseRepository
+
     {
-        private readonly LataVelhaContext _db;
+        private readonly LataVelhaContext Db;
 
         public CarRepository()
         {
-            _db = new LataVelhaContext();
+            Db = new LataVelhaContext();
         }
 
-        public IEnumerable<Car> Get() => _db
+        public IEnumerable<Car> Get() => Db
             .Cars
             .Include(c => c.Owner)
             .ToList();
 
-        public Car Find(Guid id) => _db
+        public Car Find(Guid id) => Db
             .Cars
             .Include ("Owner")
             .Where(c => c.Id == id)
@@ -34,8 +34,8 @@ namespace APIPRojeto.Repositorio
         {
             if (car != null)
             {
-                _db.Add(car);
-                _db.SaveChanges();
+                Db.Add(car);
+                Db.SaveChanges();
 
             }
         }

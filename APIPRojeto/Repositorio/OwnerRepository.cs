@@ -9,21 +9,16 @@ namespace APIPRojeto.Repositorio
 {
 
 
-    public class OwnerRepository
-        
+    public class OwnerRepository : BaseRepository
+
     {
-        private readonly LataVelhaContext _db;
+        private readonly LataVelhaContext Db;
 
-        public OwnerRepository()
-        {
-            _db = new LataVelhaContext();
-        }
-
-        public IEnumerable<Owner> Get() => _db
+        public IEnumerable<Owner> Get() => Db
             .Owners            
             .ToList();
 
-        public Owner Find(Guid id) => _db
+        public Owner Find(Guid id) => Db
             .Owners  
             .Where(c => c.Id == id)
             .FirstOrDefault();
@@ -32,8 +27,8 @@ namespace APIPRojeto.Repositorio
         {
             if (owners != null)
             {
-                _db.Add(owners);
-                _db.SaveChanges();
+                Db.Add(owners);
+                Db.SaveChanges();
 
             }
         }

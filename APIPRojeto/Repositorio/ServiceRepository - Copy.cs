@@ -9,21 +9,18 @@ namespace APIPRojeto.Repositorio
 {
 
 
-    public class ServiceRepository
-        
+    public class ServiceRepository : BaseRepository
+
     {
-        private readonly LataVelhaContext _db;
+        private readonly LataVelhaContext Db;
 
-        public ServiceRepository()
-        {
-            _db = new LataVelhaContext();
-        }
+        
 
-        public IEnumerable<Service> Get() => _db
+        public IEnumerable<Service> Get() => Db
             .Services            
             .ToList();
 
-        public Service Find(Guid id) => _db
+        public Service Find(Guid id) => Db
             .Services  
             .Where(c => c.Id == id)
             .FirstOrDefault();
@@ -32,8 +29,8 @@ namespace APIPRojeto.Repositorio
         {
             if (Services != null)
             {
-                _db.Add(Services);
-                _db.SaveChanges();
+                Db.Add(Services);
+                Db.SaveChanges();
 
             }
         }
