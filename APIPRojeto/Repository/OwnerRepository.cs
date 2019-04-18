@@ -1,59 +1,51 @@
-﻿using APIPRojeto.Models;
-using APIPRojeto.Repository.Configuration;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using APIPRojeto.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace APIPRojeto.Controllers
+namespace APIPRojeto.Repository
 {
-    public  class OwnerRepository
+    public class OwnerRepository : BaseRepository
     {
-        private readonly LataVelhaContext _db;
-
-        public OwnerRepository()
-        {
-            _db = new LataVelhaContext();
-        }
-
-        public IEnumerable<Owner> Get() => _db
+        public IEnumerable<Owner> Get() => Db
             .Owners
             .ToList();
 
-        public Owner Find(Guid id) => _db
+        public Owner Find(Guid id) => Db
             .Owners
             .Include(o => o.Id == id)
             .FirstOrDefault();
 
         public void Add(Owner owner)
         {
-            if(owner != null)
+            if (owner != null)
             {
-                _db.Add(owner);
-                _db.SaveChanges();
+                Db.Add(owner);
+                Db.SaveChanges();
             }
         }
 
         public Owner Remove(Owner owner)
         {
-            if(owner != null)
+            if (owner != null)
             {
-                _db.Remove(owner);
-                _db.SaveChanges();
+                Db.Remove(owner);
+                Db.SaveChanges();
             }
             return owner;
         }
 
         public Owner Update(Owner owner)
         {
-            if(owner != null)
-            { 
-            _db.Update(owner);
-            _db.SaveChanges();
+            if (owner != null)
+            {
+                Db.Update(owner);
+                Db.SaveChanges();
             }
             return owner;
         }
-        
-            
+
+
     }
 }

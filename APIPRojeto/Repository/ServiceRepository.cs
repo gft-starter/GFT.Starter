@@ -1,29 +1,18 @@
 ﻿using APIPRojeto.Models;
-using APIPRojeto.Repository.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace APIPRojeto.Repository
 {
-    public class ServiceRepository
+    public class ServiceRepository : BaseRepository
     {
-
-        private readonly LataVelhaContext _db;
-
-        public ServiceRepository()
-        {
-            _db = new LataVelhaContext();
-        }
-
-        public IEnumerable<Service> Get() => _db
+        public IEnumerable<Service> Get() => Db
             .Services
-            .Include(s => s.Id)
             .ToList();
 
-        public Service Find(Guid id) => _db
+        public Service Find(Guid id) => Db
             .Services
             .Include(s => s.Id)
             .Where(s => s.Id == id)
@@ -31,29 +20,29 @@ namespace APIPRojeto.Repository
 
         public void Add(Service service)
         {
-            if(service != null)
+            if (service != null)
             {
-                _db.Add(service);
-                _db.SaveChanges();
+                Db.Add(service);
+                Db.SaveChanges();
             }
         }
 
         public Service Remove(Service service)
         {
-            if(service != null)
+            if (service != null)
             {
-                _db.Remove(service);
-                _db.SaveChanges();
+                Db.Remove(service);
+                Db.SaveChanges();
             }
             return service;
         }
 
         public Service Update(Service service)
         {
-            if(service != null)
+            if (service != null)
             {
-                _db.Update(service);
-                _db.SaveChanges();
+                Db.Update(service);
+                Db.SaveChanges();
             }
             return service;
         }

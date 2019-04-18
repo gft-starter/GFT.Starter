@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using APIPRojeto.Models;
+using APIPRojeto.Repository;
 
 namespace APIPRojeto.Controllers
 {

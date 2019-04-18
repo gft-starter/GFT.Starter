@@ -1,27 +1,19 @@
-﻿using APIPRojeto.Models;
-using APIPRojeto.Repository.Configuration;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using APIPRojeto.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace APIPRojeto.Controllers
+namespace APIPRojeto.Repository
 {
-    public class CarRepository
+    public class CarRepository : BaseRepository
     {
-        private readonly LataVelhaContext _db;
-
-        public CarRepository()
-        {
-            _db = new LataVelhaContext();
-        }
-
-        public IEnumerable<Car> Get() => _db
+        public IEnumerable<Car> Get() => Db
             .Cars
             .Include(c => c.Owner)
             .ToList();
 
-        public Car Find(Guid id) => _db
+        public Car Find(Guid id) => Db
             .Cars
             .Include(c => c.Owner)
             .Where(c => c.Id == id)
@@ -31,8 +23,8 @@ namespace APIPRojeto.Controllers
         {
             if (car != null)
             {
-                _db.Add(car);
-                _db.SaveChanges();
+                Db.Add(car);
+                Db.SaveChanges();
             }
         }
 
@@ -40,8 +32,8 @@ namespace APIPRojeto.Controllers
         {
             if (car != null)
             {
-                _db.Remove(car);
-                _db.SaveChanges();
+                Db.Remove(car);
+                Db.SaveChanges();
             }
             return car;
         }
@@ -50,8 +42,8 @@ namespace APIPRojeto.Controllers
         {
             if (car != null)
             {
-                _db.Update(car);
-                _db.SaveChanges();
+                Db.Update(car);
+                Db.SaveChanges();
             }
             return car;
         }

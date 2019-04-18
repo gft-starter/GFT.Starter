@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APIPRojeto.Repository.Configuration
 {
-    public class LataVelhaContext : DbContext
+    public sealed class LataVelhaContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
         public DbSet<Owner> Owners { get; set; }
@@ -12,7 +12,6 @@ namespace APIPRojeto.Repository.Configuration
 
         public LataVelhaContext()
         {
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,6 +22,5 @@ namespace APIPRojeto.Repository.Configuration
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
-
     }
 }
