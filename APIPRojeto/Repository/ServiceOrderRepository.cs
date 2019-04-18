@@ -25,6 +25,8 @@ namespace APIPRojeto.Repository
 
         public ServiceOrder Find(Guid id) => _db
             .ServiceOrders
+            .Include(so => so.Car)
+            .Include(so =>so.Service)
             .Where(so => so.Id == id)
             .FirstOrDefault();
 
