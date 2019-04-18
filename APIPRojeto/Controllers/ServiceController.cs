@@ -21,14 +21,14 @@ namespace APIPRojeto.Controllers
             serviceRepository = new ServiceRepository();
         }
 
-        // GET: api/Owner
+        
         [HttpGet]
         public IActionResult Services()
         {
             return Ok(serviceRepository.Get());
         }
 
-        // GET: api/Owner/5
+        
         [HttpGet("{id}")]
         public IActionResult Service(Guid Id)
         {

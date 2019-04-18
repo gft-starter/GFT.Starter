@@ -20,7 +20,6 @@ namespace APIPRojeto.Repository
 
         public IEnumerable<Service> Get() => _db
             .Services
-            .Include(s => s.Id)
             .ToList();
 
         public Service Find(Guid id) => _db
