@@ -19,7 +19,7 @@ namespace APIPRojeto.Repository.Configuration
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = @"Server=BRPC003891\SQLEXPRESS;Database=LataVelha;Trusted_Connection=True";
+                var connectionString = @"Server=tcp:latavelha.database.windows.net,1433;Initial Catalog=LataVelha;Persist Security Info=False;User ID=fdario;Password=Gft@2019@1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
