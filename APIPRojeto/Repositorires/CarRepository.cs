@@ -9,26 +9,21 @@ using System.Threading.Tasks;
 namespace APIPRojeto.Repositorires
 {
     
-    public class CarRepository
+    public class CarRepository : BaseRepository
     {
-        private readonly LataVelhaContext _db;
-        public CarRepository()
-        {
-            _db = new LataVelhaContext();
-
-        }
-        public IEnumerable<Car> Get() =>_db.Cars.Include(c => c.Owner).ToList();
+        
+        public IEnumerable<Car> Get() =>Db.Cars.Include(c => c.Owner).ToList();
             
 
-        public Car Find(Guid id) => _db.Cars.Include("Owner").Where(c => c.Id == id).FirstOrDefault();
+        public Car Find(Guid id) => Db.Cars.Include("Owner").FirstOrDefault(x => x.Id == id);
 
 
         public void Insert(Car car)
         {
             if(car != null)
             {
-                _db.Add(car);
-                _db.SaveChanges();
+                Db.Add(car);
+                Db.SaveChanges();
             }
         }
 
@@ -36,8 +31,8 @@ namespace APIPRojeto.Repositorires
         {
             if (car != null)
             {
-                _db.Remove(car);
-                _db.SaveChanges();
+                Db.Remove(car);
+                Db.SaveChanges();
             }
             return car;
         }
@@ -46,8 +41,8 @@ namespace APIPRojeto.Repositorires
         {
             if (car != null)
             {
-                _db.Update(car);
-                _db.SaveChanges();
+                Db.Update(car);
+                Db.SaveChanges();
             }
             return car;
         }

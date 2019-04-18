@@ -19,7 +19,7 @@ namespace APIPRojeto.Repositorires.Configuration
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = @"Server=BRPC003801\SQLEXPRESS;Database=LataVelha;Trusted_Connection=True";
+                var connectionString = @"Server=tcp:ldbs.database.windows.net,1433;Initial Catalog=LataVelha;Persist Security Info=False;User ID=ldbs;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }

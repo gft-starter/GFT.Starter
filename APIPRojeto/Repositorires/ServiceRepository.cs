@@ -7,26 +7,20 @@ using System.Threading.Tasks;
 
 namespace APIPRojeto.Repositorires
 {
-    public class ServiceRepository
+    public class ServiceRepository : BaseRepository
     {
-        private readonly LataVelhaContext _db;
-        public ServiceRepository()
-        {
-            _db = new LataVelhaContext();
-
-        }
-        public IEnumerable<Service> Get() => _db.Service.ToList();
+        public IEnumerable<Service> Get() => Db.Service.ToList();
 
 
-        public Service Find(Guid id) => _db.Service.Where(x => x.Id == id).FirstOrDefault();
+        public Service Find(Guid id) => Db.Service.FirstOrDefault(x => x.Id == id);
 
 
         public void Insert(Service service)
         {
             if (service != null)
             {
-                _db.Add(service);
-                _db.SaveChanges();
+                Db.Add(service);
+                Db.SaveChanges();
             }
         }
 
@@ -34,8 +28,8 @@ namespace APIPRojeto.Repositorires
         {
             if (service != null)
             {
-                _db.Remove(service);
-                _db.SaveChanges();
+                Db.Remove(service);
+                Db.SaveChanges();
             }
             return service;
         }
@@ -44,8 +38,8 @@ namespace APIPRojeto.Repositorires
         {
             if (service != null)
             {
-                _db.Update(service);
-                _db.SaveChanges();
+                Db.Update(service);
+                Db.SaveChanges();
             }
             return service;
         }

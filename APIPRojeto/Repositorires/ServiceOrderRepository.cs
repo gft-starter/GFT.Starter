@@ -8,26 +8,20 @@ using System.Threading.Tasks;
 
 namespace APIPRojeto.Repositorires
 {
-    public class ServiceOrderRepository
+    public class ServiceOrderRepository : BaseRepository
     {
-        private readonly LataVelhaContext _db;
-        public ServiceOrderRepository()
-        {
-            _db = new LataVelhaContext();
-
-        }
-        public IEnumerable<ServiceOrder> Get() => _db.ServiceOrder.Include("Service").Include("Car").ToList();
+        public IEnumerable<ServiceOrder> Get() => Db.ServiceOrder.Include("Service").Include("Car").ToList();
 
 
-        public ServiceOrder Find(Guid id) => _db.ServiceOrder.Include("Service").Include("Car").Where(x => x.Id == id).FirstOrDefault();
+        public ServiceOrder Find(Guid id) => Db.ServiceOrder.Include("Service").Include("Car").FirstOrDefault(x => x.Id == id);
 
 
         public void Insert(ServiceOrder serviceOrder)
         {
             if (serviceOrder != null)
             {
-                _db.Add(serviceOrder);
-                _db.SaveChanges();
+                Db.Add(serviceOrder);
+                Db.SaveChanges();
             }
         }
 
@@ -35,8 +29,8 @@ namespace APIPRojeto.Repositorires
         {
             if (serviceOrder != null)
             {
-                _db.Remove(serviceOrder);
-                _db.SaveChanges();
+                Db.Remove(serviceOrder);
+                Db.SaveChanges();
             }
             return serviceOrder;
         }
@@ -45,8 +39,8 @@ namespace APIPRojeto.Repositorires
         {
             if (serviceOrder != null)
             {
-                _db.Update(serviceOrder);
-                _db.SaveChanges();
+                Db.Update(serviceOrder);
+                Db.SaveChanges();
             }
             return serviceOrder;
         }
