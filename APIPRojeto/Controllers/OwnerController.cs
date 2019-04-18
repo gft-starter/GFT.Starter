@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using APIPRojeto.Models;
+using APIPRojeto.Repositorio;
 
 namespace APIPRojeto.Controllers
 {
@@ -13,12 +14,18 @@ namespace APIPRojeto.Controllers
     public class OwnerController : ControllerBase
     {
         static List<Owner> owners = new List<Owner>();
+        private readonly OwnerRepository ownerrepository;
+
+        public OwnerController()
+        {
+            ownerrepository = new OwnerRepository();
+        }
 
         // GET: api/Owner
         [HttpGet]
         public IActionResult Owners()
         {
-            return Ok(owners);
+            return Ok(ownerrepository.Get());
         }
 
         // GET: api/Owner/5
@@ -32,8 +39,11 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostOwner([FromBody] Owner owner)
         {
-            owners.Add(owner);
-
+            if (owner == null)
+            {
+                return new NotFoundResult();
+            }
+            ownerrepository.Add(owner);
             return Ok(owner);
         }
 

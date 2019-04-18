@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIPRojeto.Models;
+using APIPRojeto.Repositorio;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,12 +14,19 @@ namespace APIPRojeto.Controllers
     public class ServiceController : ControllerBase
     {
         static List<Service> services = new List<Service>();
+        private readonly ServiceRepository serviceRepository;
+
+
+        public ServiceController()
+        {
+            serviceRepository = new ServiceRepository(); 
+        }
 
         // GET: api/Owner
         [HttpGet]
         public IActionResult Services()
         {
-            return Ok(services);
+            return Ok(serviceRepository.Get());
         }
 
         // GET: api/Owner/5
@@ -32,8 +40,11 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostService([FromBody] Service service)
         {
-            services.Add(service);
-
+            if (service == null)
+            {
+                return new NotFoundResult();
+            }
+            serviceRepository.Add(service);
             return Ok(service);
         }
 

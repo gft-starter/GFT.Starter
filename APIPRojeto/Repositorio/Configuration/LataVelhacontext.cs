@@ -14,6 +14,10 @@ namespace APIPRojeto.Repositorio.Configuration
 
         public DbSet<Owner> Owners { get; set; }
 
+        public DbSet<Service> Services { get; set; }
+
+        public DbSet<ServiceOrder> ServiceOrders { get; set; }
+
         public LataVelhaContext()
         {
 
