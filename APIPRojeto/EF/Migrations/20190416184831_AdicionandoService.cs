@@ -8,7 +8,7 @@ namespace APIPRojeto.EF.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ServiceOrders",
+                name: "ServiceOrder",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -18,7 +18,7 @@ namespace APIPRojeto.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ServiceOrders", x => x.Id);
+                    table.PrimaryKey("PK_ServiceOrder", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -39,7 +39,7 @@ namespace APIPRojeto.EF.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ServiceOrders");
+                name: "ServiceOrder");
 
             migrationBuilder.DropTable(
                 name: "Services");

@@ -96,7 +96,7 @@ namespace APIPRojeto.EF.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServiceOrders");
+                    b.ToTable("ServiceOrder");
                 });
 
             modelBuilder.Entity("APIPRojeto.Models.Car", b =>

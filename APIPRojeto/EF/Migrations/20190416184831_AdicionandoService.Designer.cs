@@ -94,7 +94,7 @@ namespace APIPRojeto.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ServiceOrders");
+                    b.ToTable("ServiceOrder");
                 });
 
             modelBuilder.Entity("APIPRojeto.Models.Car", b =>

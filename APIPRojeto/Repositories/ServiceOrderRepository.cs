@@ -18,13 +18,13 @@ namespace APIPRojeto.Repositories
         }
 
         public IEnumerable<ServiceOrder> Get() => _db
-            .ServiceOrders
+            .ServiceOrder
             .Include(c => c.Car)
             .Include(s => s.Service)
             .ToList();
 
         public ServiceOrder Find(Guid id) => _db
-            .ServiceOrders
+            .ServiceOrder
             .Include(c => c.Car)
             .Include(s => s.Service)
             .Where(c => c.Id == id)
