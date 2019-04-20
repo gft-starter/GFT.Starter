@@ -1,4 +1,4 @@
-﻿namespace Core.Settings
+﻿namespace GFT.Starter.Core.Settings
 {
     public class AppSettings
     {

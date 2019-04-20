@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Core.Models;
+using GFT.Starter.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace GFT.Starter.Infrastructure.Repositories
 {
     public class ServiceRepository : BaseRepository
     {

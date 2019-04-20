@@ -1,9 +1,9 @@
 ﻿using System;
-using Core.Models;
-using Infrastructure.Repositories;
+using GFT.Starter.Core.Models;
+using GFT.Starter.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace GFT.Starter.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

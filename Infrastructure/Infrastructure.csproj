@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>GFT.Starter.Infrastructure</AssemblyName>
+    <RootNamespace>GFT.Starter.Infrastructure</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

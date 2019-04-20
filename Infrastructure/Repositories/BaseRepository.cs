@@ -1,8 +1,8 @@
-﻿using Core.Settings;
-using Infrastructure.Repositories.Configuration;
+﻿using GFT.Starter.Core.Settings;
+using GFT.Starter.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace GFT.Starter.Infrastructure.Repositories
 {
     public class BaseRepository
     {

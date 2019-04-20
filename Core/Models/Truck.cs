@@ -1,6 +1,6 @@
 ﻿namespace GFT.Starter.Core.Models
 {
-    public class Car : Vehicle
+    public class Truck : Vehicle
     {
     }
 }

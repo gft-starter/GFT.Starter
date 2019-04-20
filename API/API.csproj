@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <AssemblyName>GFT.Starter.API</AssemblyName>
+    <RootNamespace>GFT.Starter.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

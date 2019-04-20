@@ -6,45 +6,45 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
 {
-    public class CarRepository : BaseRepository
+    public class TruckRepository : BaseRepository
     {
-        public IEnumerable<Car> Get() => Db
-            .Vehicles.OfType<Car>()
+        public IEnumerable<Truck> Get() => Db
+            .Vehicles.OfType<Truck>()
             .Include(c => c.Owner)
             .ToList();
 
-        public Car Find(Guid id) => Db
-            .Vehicles.OfType<Car>()
+        public Truck Find(Guid id) => Db
+            .Vehicles.OfType<Truck>()
             .Include(c => c.Owner)
             .FirstOrDefault(c => c.Id == id);
 
-        public void Add(Car car)
+        public void Add(Truck truck)
         {
-            if (car != null)
+            if (truck != null)
             {
-                Db.Add(car);
+                Db.Add(truck);
                 Db.SaveChanges();
             }
         }
 
-        public Car Remove(Car car)
+        public Truck Remove(Truck truck)
         {
-            if (car != null)
+            if (truck != null)
             {
-                Db.Remove(car);
+                Db.Remove(truck);
                 Db.SaveChanges();
             }
-            return car;
+            return truck;
         }
 
-        public Car Update(Car car)
+        public Truck Update(Truck truck)
         {
-            if (car != null)
+            if (truck != null)
             {
-                Db.Update(car);
+                Db.Update(truck);
                 Db.SaveChanges();
             }
-            return car;
+            return truck;
         }
     }
 }

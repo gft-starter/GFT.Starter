@@ -1,12 +1,12 @@
 ﻿using System.IO;
-using Core.Settings;
+using GFT.Starter.Core.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace API
+namespace GFT.Starter.API
 {
     public class Startup
     {

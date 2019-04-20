@@ -1,8 +1,8 @@
-﻿using Core.Models;
-using Core.Settings;
+﻿using GFT.Starter.Core.Models;
+using GFT.Starter.Core.Settings;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories.Configuration
+namespace GFT.Starter.Infrastructure.Configuration
 {
     public sealed class LataVelhaContext : DbContext
     {
@@ -12,7 +12,9 @@ namespace Infrastructure.Repositories.Configuration
         {
             _settings = settings;
         }
-        public DbSet<Car> Cars { get; set; }
+        public LataVelhaContext() { }
+
+        public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<ServiceOrder> ServiceOrders { get; set; }
@@ -24,6 +26,15 @@ namespace Infrastructure.Repositories.Configuration
                 var connectionString = _settings.Database.ConnectionString;
                 optionsBuilder.UseSqlServer(connectionString);
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Car>();
+            builder.Entity<Truck>();
+            builder.Entity<Owner>();
+            builder.Entity<Service>();
+            builder.Entity<ServiceOrder>();
         }
     }
 }

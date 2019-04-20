@@ -1,9 +1,11 @@
 ﻿using System;
-using Core.Models;
-using Infrastructure.Repositories;
+using System.Net;
+using System.Net.Mail;
+using GFT.Starter.Core.Models;
+using GFT.Starter.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace GFT.Starter.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,28 +19,28 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Cars()
+        public IActionResult Vehicles()
         {
             return Ok(_carRepository.Get());
         }
 
         [HttpGet("{id}")]
-        public IActionResult Car(Guid id)
+        public IActionResult Vehicle(Guid id)
         {
             var obj = FindCar(id);
             return Ok(obj);
         }
 
         [HttpPost]
-        public IActionResult PostCar([FromBody] Car car)
+        public IActionResult PostVehicle([FromBody] Car car)
         {
             _carRepository.Add(car);
-
+            SendEmail(car.Id);
             return Ok(car);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCar(Guid id, [FromBody] Car car)
+        public IActionResult UpdateVehicle(Guid id, [FromBody] Car car)
         {
             var obj = FindCar(id);
 
@@ -49,7 +51,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCar(Guid id)
+        public IActionResult DeleteVehicle(Guid id)
         {
             var obj = FindCar(id);
 
@@ -62,6 +64,20 @@ namespace API.Controllers
         public Car FindCar(Guid id)
         {
             return _carRepository.Find(id);
+        }
+
+        public void SendEmail(Guid id)
+        {
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("gftstarter@gmail.com", "Gft@2019@1");
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("gftstarter@gmail.com");
+            mailMessage.To.Add("gftstarter@gmail.com");
+            mailMessage.Body = $"Vehicle {id} created successfully!";
+            mailMessage.Subject = $"Vehicle {id} created successfully!";
+            client.Send(mailMessage);
         }
     }
 }

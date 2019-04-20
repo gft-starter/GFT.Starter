@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Models
+namespace GFT.Starter.Core.Models
 {
     public class Owner
     {
