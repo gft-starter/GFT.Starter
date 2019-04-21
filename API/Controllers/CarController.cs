@@ -55,7 +55,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPut("changetires/{id}")]
         public IActionResult ChangeTires(Guid id)
         {
-            var obj = FindCar(id);
+            Vehicle obj = FindCar(id);
             _vehicleService.ChangeTires(obj);
             return Ok();
         }
