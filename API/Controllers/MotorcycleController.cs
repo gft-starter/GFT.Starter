@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Mail;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories;
 using GFT.Starter.Infrastructure.Services;
@@ -14,11 +12,13 @@ namespace GFT.Starter.API.Controllers
     {
         private readonly MotorcycleRepository motorcycleRepository;
         private readonly UpgradePartsService _vehicleService;
+        private readonly EmailService _emailService;
 
         public MotorcycleController()
         {
             motorcycleRepository = new MotorcycleRepository();
             _vehicleService = new UpgradePartsService();
+            _emailService = new EmailService();
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace GFT.Starter.API.Controllers
         public IActionResult PostVehicle([FromBody] Motorcycle motorcycle)
         {
             motorcycleRepository.Add(motorcycle);
-            SendEmail(motorcycle.Id);
+            _emailService.SendEmail($"Motorcycle {motorcycle.Id} created successfully!", $"Motorcycle {motorcycle.Id} created successfully!");
             return Ok(motorcycle);
         }
 
@@ -49,7 +49,7 @@ namespace GFT.Starter.API.Controllers
 
             obj.Year = motorcycle.Year;
             obj.Color = motorcycle.Color;
-
+            _emailService.SendEmail($"Motorcycle {obj.Id} created successfully!", $"Motorcycle {obj.Id} created successfully!");
             return Ok(motorcycleRepository.Update(obj));
         }
 
@@ -75,31 +75,6 @@ namespace GFT.Starter.API.Controllers
         private Motorcycle FindMotorcycle(Guid id)
         {
             return motorcycleRepository.Find(id);
-        }
-
-        private void SendEmail(Guid id)
-        {
-            var fromAddress = new MailAddress("gftstarter@gmail.com", "GFT Starter");
-            var toAddress = new MailAddress("gftstarter@gmail.com", "GFT Starter");
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, "Gft@2019@1")
-            };
-
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = $"Vehicle {id} created successfully!",
-                Body = $"Vehicle {id} created successfully!"
-            })
-            {
-                smtp.Send(message);
-            }
         }
     }
 }
