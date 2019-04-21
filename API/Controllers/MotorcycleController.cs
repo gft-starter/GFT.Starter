@@ -79,16 +79,27 @@ namespace GFT.Starter.API.Controllers
 
         private void SendEmail(Guid id)
         {
-            SmtpClient client = new SmtpClient("smtp.gmail.com");
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("gftstarter@gmail.com", "Gft@2019@1");
+            var fromAddress = new MailAddress("gftstarter@gmail.com", "GFT Starter");
+            var toAddress = new MailAddress("gftstarter@gmail.com", "GFT Starter");
 
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("gftstarter@gmail.com");
-            mailMessage.To.Add("gftstarter@gmail.com");
-            mailMessage.Body = $"Vehicle {id} created successfully!";
-            mailMessage.Subject = $"Vehicle {id} created successfully!";
-            client.Send(mailMessage);
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, "Gft@2019@1")
+            };
+
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = $"Vehicle {id} created successfully!",
+                Body = $"Vehicle {id} created successfully!"
+            })
+            {
+                smtp.Send(message);
+            }
         }
     }
 }
