@@ -10,13 +10,13 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class MotorcycleController : ControllerBase
     {
-        private readonly MotorcycleRepository motorcycleRepository;
+        private readonly MotorcycleRepository _motorcycleRepository;
         private readonly UpgradePartsService _vehicleService;
         private readonly EmailService _emailService;
 
         public MotorcycleController()
         {
-            motorcycleRepository = new MotorcycleRepository();
+            _motorcycleRepository = new MotorcycleRepository();
             _vehicleService = new UpgradePartsService();
             _emailService = new EmailService();
         }
@@ -24,7 +24,7 @@ namespace GFT.Starter.API.Controllers
         [HttpGet]
         public IActionResult Vehicles()
         {
-            return Ok(motorcycleRepository.Get());
+            return Ok(_motorcycleRepository.Get());
         }
 
         [HttpGet("{id}")]
@@ -37,7 +37,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostVehicle([FromBody] Motorcycle motorcycle)
         {
-            motorcycleRepository.Add(motorcycle);
+            _motorcycleRepository.Add(motorcycle);
             _emailService.SendEmail($"Motorcycle {motorcycle.Id} created successfully!", $"Motorcycle {motorcycle.Id} created successfully!");
             return Ok(motorcycle);
         }
@@ -50,7 +50,7 @@ namespace GFT.Starter.API.Controllers
             obj.Year = motorcycle.Year;
             obj.Color = motorcycle.Color;
             _emailService.SendEmail($"Motorcycle {obj.Id} created successfully!", $"Motorcycle {obj.Id} created successfully!");
-            return Ok(motorcycleRepository.Update(obj));
+            return Ok(_motorcycleRepository.Update(obj));
         }
 
         [HttpPut("changetires/{id}")]
@@ -67,14 +67,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindMotorcycle(id);
 
             if (obj != null)
-                return Ok(motorcycleRepository.Remove(obj));
+                return Ok(_motorcycleRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Motorcycle FindMotorcycle(Guid id)
         {
-            return motorcycleRepository.Find(id);
+            return _motorcycleRepository.Find(id);
         }
     }
 }
