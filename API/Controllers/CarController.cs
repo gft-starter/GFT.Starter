@@ -12,11 +12,13 @@ namespace GFT.Starter.API.Controllers
     {
         private readonly CarRepository _carRepository;
         private readonly UpgradePartsService _vehicleService;
+        private readonly EmailService _emailService;
 
         public CarController()
         {
             _carRepository = new CarRepository();
             _vehicleService = new UpgradePartsService();
+            _emailService = new EmailService();
         }
 
         [HttpGet]
@@ -36,6 +38,7 @@ namespace GFT.Starter.API.Controllers
         public IActionResult PostVehicle([FromBody] Car car)
         {
             _carRepository.Add(car);
+            _emailService.SendEmail($"Car {car.Id} created successfully!", $"Car {car.Id} created successfully!");
             return Ok(car);
         }
 
@@ -47,6 +50,7 @@ namespace GFT.Starter.API.Controllers
             obj.Year = car.Year;
             obj.Color = car.Color;
 
+            _emailService.SendEmail($"Car {obj.Id} created successfully!", $"Car {obj.Id} created successfully!");
             return Ok(_carRepository.Update(obj));
         }
 
