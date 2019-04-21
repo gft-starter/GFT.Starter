@@ -12,6 +12,7 @@ namespace GFT.Starter.Core.Models
         {
         }
 
+        public override int PriceMultiplier { get; } = 1;
         public override void ChangeTires()
         {
             ChangeTire1();

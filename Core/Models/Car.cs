@@ -27,5 +27,6 @@ namespace GFT.Starter.Core.Models
             ChangeTire3();
             ChangeTire4();
         }
+        public override int PriceMultiplier { get; } = 2;
     }
 }

@@ -14,5 +14,6 @@ namespace GFT.Starter.Core.Models
         public virtual Owner Owner { get; set; }
 
         public abstract void ChangeTires();
+        public abstract int PriceMultiplier { get; }
     }
 }
