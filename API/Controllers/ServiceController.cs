@@ -61,7 +61,7 @@ namespace GFT.Starter.API.Controllers
             return NotFound(obj);
         }
 
-        public Service FindService(Guid id)
+        private Service FindService(Guid id)
         {
             return _serviceRepository.Find(id);
         }

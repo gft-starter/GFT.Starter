@@ -49,7 +49,7 @@ namespace GFT.Starter.API.Controllers
             return Ok(obj);
         }
 
-        public ServiceOrder FindServiceOrder(Guid id)
+        private ServiceOrder FindServiceOrder(Guid id)
         {
             return _serviceOrderRepository.Find(id);
         }

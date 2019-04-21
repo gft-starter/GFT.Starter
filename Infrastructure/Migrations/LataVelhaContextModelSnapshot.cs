@@ -111,11 +111,11 @@ namespace GFT.Starter.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("Car");
                 });
 
-            modelBuilder.Entity("GFT.Starter.Core.Models.Truck", b =>
+            modelBuilder.Entity("GFT.Starter.Core.Models.Motorcycle", b =>
                 {
                     b.HasBaseType("GFT.Starter.Core.Models.Vehicle");
 
-                    b.HasDiscriminator().HasValue("Truck");
+                    b.HasDiscriminator().HasValue("Motorcycle");
                 });
 
             modelBuilder.Entity("GFT.Starter.Core.Models.ServiceOrder", b =>

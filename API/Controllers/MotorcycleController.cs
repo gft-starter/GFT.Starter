@@ -10,53 +10,53 @@ namespace GFT.Starter.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarController : ControllerBase
+    public class MotorcycleController : ControllerBase
     {
-        private readonly CarRepository _carRepository;
+        private readonly MotorcycleRepository motorcycleRepository;
         private readonly UpgradePartsService _vehicleService;
 
-        public CarController()
+        public MotorcycleController()
         {
-            _carRepository = new CarRepository();
+            motorcycleRepository = new MotorcycleRepository();
             _vehicleService = new UpgradePartsService();
         }
 
         [HttpGet]
         public IActionResult Vehicles()
         {
-            return Ok(_carRepository.Get());
+            return Ok(motorcycleRepository.Get());
         }
 
         [HttpGet("{id}")]
         public IActionResult Vehicle(Guid id)
         {
-            var obj = FindCar(id);
+            var obj = FindMotorcycle(id);
             return Ok(obj);
         }
 
         [HttpPost]
-        public IActionResult PostVehicle([FromBody] Car car)
+        public IActionResult PostVehicle([FromBody] Motorcycle motorcycle)
         {
-            _carRepository.Add(car);
-            SendEmail(car.Id);
-            return Ok(car);
+            motorcycleRepository.Add(motorcycle);
+            SendEmail(motorcycle.Id);
+            return Ok(motorcycle);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateVehicle(Guid id, [FromBody] Car car)
+        public IActionResult UpdateVehicle(Guid id, [FromBody] Motorcycle motorcycle)
         {
-            var obj = FindCar(id);
+            var obj = FindMotorcycle(id);
 
-            obj.Year = car.Year;
-            obj.Color = car.Color;
+            obj.Year = motorcycle.Year;
+            obj.Color = motorcycle.Color;
 
-            return Ok(_carRepository.Update(obj));
+            return Ok(motorcycleRepository.Update(obj));
         }
 
         [HttpPut("changetires/{id}")]
         public IActionResult ChangeTires(Guid id)
         {
-            var obj = FindCar(id);
+            var obj = FindMotorcycle(id);
             _vehicleService.ChangeTires(obj);
             return Ok();
         }
@@ -64,17 +64,17 @@ namespace GFT.Starter.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteVehicle(Guid id)
         {
-            var obj = FindCar(id);
+            var obj = FindMotorcycle(id);
 
             if (obj != null)
-                return Ok(_carRepository.Remove(obj));
+                return Ok(motorcycleRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
-        private Car FindCar(Guid id)
+        private Motorcycle FindMotorcycle(Guid id)
         {
-            return _carRepository.Find(id);
+            return motorcycleRepository.Find(id);
         }
 
         private void SendEmail(Guid id)

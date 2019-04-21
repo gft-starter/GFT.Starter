@@ -61,7 +61,7 @@ namespace GFT.Starter.API.Controllers
             return NotFound(obj);
         }
 
-        public Owner FindOwner(Guid id)
+        private Owner FindOwner(Guid id)
         {
             return _ownerRepository.Find(id);
         }

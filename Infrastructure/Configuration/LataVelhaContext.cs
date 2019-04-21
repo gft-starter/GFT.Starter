@@ -31,7 +31,7 @@ namespace GFT.Starter.Infrastructure.Configuration
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Car>();
-            builder.Entity<Truck>();
+            builder.Entity<Motorcycle>();
             builder.Entity<Owner>();
             builder.Entity<Service>();
             builder.Entity<ServiceOrder>();
