@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Mail;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories;
 using GFT.Starter.Infrastructure.Services;
@@ -12,19 +10,19 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class MotorcycleController : ControllerBase
     {
-        private readonly MotorcycleRepository motorcycleRepository;
+        private readonly MotorcycleRepository _motorcycleRepository;
         private readonly UpgradePartsService _vehicleService;
 
         public MotorcycleController()
         {
-            motorcycleRepository = new MotorcycleRepository();
+            _motorcycleRepository = new MotorcycleRepository();
             _vehicleService = new UpgradePartsService();
         }
 
         [HttpGet]
         public IActionResult Vehicles()
         {
-            return Ok(motorcycleRepository.Get());
+            return Ok(_motorcycleRepository.Get());
         }
 
         [HttpGet("{id}")]
@@ -37,8 +35,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostVehicle([FromBody] Motorcycle motorcycle)
         {
-            motorcycleRepository.Add(motorcycle);
-            SendEmail(motorcycle.Id);
+            _motorcycleRepository.Add(motorcycle);
             return Ok(motorcycle);
         }
 
@@ -50,7 +47,7 @@ namespace GFT.Starter.API.Controllers
             obj.Year = motorcycle.Year;
             obj.Color = motorcycle.Color;
 
-            return Ok(motorcycleRepository.Update(obj));
+            return Ok(_motorcycleRepository.Update(obj));
         }
 
         [HttpPut("changetires/{id}")]
@@ -67,39 +64,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindMotorcycle(id);
 
             if (obj != null)
-                return Ok(motorcycleRepository.Remove(obj));
+                return Ok(_motorcycleRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Motorcycle FindMotorcycle(Guid id)
         {
-            return motorcycleRepository.Find(id);
-        }
-
-        private void SendEmail(Guid id)
-        {
-            var fromAddress = new MailAddress("gftstarter@gmail.com", "GFT Starter");
-            var toAddress = new MailAddress("gftstarter@gmail.com", "GFT Starter");
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, "Gft@2019@1")
-            };
-
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = $"Vehicle {id} created successfully!",
-                Body = $"Vehicle {id} created successfully!"
-            })
-            {
-                smtp.Send(message);
-            }
+            return _motorcycleRepository.Find(id);
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Mail;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories;
 using GFT.Starter.Infrastructure.Services;
@@ -38,7 +36,6 @@ namespace GFT.Starter.API.Controllers
         public IActionResult PostVehicle([FromBody] Car car)
         {
             _carRepository.Add(car);
-            SendEmail(car.Id);
             return Ok(car);
         }
 
@@ -75,31 +72,6 @@ namespace GFT.Starter.API.Controllers
         private Car FindCar(Guid id)
         {
             return _carRepository.Find(id);
-        }
-
-        private void SendEmail(Guid id)
-        {
-            var fromAddress = new MailAddress("gftstarter@gmail.com", "GFT Starter");
-            var toAddress = new MailAddress("gftstarter@gmail.com", "GFT Starter");
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, "Gft@2019@1")
-            };
-
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = $"Vehicle {id} created successfully!",
-                Body = $"Vehicle {id} created successfully!"
-            })
-            {
-                smtp.Send(message);
-            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using GFT.Starter.Core.Models;
+﻿using GFT.Starter.Core.Models;
 
 namespace GFT.Starter.Infrastructure.Services
 {

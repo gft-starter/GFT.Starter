@@ -2,9 +2,7 @@
 {
     public class Car : Vehicle
     {
-        public override void ChangeFourTires()
-        {
-
-        }
+        public override int PriceMultiplier { get; } = 2;
+        public override void ChangeFourTires() { }
     }
 }
