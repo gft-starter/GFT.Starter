@@ -4,9 +4,18 @@ namespace GFT.Starter.Core.Models
 {
     public class Motorcycle : Vehicle
     {
-        public override void ChangeFourTires()
+        public void ChangeTire1()
         {
-            throw new InvalidOperationException();
+        }
+
+        public void ChangeTire2()
+        {
+        }
+
+        public override void ChangeTires()
+        {
+            ChangeTire1();
+            ChangeTire2();
         }
     }
 }
