@@ -13,6 +13,9 @@ namespace GFT.Starter.Core.Models
         public Guid OwnerId { get; set; }
         public virtual Owner Owner { get; set; }
 
-        public abstract void ChangeFourTires();
+        public abstract void ChangeTire1();
+        public abstract void ChangeTire2();
+        public abstract void ChangeTire3();
+        public abstract void ChangeTire4();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using GFT.Starter.Core.Models;
+﻿using GFT.Starter.Core.Models;
 
 namespace GFT.Starter.Infrastructure.Services
 {
@@ -7,7 +6,10 @@ namespace GFT.Starter.Infrastructure.Services
     {
         public void ChangeTires(Vehicle vehicle)
         {
-            vehicle.ChangeFourTires();
+            vehicle.ChangeTire1();
+            vehicle.ChangeTire2();
+            vehicle.ChangeTire3();
+            vehicle.ChangeTire4();
         }
     }
 }
