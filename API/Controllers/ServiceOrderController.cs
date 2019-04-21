@@ -9,18 +9,20 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class ServiceOrderController : ControllerBase
     {
-        private readonly ServiceOrderRepository _serviceOrderRepository;
+        private readonly IReadOnlyRepository<ServiceOrder> _serviceOrdeReadOnlyRepository;
+        private readonly IWriteRepository<ServiceOrder> _serviceOrderWriteRepository;
 
         public ServiceOrderController()
         {
-            _serviceOrderRepository = new ServiceOrderRepository();
+            _serviceOrdeReadOnlyRepository = new ServiceOrderRepository();
+            _serviceOrderWriteRepository = new ServiceOrderRepository();
         }
 
         
         [HttpGet]
         public IActionResult ServiceOrders()
         {
-            return Ok(_serviceOrderRepository.Get());
+            return Ok(_serviceOrdeReadOnlyRepository.Get());
         }
 
         
@@ -34,7 +36,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostServiceOrder([FromBody] ServiceOrder serviceOrder)
         {
-            _serviceOrderRepository.Add(serviceOrder);
+            _serviceOrderWriteRepository.Add(serviceOrder);
 
             return Ok(serviceOrder);
         }
@@ -45,13 +47,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindServiceOrder(id);
 
             obj.Quantity = serviceOrder.Quantity;
+            _serviceOrderWriteRepository.Update(obj);
 
             return Ok(obj);
         }
 
         private ServiceOrder FindServiceOrder(Guid id)
         {
-            return _serviceOrderRepository.Find(id);
+            return _serviceOrdeReadOnlyRepository.Find(id);
         }
     }
 }

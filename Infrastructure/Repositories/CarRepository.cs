@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
 {
-    public class CarRepository : BaseRepository
+    public class CarRepository : BaseRepository, IReadOnlyRepository<Car>, IWriteRepository<Car>
     {
         public IEnumerable<Car> Get() => Db
             .Vehicles.OfType<Car>()

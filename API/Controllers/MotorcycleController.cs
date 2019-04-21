@@ -12,19 +12,21 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class MotorcycleController : ControllerBase
     {
-        private readonly MotorcycleRepository motorcycleRepository;
+        private readonly IReadOnlyRepository<Motorcycle> _motorcycleReadOnlyRepository;
+        private readonly IWriteRepository<Motorcycle> _motorcycleWriteRepository;
         private readonly UpgradePartsService _vehicleService;
 
         public MotorcycleController()
         {
-            motorcycleRepository = new MotorcycleRepository();
+            _motorcycleReadOnlyRepository = new MotorcycleRepository();
+            _motorcycleWriteRepository = new MotorcycleRepository();
             _vehicleService = new UpgradePartsService();
         }
 
         [HttpGet]
         public IActionResult Vehicles()
         {
-            return Ok(motorcycleRepository.Get());
+            return Ok(_motorcycleReadOnlyRepository.Get());
         }
 
         [HttpGet("{id}")]
@@ -37,7 +39,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostVehicle([FromBody] Motorcycle motorcycle)
         {
-            motorcycleRepository.Add(motorcycle);
+            _motorcycleWriteRepository.Add(motorcycle);
             SendEmail(motorcycle.Id);
             return Ok(motorcycle);
         }
@@ -50,7 +52,7 @@ namespace GFT.Starter.API.Controllers
             obj.Year = motorcycle.Year;
             obj.Color = motorcycle.Color;
 
-            return Ok(motorcycleRepository.Update(obj));
+            return Ok(_motorcycleWriteRepository.Update(obj));
         }
 
         [HttpPut("changetires/{id}")]
@@ -67,14 +69,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindMotorcycle(id);
 
             if (obj != null)
-                return Ok(motorcycleRepository.Remove(obj));
+                return Ok(_motorcycleWriteRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Motorcycle FindMotorcycle(Guid id)
         {
-            return motorcycleRepository.Find(id);
+            return _motorcycleReadOnlyRepository.Find(id);
         }
 
         private void SendEmail(Guid id)

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
 {
-    public class OwnerRepository : BaseRepository
+    public class OwnerRepository : BaseRepository, IReadOnlyRepository<Owner>, IWriteRepository<Owner>
     {
         public IEnumerable<Owner> Get() => Db
             .Owners

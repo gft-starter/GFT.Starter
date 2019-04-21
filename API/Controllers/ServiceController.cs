@@ -9,18 +9,20 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        private readonly ServiceRepository _serviceRepository;
+        private readonly IReadOnlyRepository<Service> _serviceReadOnlyRepository;
+        private readonly IWriteRepository<Service> _serviceWriteRepository;
 
         public ServiceController()
         {
-            _serviceRepository = new ServiceRepository();
+            _serviceReadOnlyRepository = new ServiceRepository();
+            _serviceWriteRepository = new ServiceRepository();
         }
 
 
         [HttpGet]
         public IActionResult Services()
         {
-            return Ok(_serviceRepository.Get());
+            return Ok(_serviceReadOnlyRepository.Get());
         }
 
 
@@ -34,7 +36,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostService([FromBody] Service service)
         {
-            _serviceRepository.Add(service);
+            _serviceWriteRepository.Add(service);
 
             return Ok(service);
         }
@@ -56,14 +58,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindService(id);
 
             if (obj != null)
-                return Ok(_serviceRepository.Remove(obj));
+                return Ok(_serviceWriteRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Service FindService(Guid id)
         {
-            return _serviceRepository.Find(id);
+            return _serviceReadOnlyRepository.Find(id);
         }
     }
 }

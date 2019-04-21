@@ -12,19 +12,21 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class CarController : ControllerBase
     {
-        private readonly CarRepository _carRepository;
+        private readonly IReadOnlyRepository<Car> _carReadOnlyRepository;
+        private readonly IWriteRepository<Car> _carWriteRepository;
         private readonly UpgradePartsService _vehicleService;
 
         public CarController()
         {
-            _carRepository = new CarRepository();
+            _carReadOnlyRepository = new CarRepository();
+            _carWriteRepository = new CarRepository();
             _vehicleService = new UpgradePartsService();
         }
 
         [HttpGet]
         public IActionResult Vehicles()
         {
-            return Ok(_carRepository.Get());
+            return Ok(_carReadOnlyRepository.Get());
         }
 
         [HttpGet("{id}")]
@@ -37,7 +39,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostVehicle([FromBody] Car car)
         {
-            _carRepository.Add(car);
+            _carWriteRepository.Add(car);
             SendEmail(car.Id);
             return Ok(car);
         }
@@ -50,7 +52,7 @@ namespace GFT.Starter.API.Controllers
             obj.Year = car.Year;
             obj.Color = car.Color;
 
-            return Ok(_carRepository.Update(obj));
+            return Ok(_carWriteRepository.Update(obj));
         }
 
         [HttpPut("changetires/{id}")]
@@ -67,14 +69,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindCar(id);
 
             if (obj != null)
-                return Ok(_carRepository.Remove(obj));
+                return Ok(_carWriteRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Car FindCar(Guid id)
         {
-            return _carRepository.Find(id);
+            return _carReadOnlyRepository.Find(id);
         }
 
         private void SendEmail(Guid id)

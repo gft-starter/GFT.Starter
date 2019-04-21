@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
 {
-    public class ServiceRepository : BaseRepository
+    public class ServiceRepository : BaseRepository, IReadOnlyRepository<Service>, IWriteRepository<Service>
     {
         public IEnumerable<Service> Get() => Db
             .Services
@@ -15,8 +15,7 @@ namespace GFT.Starter.Infrastructure.Repositories
         public Service Find(Guid id) => Db
             .Services
             .Include(s => s.Id)
-            .Where(s => s.Id == id)
-            .FirstOrDefault();
+            .FirstOrDefault(s => s.Id == id);
 
         public void Add(Service service)
         {

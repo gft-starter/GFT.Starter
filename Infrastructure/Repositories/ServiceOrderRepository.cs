@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
 {
-    public class ServiceOrderRepository : BaseRepository
+    public class ServiceOrderRepository : BaseRepository, IReadOnlyRepository<ServiceOrder>, IWriteRepository<ServiceOrder>
     {
         public IEnumerable<ServiceOrder> Get() => Db
               .ServiceOrders
@@ -16,7 +16,7 @@ namespace GFT.Starter.Infrastructure.Repositories
 
         public ServiceOrder Find(Guid id) => Db
             .ServiceOrders
-            .Include(so =>so.Vehicle)
+            .Include(so => so.Vehicle)
             .Include(so => so.Service)
             .FirstOrDefault(so => so.Id == id);
 
