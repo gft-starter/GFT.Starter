@@ -3,7 +3,7 @@ using System.Net.Mail;
 
 namespace GFT.Starter.Infrastructure.Services
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         public void SendEmail(string subject, string body)
         {

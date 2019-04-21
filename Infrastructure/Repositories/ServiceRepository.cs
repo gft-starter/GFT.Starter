@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using GFT.Starter.Core.Models;
+using GFT.Starter.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
 {
-    public class ServiceRepository : BaseRepository, IReadOnlyRepository<Service>, IWriteRepository<Service>
+    public class ServiceRepository : IReadOnlyRepository<Service>, IWriteRepository<Service>
     {
-        public IEnumerable<Service> Get() => Db
+        private readonly LataVelhaContext _db;
+
+        public ServiceRepository(LataVelhaContext db)
+        {
+            _db = db;
+        }
+
+        public IEnumerable<Service> Get() => _db
             .Services
             .ToList();
 
-        public Service Find(Guid id) => Db
+        public Service Find(Guid id) => _db
             .Services
             .Include(s => s.Id)
             .FirstOrDefault(s => s.Id == id);
@@ -21,8 +29,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (service != null)
             {
-                Db.Add(service);
-                Db.SaveChanges();
+                _db.Add(service);
+                _db.SaveChanges();
             }
         }
 
@@ -30,8 +38,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (service != null)
             {
-                Db.Remove(service);
-                Db.SaveChanges();
+                _db.Remove(service);
+                _db.SaveChanges();
             }
             return service;
         }
@@ -40,8 +48,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (service != null)
             {
-                Db.Update(service);
-                Db.SaveChanges();
+                _db.Update(service);
+                _db.SaveChanges();
             }
             return service;
         }

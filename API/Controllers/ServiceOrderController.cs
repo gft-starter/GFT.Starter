@@ -12,15 +12,14 @@ namespace GFT.Starter.API.Controllers
     {
         private readonly IReadOnlyRepository<ServiceOrder> _serviceOrdeReadOnlyRepository;
         private readonly IWriteRepository<ServiceOrder> _serviceOrderWriteRepository;
-        private readonly ServiceOrderCalculator _serviceOrderCalculator;
+        private readonly IServiceOrderCalculator _serviceOrderCalculator;
 
-        public ServiceOrderController()
+        public ServiceOrderController(IReadOnlyRepository<ServiceOrder> serviceOrdeReadOnlyRepository, IWriteRepository<ServiceOrder> serviceOrderWriteRepository, IServiceOrderCalculator serviceOrderCalculator)
         {
-            _serviceOrdeReadOnlyRepository = new ServiceOrderRepository();
-            _serviceOrderWriteRepository = new ServiceOrderRepository();
-            _serviceOrderCalculator = new ServiceOrderCalculator();
+            _serviceOrdeReadOnlyRepository = serviceOrdeReadOnlyRepository;
+            _serviceOrderWriteRepository = serviceOrderWriteRepository;
+            _serviceOrderCalculator = serviceOrderCalculator;
         }
-
 
         [HttpGet]
         public IActionResult ServiceOrders()

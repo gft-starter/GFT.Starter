@@ -2,18 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using GFT.Starter.Core.Models;
+using GFT.Starter.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
 {
-    public class MotorcycleRepository : BaseRepository, IReadOnlyRepository<Motorcycle>, IWriteRepository<Motorcycle>
+    public class MotorcycleRepository : IReadOnlyRepository<Motorcycle>, IWriteRepository<Motorcycle>
     {
-        public IEnumerable<Motorcycle> Get() => Db
+        private readonly LataVelhaContext _db;
+
+        public MotorcycleRepository(LataVelhaContext db)
+        {
+            _db = db;
+        }
+
+        public IEnumerable<Motorcycle> Get() => _db
             .Vehicles.OfType<Motorcycle>()
             .Include(c => c.Owner)
             .ToList();
 
-        public Motorcycle Find(Guid id) => Db
+        public Motorcycle Find(Guid id) => _db
             .Vehicles.OfType<Motorcycle>()
             .Include(c => c.Owner)
             .FirstOrDefault(c => c.Id == id);
@@ -22,8 +30,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (motorcycle != null)
             {
-                Db.Add(motorcycle);
-                Db.SaveChanges();
+                _db.Add(motorcycle);
+                _db.SaveChanges();
             }
         }
 
@@ -31,8 +39,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (motorcycle != null)
             {
-                Db.Remove(motorcycle);
-                Db.SaveChanges();
+                _db.Remove(motorcycle);
+                _db.SaveChanges();
             }
             return motorcycle;
         }
@@ -41,8 +49,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (motorcycle != null)
             {
-                Db.Update(motorcycle);
-                Db.SaveChanges();
+                _db.Update(motorcycle);
+                _db.SaveChanges();
             }
             return motorcycle;
         }

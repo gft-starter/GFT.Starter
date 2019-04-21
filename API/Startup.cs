@@ -1,8 +1,11 @@
-﻿using System.IO;
-using GFT.Starter.Core.Settings;
+﻿using GFT.Starter.Core.Models;
+using GFT.Starter.Infrastructure.Configuration;
+using GFT.Starter.Infrastructure.Repositories;
+using GFT.Starter.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -22,16 +25,28 @@ namespace GFT.Starter.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddScoped<IReadOnlyRepository<Car>, CarRepository>();
+            services.AddScoped<IWriteRepository<Car>, CarRepository>();
+            services.AddScoped<IReadOnlyRepository<Motorcycle>, MotorcycleRepository>();
+            services.AddScoped<IWriteRepository<Motorcycle>, MotorcycleRepository>();
+            services.AddScoped<IReadOnlyRepository<Owner>, OwnerRepository>();
+            services.AddScoped<IWriteRepository<Owner>, OwnerRepository>();
+            services.AddScoped<IReadOnlyRepository<Service>, ServiceRepository>();
+            services.AddScoped<IWriteRepository<Service>, ServiceRepository>();
+            services.AddScoped<IReadOnlyRepository<ServiceOrder>, ServiceOrderRepository>();
+            services.AddScoped<IWriteRepository<ServiceOrder>, ServiceOrderRepository>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IServiceOrderCalculator, ServiceOrderCalculator>();
+            services.AddScoped<IUpgradePartsService, UpgradePartsService>();
+            services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
-            // build config
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", false)
-                .AddEnvironmentVariables()
-                .Build();
+            ConfigureSwagger(services);
+        }
 
-            services.AddOptions();
-            services.Configure<AppSettings>(configuration.GetSection("App"));
+        private static void ConfigureSwagger(IServiceCollection services)
+        {
+
+
 
             services.AddSwaggerGen(c =>
             {

@@ -12,12 +12,11 @@ namespace GFT.Starter.API.Controllers
         private readonly IReadOnlyRepository<Service> _serviceReadOnlyRepository;
         private readonly IWriteRepository<Service> _serviceWriteRepository;
 
-        public ServiceController()
+        public ServiceController(IReadOnlyRepository<Service> serviceReadOnlyRepository, IWriteRepository<Service> serviceWriteRepository)
         {
-            _serviceReadOnlyRepository = new ServiceRepository();
-            _serviceWriteRepository = new ServiceRepository();
+            _serviceReadOnlyRepository = serviceReadOnlyRepository;
+            _serviceWriteRepository = serviceWriteRepository;
         }
-
 
         [HttpGet]
         public IActionResult Services()

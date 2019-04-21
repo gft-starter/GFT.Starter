@@ -2,30 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using GFT.Starter.Core.Models;
+using GFT.Starter.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
 {
-    public class ServiceOrderRepository : BaseRepository, IReadOnlyRepository<ServiceOrder>, IWriteRepository<ServiceOrder>
+    public class ServiceOrderRepository : IReadOnlyRepository<ServiceOrder>, IWriteRepository<ServiceOrder>
     {
-        public IEnumerable<ServiceOrder> Get() => Db
+        private readonly LataVelhaContext _db;
+
+        public ServiceOrderRepository(LataVelhaContext db)
+        {
+            _db = db;
+        }
+
+        public IEnumerable<ServiceOrder> Get() => _db
               .ServiceOrders
               .Include(so => so.Vehicle)
               .Include(so => so.Service)
               .ToList();
 
-        public ServiceOrder Find(Guid id) => Db
+        public ServiceOrder Find(Guid id) => _db
             .ServiceOrders
             .Include(so => so.Vehicle)
             .Include(so => so.Service)
             .FirstOrDefault(so => so.Id == id);
 
-        public ServiceOrder FidByVehicle(Guid id) => Db
+        public ServiceOrder FidByVehicle(Guid id) => _db
             .ServiceOrders
             .Include(so => so.Vehicle)
             .FirstOrDefault(so => so.VehicleId == id);
 
-        public ServiceOrder FindByService(Guid id) => Db
+        public ServiceOrder FindByService(Guid id) => _db
             .ServiceOrders
             .Include(so => so.Service)
             .FirstOrDefault(so => so.ServiceId == id);
@@ -34,8 +42,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (serviceOrder != null)
             {
-                Db.Add(serviceOrder);
-                Db.SaveChanges();
+                _db.Add(serviceOrder);
+                _db.SaveChanges();
             }
         }
 
@@ -43,8 +51,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (serviceOrder != null)
             {
-                Db.Remove(serviceOrder);
-                Db.SaveChanges();
+                _db.Remove(serviceOrder);
+                _db.SaveChanges();
             }
             return serviceOrder;
         }
@@ -52,8 +60,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (serviceOrder != null)
             {
-                Db.Update(serviceOrder);
-                Db.SaveChanges();
+                _db.Update(serviceOrder);
+                _db.SaveChanges();
             }
             return serviceOrder;
         }

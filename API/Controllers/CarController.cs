@@ -12,15 +12,15 @@ namespace GFT.Starter.API.Controllers
     {
         private readonly IReadOnlyRepository<Car> _carReadOnlyRepository;
         private readonly IWriteRepository<Car> _carWriteRepository;
-        private readonly UpgradePartsService _vehicleService;
-        private readonly EmailService _emailService;
+        private readonly IUpgradePartsService _vehicleService;
+        private readonly IEmailService _emailService;
 
-        public CarController()
+        public CarController(IReadOnlyRepository<Car> carReadOnlyRepository, IWriteRepository<Car> carWriteRepository, IUpgradePartsService vehicleService, IEmailService emailService)
         {
-            _carReadOnlyRepository = new CarRepository();
-            _carWriteRepository = new CarRepository();
-            _vehicleService = new UpgradePartsService();
-            _emailService = new EmailService();
+            _carReadOnlyRepository = carReadOnlyRepository;
+            _carWriteRepository = carWriteRepository;
+            _vehicleService = vehicleService;
+            _emailService = emailService;
         }
 
         [HttpGet]

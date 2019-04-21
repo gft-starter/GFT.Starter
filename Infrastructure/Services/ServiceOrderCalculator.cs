@@ -2,7 +2,7 @@
 
 namespace GFT.Starter.Infrastructure.Services
 {
-    public class ServiceOrderCalculator
+    public class ServiceOrderCalculator : IServiceOrderCalculator
     {
         public float CalculateTotalPrice(ServiceOrder serviceOrder)
         {

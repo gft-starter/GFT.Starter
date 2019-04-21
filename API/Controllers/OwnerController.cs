@@ -12,10 +12,10 @@ namespace GFT.Starter.API.Controllers
         private readonly IReadOnlyRepository<Owner> _ownerReadOnlyRepository;
         private readonly IWriteRepository<Owner> _ownerWriteRepository;
 
-        public OwnerController()
+        public OwnerController(IReadOnlyRepository<Owner> ownerReadOnlyRepository, IWriteRepository<Owner> ownerWriteRepository)
         {
-            _ownerReadOnlyRepository = new OwnerRepository();
-            _ownerWriteRepository = new OwnerRepository();
+            _ownerReadOnlyRepository = ownerReadOnlyRepository;
+            _ownerWriteRepository = ownerWriteRepository;
         }
 
         // GET: api/Owner

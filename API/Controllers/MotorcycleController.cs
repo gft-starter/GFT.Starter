@@ -12,15 +12,15 @@ namespace GFT.Starter.API.Controllers
     {
         private readonly IReadOnlyRepository<Motorcycle> _motorcycleReadOnlyRepository;
         private readonly IWriteRepository<Motorcycle> _motorcycleWriteRepository;
-        private readonly UpgradePartsService _vehicleService;
-        private readonly EmailService _emailService;
+        private readonly IUpgradePartsService _vehicleService;
+        private readonly IEmailService _emailService;
 
-        public MotorcycleController()
+        public MotorcycleController(IReadOnlyRepository<Motorcycle> motorcycleReadOnlyRepository, IWriteRepository<Motorcycle> motorcycleWriteRepository, IUpgradePartsService vehicleService, IEmailService emailService)
         {
-            _motorcycleReadOnlyRepository = new MotorcycleRepository();
-            _motorcycleWriteRepository = new MotorcycleRepository();
-            _vehicleService = new UpgradePartsService();
-            _emailService = new EmailService();
+            _motorcycleReadOnlyRepository = motorcycleReadOnlyRepository;
+            _motorcycleWriteRepository = motorcycleWriteRepository;
+            _vehicleService = vehicleService;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -79,6 +79,6 @@ namespace GFT.Starter.API.Controllers
             return _motorcycleReadOnlyRepository.Find(id);
         }
 
-       
+
     }
 }
