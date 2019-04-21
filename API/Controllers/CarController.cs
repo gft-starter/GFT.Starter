@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Mail;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories;
 using GFT.Starter.Infrastructure.Services;
