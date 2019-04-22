@@ -4,27 +4,23 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace APIPRojeto.Repositories
 {
-
+    
     public class CarRepository : BaseRepository
     {
+        
+        public IEnumerable<Car> Get() =>Db.Cars.Include(c => c.Owner).ToList();
+            
 
-        public IEnumerable<Car> Get() => Db
-            .Cars
-            .Include(c => c.Owner)
-            .ToList();
+        public Car Find(Guid id) => Db.Cars.Include("Owner").FirstOrDefault(x => x.Id == id);
 
-        public Car Find(Guid id) => Db
-            .Cars
-            .Include(c => c.Owner)
-            .Where(c => c.Id == id)
-            .FirstOrDefault();
 
-        public void Add(Car car)
+        public void Insert(Car car)
         {
-            if (car != null)
+            if(car != null)
             {
                 Db.Add(car);
                 Db.SaveChanges();
@@ -38,7 +34,6 @@ namespace APIPRojeto.Repositories
                 Db.Remove(car);
                 Db.SaveChanges();
             }
-
             return car;
         }
 
@@ -49,8 +44,10 @@ namespace APIPRojeto.Repositories
                 Db.Update(car);
                 Db.SaveChanges();
             }
-
             return car;
         }
     }
+
+    
 }
+

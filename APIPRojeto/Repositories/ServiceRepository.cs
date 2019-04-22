@@ -9,16 +9,13 @@ namespace APIPRojeto.Repositories
 {
     public class ServiceRepository : BaseRepository
     {
-        public IEnumerable<Service> Get() => Db
-            .Services
-            .ToList();
+        public IEnumerable<Service> Get() => Db.Service.ToList();
 
-        public Service Find(Guid id) => Db
-            .Services
-            .Where(s => s.Id == id)
-            .FirstOrDefault();
 
-        public void Add(Service service)
+        public Service Find(Guid id) => Db.Service.FirstOrDefault(x => x.Id == id);
+
+
+        public void Insert(Service service)
         {
             if (service != null)
             {
@@ -34,7 +31,6 @@ namespace APIPRojeto.Repositories
                 Db.Remove(service);
                 Db.SaveChanges();
             }
-
             return service;
         }
 
@@ -45,8 +41,8 @@ namespace APIPRojeto.Repositories
                 Db.Update(service);
                 Db.SaveChanges();
             }
-
             return service;
         }
     }
 }
+

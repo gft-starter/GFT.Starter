@@ -10,20 +10,13 @@ namespace APIPRojeto.Repositories
 {
     public class ServiceOrderRepository : BaseRepository
     {
-        public IEnumerable<ServiceOrder> Get() => Db
-            .ServiceOrder
-            .Include(c => c.Car)
-            .Include(s => s.Service)
-            .ToList();
+        public IEnumerable<ServiceOrder> Get() => Db.ServiceOrder.Include("Service").Include("Car").ToList();
 
-        public ServiceOrder Find(Guid id) => Db
-            .ServiceOrder
-            .Include(c => c.Car)
-            .Include(s => s.Service)
-            .Where(c => c.Id == id)
-            .FirstOrDefault();
 
-        public void Add(ServiceOrder serviceOrder)
+        public ServiceOrder Find(Guid id) => Db.ServiceOrder.Include("Service").Include("Car").FirstOrDefault(x => x.Id == id);
+
+
+        public void Insert(ServiceOrder serviceOrder)
         {
             if (serviceOrder != null)
             {
@@ -39,7 +32,6 @@ namespace APIPRojeto.Repositories
                 Db.Remove(serviceOrder);
                 Db.SaveChanges();
             }
-
             return serviceOrder;
         }
 
@@ -50,8 +42,8 @@ namespace APIPRojeto.Repositories
                 Db.Update(serviceOrder);
                 Db.SaveChanges();
             }
-
             return serviceOrder;
         }
     }
 }
+

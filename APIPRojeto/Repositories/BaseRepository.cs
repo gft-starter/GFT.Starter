@@ -14,7 +14,7 @@ namespace APIPRojeto.Repositories
         protected BaseRepository()
         {
             Db = new LataVelhaContext();
-            //Db.Database.Migrate();
+            Db.Database.Migrate();
         }
     }
 }

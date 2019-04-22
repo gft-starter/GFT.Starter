@@ -1,5 +1,6 @@
 ﻿using APIPRojeto.Models;
 using APIPRojeto.Repositories.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,16 @@ namespace APIPRojeto.Repositories
 {
     public class OwnerRepository : BaseRepository
     {
+        
+        public IEnumerable<Owner> Get() => Db.Owner.ToList();
 
-        public IEnumerable<Owner> Get() => Db
-            .Owners
-            .ToList();
 
-        public Owner Find(Guid id) => Db
-            .Owners
-            .Where(o => o.Id == id)
-            .FirstOrDefault();
+        public Owner Find(Guid id) => Db.Owner.FirstOrDefault(x => x.Id == id);
 
-        public void Add (Owner owner)
+
+        public void Insert(Owner owner)
         {
-            if(owner != null)
+            if (owner != null)
             {
                 Db.Add(owner);
                 Db.SaveChanges();
@@ -30,23 +28,21 @@ namespace APIPRojeto.Repositories
 
         public Owner Remove(Owner owner)
         {
-            if(owner != null)
+            if (owner != null)
             {
                 Db.Remove(owner);
                 Db.SaveChanges();
             }
-
             return owner;
         }
 
         public Owner Update(Owner owner)
         {
-            if(owner != null)
+            if (owner != null)
             {
                 Db.Update(owner);
                 Db.SaveChanges();
             }
-
             return owner;
         }
     }
