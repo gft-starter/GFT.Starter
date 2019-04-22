@@ -12,8 +12,6 @@ namespace APIPRojeto.Repositorio
     public class ServiceOrderRepository : BaseRepository
 
     {
-        private readonly LataVelhaContext Db;
-
         
 
         public IEnumerable<ServiceOrder> Get() => Db

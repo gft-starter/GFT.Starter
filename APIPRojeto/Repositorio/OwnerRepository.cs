@@ -12,8 +12,6 @@ namespace APIPRojeto.Repositorio
     public class OwnerRepository : BaseRepository
 
     {
-        private readonly LataVelhaContext Db;
-
         public IEnumerable<Owner> Get() => Db
             .Owners            
             .ToList();

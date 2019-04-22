@@ -12,12 +12,7 @@ namespace APIPRojeto.Repositorio
     public class CarRepository : BaseRepository
 
     {
-        private readonly LataVelhaContext Db;
-
-        public CarRepository()
-        {
-            Db = new LataVelhaContext();
-        }
+       
 
         public IEnumerable<Car> Get() => Db
             .Cars

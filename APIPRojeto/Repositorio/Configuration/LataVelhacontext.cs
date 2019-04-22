@@ -28,7 +28,7 @@ namespace APIPRojeto.Repositorio.Configuration
             if (!optionsBuilder.IsConfigured)
             {
                 
-                var connectionString = @"Server=BRPC003897\SQLEXPRESS; Database=LataVelha; Trusted_Connection=True";
+                var connectionString = @"Server=tcp:pojnstarter.database.windows.net,1433;Initial Catalog=PojnStarter;Persist Security Info=False;User ID=pojn;Password=K44i85mv;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
                 //CONNECTION STRING DO AZURE DEVE SER COLOCADO NESTE LOCAL
                 optionsBuilder.UseSqlServer(connectionString);
 
