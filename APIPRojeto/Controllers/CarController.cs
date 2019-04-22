@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIPRojeto.Models;
-using APIPRojeto.Repositories;
+using APIPRojeto.Repositorires;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIPRojeto.Controllers
@@ -14,12 +14,10 @@ namespace APIPRojeto.Controllers
     {
         static List<Car> cars = new List<Car>();
         private readonly CarRepository carRepository;
-
         public CarController()
         {
             carRepository = new CarRepository();
         }
-
         [HttpGet]
         public IActionResult Cars()
         {
@@ -36,7 +34,7 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostCar([FromBody] Car car)
         {
-            carRepository.Add(car);
+            carRepository.Insert(car);
 
             return Ok(car);
         }

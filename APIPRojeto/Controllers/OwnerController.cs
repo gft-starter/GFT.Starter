@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using APIPRojeto.Models;
-using APIPRojeto.Repositories;
+using APIPRojeto.Repositorires;
 
 namespace APIPRojeto.Controllers
 {
@@ -20,15 +20,12 @@ namespace APIPRojeto.Controllers
         {
             ownerRepository = new OwnerRepository();
         }
-
-        // GET: api/Owner
         [HttpGet]
-        public IActionResult Owners()
+        public IActionResult Owner()
         {
             return Ok(ownerRepository.Get());
         }
 
-        // GET: api/Owner/5
         [HttpGet("{id}")]
         public IActionResult Owner(Guid Id)
         {
@@ -39,22 +36,22 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostOwner([FromBody] Owner owner)
         {
-            ownerRepository.Add(owner);
+            ownerRepository.Insert(owner);
 
             return Ok(owner);
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCar(Guid Id, [FromBody] Owner owner)
+        public IActionResult UpdateOwner(Guid Id, [FromBody] Owner owner)
         {
             var obj = FindOwner(Id);
 
-            obj.Name = owner.Name;
+            obj.CPF = owner.CPF;
+            obj.Gender = owner.Gender;
 
-            return Ok(ownerRepository.Update(owner));
+            return Ok(ownerRepository.Update(obj));
         }
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult DeleteOwner(Guid Id)
         {

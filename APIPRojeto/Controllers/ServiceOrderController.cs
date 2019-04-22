@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIPRojeto.Models;
-using APIPRojeto.Repositories;
+using APIPRojeto.Repositorires;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,16 +13,14 @@ namespace APIPRojeto.Controllers
     [ApiController]
     public class ServiceOrderController : ControllerBase
     {
-        static List<Car> serviceOrders = new List<Car>();
+        static List<ServiceOrder> serviceOrders = new List<ServiceOrder>();
         private readonly ServiceOrderRepository serviceOrderRepository;
-
         public ServiceOrderController()
         {
             serviceOrderRepository = new ServiceOrderRepository();
         }
-
         [HttpGet]
-        public IActionResult ServiceOrder()
+        public IActionResult ServiceOrders()
         {
             return Ok(serviceOrderRepository.Get());
         }
@@ -37,7 +35,7 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostServiceOrder([FromBody] ServiceOrder serviceOrder)
         {
-            serviceOrderRepository.Add(serviceOrder);
+            serviceOrderRepository.Insert(serviceOrder);
 
             return Ok(serviceOrder);
         }

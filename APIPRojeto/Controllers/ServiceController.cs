@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIPRojeto.Models;
-using APIPRojeto.Repositories;
+using APIPRojeto.Repositorires;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,20 +15,16 @@ namespace APIPRojeto.Controllers
     {
         static List<Service> services = new List<Service>();
         private readonly ServiceRepository serviceRepository;
-
         public ServiceController()
         {
             serviceRepository = new ServiceRepository();
         }
-
-        // GET: api/Owner
         [HttpGet]
         public IActionResult Services()
         {
             return Ok(serviceRepository.Get());
         }
 
-        // GET: api/Owner/5
         [HttpGet("{id}")]
         public IActionResult Service(Guid Id)
         {
@@ -39,7 +35,7 @@ namespace APIPRojeto.Controllers
         [HttpPost]
         public IActionResult PostService([FromBody] Service service)
         {
-            serviceRepository.Add(service);
+            serviceRepository.Insert(service);
 
             return Ok(service);
         }
@@ -49,12 +45,13 @@ namespace APIPRojeto.Controllers
         {
             var obj = FindService(Id);
 
+            obj.Description = service.Description;
             obj.Name = service.Name;
+            obj.Value = service.Value;
 
-            return Ok(serviceRepository.Update(service));
+            return Ok(serviceRepository.Update(obj));
         }
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult DeleteService(Guid Id)
         {
