@@ -8,21 +8,14 @@ using System.Threading.Tasks;
 
 namespace APIPRojeto.Repositories
 {
-    public class CarRepository
+    public class CarRepository : BaseRepository
     {
-        private readonly LataNovaContext _db;
-
-        public CarRepository()
-        {
-            _db = new LataNovaContext();
-        }
-
-        public IEnumerable<Car> Get() => _db
+        public IEnumerable<Car> Get() => Db
             .Cars
             .Include(c => c.Owner)
             .ToList();
 
-        public Car Find(Guid id) => _db
+        public Car Find(Guid id) => Db
             .Cars
             .Include(c => c.Owner)
             .Where(c => c.Id == id)
@@ -32,8 +25,8 @@ namespace APIPRojeto.Repositories
         {
             if (car != null)
             {
-                _db.Add(car);
-                _db.SaveChanges();
+                Db.Add(car);
+                Db.SaveChanges();
             }
         }
 
@@ -41,8 +34,8 @@ namespace APIPRojeto.Repositories
         {
             if (car != null)
             {
-                _db.Remove(car);
-                _db.SaveChanges();
+                Db.Remove(car);
+                Db.SaveChanges();
             }
 
             return car;
@@ -52,8 +45,8 @@ namespace APIPRojeto.Repositories
         {
             if (car != null)
             {
-                _db.Update(car);
-                _db.SaveChanges();
+                Db.Update(car);
+                Db.SaveChanges();
             }
 
             return car;

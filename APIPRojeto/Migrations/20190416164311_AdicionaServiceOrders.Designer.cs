@@ -4,14 +4,16 @@ using APIPRojeto.Repositories.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace APIPRojeto.Migrations
 {
     [DbContext(typeof(LataNovaContext))]
-    partial class LataNovaContextModelSnapshot : ModelSnapshot
+    [Migration("20190416164311_AdicionaServiceOrders")]
+    partial class AdicionaServiceOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -26,7 +26,7 @@ namespace APIPRojeto.Controllers
         [HttpGet("{id}")]
         public IActionResult ServiceOrder(Guid Id)
         {
-            var obj = FindServiceOrder(Id);
+            var obj = serviceOrders.Find(Id);
             return Ok(obj);
         }
 
@@ -41,16 +41,11 @@ namespace APIPRojeto.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateServiceOrder(Guid Id, [FromBody] ServiceOrder serviceOrder)
         {
-            var obj = FindServiceOrder(Id);
+            var obj = serviceOrders.Find(Id);
 
             obj.Quantity = serviceOrder.Quantity;
 
             return Ok(obj);
-        }
-
-        public ServiceOrder FindServiceOrder(Guid Id)
-        {
-            return serviceOrders.Find(Id);
         }
     }
 }

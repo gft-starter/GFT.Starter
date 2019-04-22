@@ -8,22 +8,15 @@ using System.Threading.Tasks;
 
 namespace APIPRojeto.Repositories
 {
-    public class ServiceOrderRepository
+    public class ServiceOrderRepository : BaseRepository
     {
-        private readonly LataNovaContext _db;
-
-        public ServiceOrderRepository()
-        {
-            _db = new LataNovaContext();
-        }
-
-        public IEnumerable<ServiceOrder> Get() => _db
+        public IEnumerable<ServiceOrder> Get() => Db
             .ServiceOrders
             .Include(so => so.Car)
             .Include(so => so.Service)
             .ToList();
 
-        public ServiceOrder Find(Guid id) => _db
+        public ServiceOrder Find(Guid id) => Db
             .ServiceOrders
             .Include(so => so.Car)
             .Include(so => so.Service)
@@ -34,8 +27,8 @@ namespace APIPRojeto.Repositories
         {
             if (serviceOrder != null)
             {
-                _db.Add(serviceOrder);
-                _db.SaveChanges();
+                Db.Add(serviceOrder);
+                Db.SaveChanges();
             }
         }
 
@@ -43,8 +36,8 @@ namespace APIPRojeto.Repositories
         {
             if (serviceOrder != null)
             {
-                _db.Remove(serviceOrder);
-                _db.SaveChanges();
+                Db.Remove(serviceOrder);
+                Db.SaveChanges();
             }
 
             return serviceOrder;
@@ -54,8 +47,8 @@ namespace APIPRojeto.Repositories
         {
             if (serviceOrder != null)
             {
-                _db.Update(serviceOrder);
-                _db.SaveChanges();
+                Db.Update(serviceOrder);
+                Db.SaveChanges();
             }
 
             return serviceOrder;

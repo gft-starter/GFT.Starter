@@ -28,7 +28,7 @@ namespace APIPRojeto.Controllers
         [HttpGet("{id}")]
         public IActionResult Car(Guid Id)
         {
-            var obj = FindCar(Id);
+            var obj = carRepository.Find(Id);
             return Ok(obj);
         }
 
@@ -43,7 +43,7 @@ namespace APIPRojeto.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateCar(Guid Id, [FromBody] Car car)
         {
-            var obj = FindCar(Id);
+            var obj = carRepository.Find(Id);
 
             obj.Year = car.Year;
             obj.Color = car.Color;
@@ -54,17 +54,12 @@ namespace APIPRojeto.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteCar(Guid Id)
         {
-            var obj = FindCar(Id);
+            var obj = carRepository.Find(Id);
 
             if (obj != null)
                 return Ok(carRepository.Remove(obj));
 
             return NotFound(obj);
-        }
-
-        public Car FindCar(Guid Id)
-        {
-            return carRepository.Find(Id);
         }
     }
 }

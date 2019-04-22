@@ -26,7 +26,7 @@ namespace APIPRojeto.Controllers
         [HttpGet("{id}")]
         public IActionResult Owner(Guid Id)
         {
-            var obj = FindOwner(Id);
+            var obj = owners.Find(Id);
             return Ok(obj);
         }
 
@@ -41,7 +41,7 @@ namespace APIPRojeto.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateCar(Guid Id, [FromBody] Owner owner)
         {
-            var obj = FindOwner(Id);
+            var obj = owners.Find(Id);
 
             obj.Name = owner.Name;
 
@@ -52,17 +52,12 @@ namespace APIPRojeto.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteOwner(Guid Id)
         {
-            var obj = FindOwner(Id);
+            var obj = owners.Find(Id);
 
             if (obj != null)
                 return Ok(owners.Remove(obj));
 
             return NotFound(obj);
-        }
-
-        public Owner FindOwner(Guid Id)
-        {
-            return owners.Find(Id);
         }
     }
 }

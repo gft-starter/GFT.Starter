@@ -26,7 +26,7 @@ namespace APIPRojeto.Controllers
         [HttpGet("{id}")]
         public IActionResult Service(Guid Id)
         {
-            var obj = FindService(Id);
+            var obj = services.Find(Id);
             return Ok(obj);
         }
 
@@ -41,7 +41,7 @@ namespace APIPRojeto.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateService(Guid Id, [FromBody] Service service)
         {
-            var obj = FindService(Id);
+            var obj = services.Find(Id);
 
             obj.Name = service.Name;
 
@@ -52,17 +52,12 @@ namespace APIPRojeto.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteService(Guid Id)
         {
-            var obj = FindService(Id);
+            var obj = services.Find(Id);
 
             if (obj != null)
                 return Ok(services.Remove(obj));
 
             return NotFound(obj);
-        }
-
-        public Service FindService(Guid Id)
-        {
-            return services.Find(Id);
         }
     }
 }

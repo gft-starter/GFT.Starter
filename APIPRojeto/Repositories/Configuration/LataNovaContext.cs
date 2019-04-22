@@ -22,7 +22,7 @@ namespace APIPRojeto.Repositories.Configuration
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = @"Server=BRPC003931\SQLEXPRESS150;Database=LataNova;Trusted_Connection=True";
+                var connectionString = @"Server=tcp:latanova150.database.windows.net,1433;Initial Catalog=LataNova;Persist Security Info=False;User ID=arielzao150;Password=P@$$w0rd;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
                 optionsBuilder.UseSqlServer(connectionString);
             }
             
