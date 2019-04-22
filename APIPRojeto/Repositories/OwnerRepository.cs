@@ -7,20 +7,14 @@ using System.Threading.Tasks;
 
 namespace APIPRojeto.Repositories
 {
-    public class OwnerRepository
+    public class OwnerRepository : BaseRepository
     {
-        private readonly LataVelhaContext _db;
 
-        public OwnerRepository()
-        {
-            _db = new LataVelhaContext();
-        }
-
-        public IEnumerable<Owner> Get() => _db
+        public IEnumerable<Owner> Get() => Db
             .Owners
             .ToList();
 
-        public Owner Find(Guid id) => _db
+        public Owner Find(Guid id) => Db
             .Owners
             .Where(o => o.Id == id)
             .FirstOrDefault();
@@ -29,8 +23,8 @@ namespace APIPRojeto.Repositories
         {
             if(owner != null)
             {
-                _db.Add(owner);
-                _db.SaveChanges();
+                Db.Add(owner);
+                Db.SaveChanges();
             }
         }
 
@@ -38,8 +32,8 @@ namespace APIPRojeto.Repositories
         {
             if(owner != null)
             {
-                _db.Remove(owner);
-                _db.SaveChanges();
+                Db.Remove(owner);
+                Db.SaveChanges();
             }
 
             return owner;
@@ -49,8 +43,8 @@ namespace APIPRojeto.Repositories
         {
             if(owner != null)
             {
-                _db.Update(owner);
-                _db.SaveChanges();
+                Db.Update(owner);
+                Db.SaveChanges();
             }
 
             return owner;
