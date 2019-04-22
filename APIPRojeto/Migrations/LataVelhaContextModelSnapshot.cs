@@ -4,16 +4,14 @@ using APIPRojeto.Repositories.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace APIPRojeto.EF.Migrations
+namespace APIPRojeto.Migrations
 {
     [DbContext(typeof(LataVelhaContext))]
-    [Migration("20190416182532_AdicionandoService")]
-    partial class AdicionandoService
+    partial class LataVelhaContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,21 +63,21 @@ namespace APIPRojeto.EF.Migrations
                     b.ToTable("Owner");
                 });
 
-            //modelBuilder.Entity("APIPRojeto.Models.Service", b =>
-            //    {
-            //        b.Property<Guid>("Id")
-            //            .ValueGeneratedOnAdd();
+            modelBuilder.Entity("APIPRojeto.Models.Service", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
-            //        b.Property<string>("Description");
+                    b.Property<string>("Description");
 
-            //        b.Property<string>("Name");
+                    b.Property<string>("Name");
 
-            //        b.Property<string>("Value");
+                    b.Property<string>("Value");
 
-            //        b.HasKey("Id");
+                    b.HasKey("Id");
 
-            //        b.ToTable("Service");
-            //    });
+                    b.ToTable("Service");
+                });
 
             modelBuilder.Entity("APIPRojeto.Models.ServiceOrder", b =>
                 {
@@ -88,11 +86,19 @@ namespace APIPRojeto.EF.Migrations
 
                     b.Property<Guid>("CarId");
 
+                    b.Property<Guid?>("OwnerId");
+
                     b.Property<int>("Quantity");
 
                     b.Property<Guid>("ServiceId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("ServiceOrder");
                 });
@@ -102,6 +108,23 @@ namespace APIPRojeto.EF.Migrations
                     b.HasOne("APIPRojeto.Models.Owner", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("APIPRojeto.Models.ServiceOrder", b =>
+                {
+                    b.HasOne("APIPRojeto.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("APIPRojeto.Models.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.HasOne("APIPRojeto.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
