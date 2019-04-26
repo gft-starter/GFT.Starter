@@ -1,6 +1,7 @@
 ﻿using System;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories;
+using GFT.Starter.Infrastructure.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GFT.Starter.API.Controllers

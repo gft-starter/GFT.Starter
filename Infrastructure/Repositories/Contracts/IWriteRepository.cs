@@ -1,4 +1,4 @@
-﻿namespace GFT.Starter.Infrastructure.Repositories
+﻿namespace GFT.Starter.Infrastructure.Repositories.Contracts
 {
     public interface IWriteRepository<T>
     {
