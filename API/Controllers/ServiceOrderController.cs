@@ -38,7 +38,6 @@ namespace GFT.Starter.API.Controllers
         public IActionResult PostServiceOrder([FromBody] ServiceOrder serviceOrder)
         {
             _serviceOrderRepository.Add(serviceOrder);
-            _serviceOrderCalculator.CalculateTotalPrice(serviceOrder);
             return Ok(serviceOrder);
         }
 
@@ -50,6 +49,13 @@ namespace GFT.Starter.API.Controllers
             obj.Quantity = serviceOrder.Quantity;
 
             return Ok(obj);
+        }
+
+        [HttpGet("Calculate")]
+        public IActionResult CalculatePrice(Guid id)
+        {
+            var obj = FindServiceOrder(id);
+            return Ok(_serviceOrderCalculator.CalculateTotalPrice(obj));
         }
 
         private ServiceOrder FindServiceOrder(Guid id)
