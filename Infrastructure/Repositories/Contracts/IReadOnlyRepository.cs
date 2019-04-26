@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GFT.Starter.Infrastructure.Repositories
+namespace GFT.Starter.Infrastructure.Repositories.Contracts
 {
     public interface IReadOnlyRepository<T>
     {

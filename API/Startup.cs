@@ -1,7 +1,9 @@
 ﻿using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Configuration;
 using GFT.Starter.Infrastructure.Repositories;
+using GFT.Starter.Infrastructure.Repositories.Contracts;
 using GFT.Starter.Infrastructure.Services;
+using GFT.Starter.Infrastructure.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -43,17 +45,6 @@ namespace GFT.Starter.API
             ConfigureSwagger(services);
         }
 
-        private static void ConfigureSwagger(IServiceCollection services)
-        {
-
-
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "GFT Starter Workshop", Version = "v1" });
-            });
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -70,6 +61,19 @@ namespace GFT.Starter.API
             app.UseHttpsRedirection();
             app.UseMvc();
 
+            ConfigureSwaggerUi(app);
+        }
+
+        private static void ConfigureSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "GFT Starter Workshop", Version = "v1" });
+            });
+        }
+
+        private static void ConfigureSwaggerUi(IApplicationBuilder app)
+        {
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>

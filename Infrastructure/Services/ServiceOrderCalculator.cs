@@ -1,4 +1,5 @@
 ﻿using GFT.Starter.Core.Models;
+using GFT.Starter.Infrastructure.Services.Contracts;
 
 namespace GFT.Starter.Infrastructure.Services
 {

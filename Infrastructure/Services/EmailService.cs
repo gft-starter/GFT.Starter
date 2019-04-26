@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using GFT.Starter.Infrastructure.Services.Contracts;
 
 namespace GFT.Starter.Infrastructure.Services
 {

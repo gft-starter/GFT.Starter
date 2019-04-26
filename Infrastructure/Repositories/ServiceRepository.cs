@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Configuration;
+using GFT.Starter.Infrastructure.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
