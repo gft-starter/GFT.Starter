@@ -15,7 +15,5 @@ namespace APIPRojeto.Models
         public int Year { get; set; }
         public Guid OwnerId { get; set; }
         public virtual Owner Owner { get; set; }
-
-
     }
 }

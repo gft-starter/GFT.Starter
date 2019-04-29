@@ -62,7 +62,7 @@ namespace APIPRojeto.Controllers
             return NotFound(obj);
         }
 
-        public Car FindCar(Guid Id)
+        private Car FindCar(Guid Id)
         {
             return carRepository.Find(Id);
         }

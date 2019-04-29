@@ -65,7 +65,7 @@ namespace APIPRojeto.Controllers
             return NotFound(obj);
         }
 
-        public Owner FindOwner(Guid Id)
+        private Owner FindOwner(Guid Id)
         {
             return ownerRepository.Find(Id);
         }

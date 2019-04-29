@@ -66,7 +66,7 @@ namespace APIPRojeto.Controllers
             return NotFound(obj);
         }
 
-        public Service FindService(Guid Id)
+        private Service FindService(Guid Id)
         {
             return serviceRepository.Find(Id);
         }

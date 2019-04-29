@@ -54,7 +54,7 @@ namespace APIPRojeto.Controllers
             return Ok(obj);
         }
 
-        public ServiceOrder FindServiceOrder(Guid Id)
+        private ServiceOrder FindServiceOrder(Guid Id)
         {
             return serviceOrderRepository.Find(Id);
         }

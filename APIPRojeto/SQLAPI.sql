@@ -20,9 +20,11 @@ values('898c1c50-2de2-47f4-a5f3-2d8ed65523af','Pintura','Troca da Cor', '1500.00
 
 
 //Inserindo Dados na Tabela Ordem de Serviço
-
+insert into ServiceOrders(Id,CarId,ServiceId,Quantity)
+values('f5e1cdb3-6cc2-442d-8cdc-4ed71f1ed6bb','6837f64a-5316-4d23-bd8c-03ffffce980e','4d073d22-f299-47ec-bbc1-b0f78bb9621f','2')
 
 //Seleçao de todos campos da Tabela
 select * from Owners;
 select * from Cars;
 Select * from Services;
+Select * from ServiceOrders;

@@ -8,32 +8,22 @@ using System.Threading.Tasks;
 
 namespace APIPRojeto.Repository
 {
-    public class ServiceRepository
+    public class ServiceRepository : BaseRepository
     {
-
-        private readonly LataVelhaContext _db;
-
-        public ServiceRepository()
-        {
-            _db = new LataVelhaContext();
-        }
-
-        public IEnumerable<Service> Get() => _db
+        public IEnumerable<Service> Get() => Db
             .Services
             .ToList();
 
-        public Service Find(Guid id) => _db
+        public Service Find(Guid id) => Db
             .Services
-            .Include(s => s.Id)
-            .Where(s => s.Id == id)
-            .FirstOrDefault();
+            .FirstOrDefault(s => s.Id == id);
 
         public void Add(Service service)
         {
             if(service != null)
             {
-                _db.Add(service);
-                _db.SaveChanges();
+                Db.Add(service);
+                Db.SaveChanges();
             }
         }
 
@@ -41,8 +31,8 @@ namespace APIPRojeto.Repository
         {
             if(service != null)
             {
-                _db.Remove(service);
-                _db.SaveChanges();
+                Db.Remove(service);
+                Db.SaveChanges();
             }
             return service;
         }
@@ -51,8 +41,8 @@ namespace APIPRojeto.Repository
         {
             if(service != null)
             {
-                _db.Update(service);
-                _db.SaveChanges();
+                Db.Update(service);
+                Db.SaveChanges();
             }
             return service;
         }
