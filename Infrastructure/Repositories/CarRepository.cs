@@ -9,12 +9,12 @@ namespace GFT.Starter.Infrastructure.Repositories
     public class CarRepository : BaseRepository
     {
         public IEnumerable<Car> Get() => Db
-            .Vehicles.OfType<Car>()
+            .Cars.OfType<Car>()
             .Include(c => c.Owner)
             .ToList();
 
         public Car Find(Guid id) => Db
-            .Vehicles.OfType<Car>()
+            .Cars.OfType<Car>()
             .Include(c => c.Owner)
             .FirstOrDefault(c => c.Id == id);
 

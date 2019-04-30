@@ -37,7 +37,7 @@ namespace GFT.Starter.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vehicles",
+                name: "Cars",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -51,9 +51,9 @@ namespace GFT.Starter.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vehicles", x => x.Id);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehicles_Owners_OwnerId",
+                        name: "FK_Cars_Owners_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Owners",
                         principalColumn: "Id",
@@ -65,7 +65,7 @@ namespace GFT.Starter.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    VehicleId = table.Column<Guid>(nullable: false),
+                    CarId = table.Column<Guid>(nullable: false),
                     ServiceId = table.Column<Guid>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
                 },
@@ -79,9 +79,9 @@ namespace GFT.Starter.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ServiceOrders_Vehicles_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Vehicles",
+                        name: "FK_ServiceOrders_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -92,13 +92,13 @@ namespace GFT.Starter.Infrastructure.Migrations
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiceOrders_VehicleId",
+                name: "IX_ServiceOrders_CarId",
                 table: "ServiceOrders",
-                column: "VehicleId");
+                column: "CarId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_OwnerId",
-                table: "Vehicles",
+                name: "IX_Cars_OwnerId",
+                table: "Cars",
                 column: "OwnerId");
         }
 
@@ -111,7 +111,7 @@ namespace GFT.Starter.Infrastructure.Migrations
                 name: "Services");
 
             migrationBuilder.DropTable(
-                name: "Vehicles");
+                name: "Cars");
 
             migrationBuilder.DropTable(
                 name: "Owners");
