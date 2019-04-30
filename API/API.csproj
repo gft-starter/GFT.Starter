@@ -15,7 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Workshop\Application\Application.csproj" />
+    <ProjectReference Include="..\Workshop\DomainModel\DomainModel.csproj" />
+    <ProjectReference Include="..\Workshop\Helpers\Helpers.csproj" />
+    <ProjectReference Include="..\Workshop\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

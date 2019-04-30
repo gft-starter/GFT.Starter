@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyName>GFT.Starter.Application</AssemblyName>
-    <RootNamespace>GFT.Starter.Application</RootNamespace>
-  </PropertyGroup>
-
-</Project>

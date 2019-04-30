@@ -1,7 +1,8 @@
 ﻿using System;
-using GFT.Starter.Core.Models;
-using GFT.Starter.Infrastructure.Repositories;
-using GFT.Starter.Infrastructure.Repositories.Contracts;
+using Application.ServiceOrder.Contracts;
+using Application.ServiceOrder.DTOs;
+using Application.ServiceOrder.Services;
+using DomainModel.ServiceOrder;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GFT.Starter.API.Controllers
@@ -10,62 +11,48 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        private readonly IReadOnlyRepository<Service> _serviceReadOnlyRepository;
-        private readonly IWriteRepository<Service> _serviceWriteRepository;
+        private readonly IServiceService _serviceService;
 
-        public ServiceController(IReadOnlyRepository<Service> serviceReadOnlyRepository, IWriteRepository<Service> serviceWriteRepository)
+        public ServiceController(IServiceService serviceService)
         {
-            _serviceReadOnlyRepository = serviceReadOnlyRepository;
-            _serviceWriteRepository = serviceWriteRepository;
+            _serviceService = serviceService;
         }
 
         [HttpGet]
         public IActionResult Services()
         {
-            return Ok(_serviceReadOnlyRepository.Get());
+            return Ok(_serviceService.Get());
         }
 
 
         [HttpGet("{id}")]
         public IActionResult Service(Guid id)
         {
-            var obj = FindService(id);
-            return Ok(obj);
+            return Ok(_serviceService.GetById(id));
         }
 
         [HttpPost]
-        public IActionResult PostService([FromBody] Service service)
+        public IActionResult PostService([FromBody] ServiceDto service)
         {
-            _serviceWriteRepository.Add(service);
+            _serviceService.Add(service);
 
-            return Ok(service);
+            return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateService(Guid id, [FromBody] Service service)
+        public IActionResult UpdateService(Guid id, [FromBody] ServiceDto service)
         {
-            var obj = FindService(id);
+            _serviceService.Add(service);
 
-            obj.Name = service.Name;
-
-            return Ok(obj);
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult DeleteService(Guid id)
         {
-            var obj = FindService(id);
-
-            if (obj != null)
-                return Ok(_serviceWriteRepository.Remove(obj));
-
-            return NotFound(obj);
-        }
-
-        private Service FindService(Guid id)
-        {
-            return _serviceReadOnlyRepository.Find(id);
+            _serviceService.Remove(new ServiceDto { Id = id });
+            return Ok();
         }
     }
 }

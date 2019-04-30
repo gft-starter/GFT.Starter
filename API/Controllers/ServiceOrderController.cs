@@ -1,9 +1,6 @@
 ﻿using System;
-using GFT.Starter.Core.Models;
-using GFT.Starter.Infrastructure.Repositories;
-using GFT.Starter.Infrastructure.Repositories.Contracts;
-using GFT.Starter.Infrastructure.Services;
-using GFT.Starter.Infrastructure.Services.Contracts;
+using Application.ServiceOrder.Contracts;
+using Application.ServiceOrder.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GFT.Starter.API.Controllers
@@ -12,60 +9,48 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class ServiceOrderController : ControllerBase
     {
-        private readonly IReadOnlyRepository<ServiceOrder> _serviceOrdeReadOnlyRepository;
-        private readonly IWriteRepository<ServiceOrder> _serviceOrderWriteRepository;
-        private readonly IServiceOrderCalculator _serviceOrderCalculator;
+        private readonly IServiceOrderService _serviceOrderService;
 
-        public ServiceOrderController(IReadOnlyRepository<ServiceOrder> serviceOrdeReadOnlyRepository, IWriteRepository<ServiceOrder> serviceOrderWriteRepository, IServiceOrderCalculator serviceOrderCalculator)
+        public ServiceOrderController(IServiceOrderService serviceOrderService)
         {
-            _serviceOrdeReadOnlyRepository = serviceOrdeReadOnlyRepository;
-            _serviceOrderWriteRepository = serviceOrderWriteRepository;
-            _serviceOrderCalculator = serviceOrderCalculator;
+            _serviceOrderService = serviceOrderService;
         }
 
         [HttpGet]
         public IActionResult ServiceOrders()
         {
-            return Ok(_serviceOrdeReadOnlyRepository.Get());
+            return Ok(_serviceOrderService.Get());
         }
 
 
         [HttpGet("{id}")]
         public IActionResult ServiceOrder(Guid id)
         {
-            var obj = FindServiceOrder(id);
-            return Ok(obj);
+            return Ok(_serviceOrderService.GetById(id));
         }
 
         [HttpPost]
-        public IActionResult PostServiceOrder([FromBody] ServiceOrder serviceOrder)
+        public IActionResult PostServiceOrder([FromBody] ServiceOrderDto service)
         {
-            _serviceOrderWriteRepository.Add(serviceOrder);
+            _serviceOrderService.Add(service);
 
-            return Ok(serviceOrder);
+            return Ok();
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateServiceOrder(Guid id, [FromBody] ServiceOrder serviceOrder)
+        public IActionResult UpdateServiceOrder(Guid id, [FromBody] ServiceOrderDto service)
         {
-            var obj = FindServiceOrder(id);
+            _serviceOrderService.Add(service);
 
-            obj.Quantity = serviceOrder.Quantity;
-            _serviceOrderWriteRepository.Update(obj);
-
-            return Ok(obj);
+            return Ok();
         }
 
-        [HttpGet("Calculate")]
-        public IActionResult CalculatePrice(Guid id)
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public IActionResult DeleteServiceOrder(Guid id)
         {
-            var obj = FindServiceOrder(id);
-            return Ok(_serviceOrderCalculator.CalculateTotalPrice(obj));
-        }
-
-        private ServiceOrder FindServiceOrder(Guid id)
-        {
-            return _serviceOrdeReadOnlyRepository.Find(id);
+            _serviceOrderService.Remove(new ServiceOrderDto { Id = id });
+            return Ok();
         }
     }
 }
