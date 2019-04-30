@@ -15,7 +15,7 @@ namespace DomainModel.Owner
 
         private readonly List<Car> _cars = new List<Car>();
 
-        public virtual ReadOnlyCollection<Car> Vehicles => _cars.AsReadOnly();
+        public virtual ReadOnlyCollection<Car> Cars => _cars.AsReadOnly();
 
         public string Name { get; private set; }
         public string Cpf { get; private set; }
@@ -29,10 +29,7 @@ namespace DomainModel.Owner
 
         public static Owner CreateOwner(Guid id, string name, string cpf, DateTime birthDate, char gender)
         {
-            var owner = new Owner();
-            owner.Id = id;
-            owner.Name = name;
-            owner.BirthDate = birthDate;
+            var owner = new Owner { Id = id, Name = name, BirthDate = birthDate };
 
             if (DocumentValidator.IsValid(cpf))
                 owner.Cpf = cpf;
@@ -41,7 +38,7 @@ namespace DomainModel.Owner
             if (Genders.Contains(gender.ToString().ToUpper()))
                 owner.Gender = gender;
             else
-                throw new InvalidOperationException("Invalid gender.");
+                throw new InvalidOperationException("Invalid gender");
 
             DomainEvents.Raise(new OwnerCreated { Owner = owner });
 
@@ -51,6 +48,11 @@ namespace DomainModel.Owner
         public void AddCar(Car car)
         {
             _cars.Add(car);
+        }
+
+        public void RemoveCar(Car car)
+        {
+            _cars.Remove(car);
         }
     }
 }

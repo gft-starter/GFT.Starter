@@ -1,6 +1,6 @@
 ﻿using DomainModel.Service.Events;
 using Helpers.Domain;
-using Helpers.Service;
+using Infrastructure;
 
 namespace DomainModel.Service.Handlers
 {

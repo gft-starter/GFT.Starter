@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using Application.Owner.Contracts;
-using Helpers.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GFT.Starter.API.Controllers

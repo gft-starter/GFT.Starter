@@ -66,7 +66,7 @@ namespace Application.ServiceOrder.Services
             DomainModel.Owner.Car car = DomainModel.Owner.Car.CreateCar(dto.Car.Plate, dto.Car.Brand, dto.Car.Model,
                 dto.Car.Color, dto.Car.Year, owner);
             List<DomainModel.Service.Service> services = dto.Services
-                .Select(x => DomainModel.Service.Service.CreateService(x.Name, x.Description, x.Value)).ToList();
+                .Select(x => DomainModel.Service.Service.CreateService(x.Id, x.Name, x.Description, x.Value)).ToList();
 
             var domain = DomainModel.ServiceOrder.ServiceOrder.CreateServiceOrder(car, services);
             foreach (DomainModel.Service.Service service in services)

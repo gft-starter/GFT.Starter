@@ -24,7 +24,7 @@ namespace DomainModel.ServiceOrder
         public static ServiceOrder CreateServiceOrder(Guid id, Car car, List<Service.Service> services)
         {
             var serviceOrder = new ServiceOrder { Id = id, Car = car, _services = services };
-
+            
             DomainEvents.Raise(new ServiceOrderCreated { ServiceOrder = serviceOrder });
 
             return serviceOrder;

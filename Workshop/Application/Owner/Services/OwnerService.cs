@@ -56,6 +56,10 @@ namespace Application.Owner.Services
         public void Add(OwnerDto dto)
         {
             var owner = DomainModel.Owner.Owner.CreateOwner(dto.Name, dto.Cpf, dto.BirthDate, dto.Gender);
+            foreach (CarDto carDto in dto.Cars)
+            {
+                owner.AddCar(DomainModel.Owner.Car.CreateCar(carDto.Plate, carDto.Brand, carDto.Model, carDto.Color, carDto.Year, owner));
+            }
             _ownerRepository.Add(Mapper.Map<Infrastructure.Models.Owner>(owner));
         }
 
