@@ -2,6 +2,7 @@
 using Application.Owner.Services;
 using Application.ServiceOrder.Contracts;
 using Application.ServiceOrder.Services;
+using AutoMapper;
 using DomainModel.Services;
 using Helpers.Repository;
 using Helpers.Service;
@@ -39,7 +40,7 @@ namespace GFT.Starter.API
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<TaxService>();
 
-
+            services.AddAutoMapper();
 
             services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
