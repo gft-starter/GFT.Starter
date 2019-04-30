@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Application.Service.DTOs;
 using Application.ServiceOrder.Contracts;
 using Application.ServiceOrder.DTOs;
 using AutoMapper;
-using DomainModel.ServiceOrder;
 using DomainModel.Services;
 using Helpers.Repository;
 
@@ -14,16 +14,13 @@ namespace Application.ServiceOrder.Services
     {
         private readonly IRepository<Infrastructure.Models.ServiceOrder> _serviceOrderRepository;
         private readonly IRepository<Infrastructure.Models.Service> _serviceRepository;
-        private readonly IRepository<Infrastructure.Models.Car> _carRepository;
         private readonly TaxService _taxService;
 
         public ServiceOrderService(IRepository<Infrastructure.Models.ServiceOrder> serviceOrderRepository,
-            IRepository<Infrastructure.Models.Service> serviceRepository, IRepository<Infrastructure.Models.Car> carRepository,
-            TaxService taxService)
+            IRepository<Infrastructure.Models.Service> serviceRepository, TaxService taxService)
         {
             _serviceOrderRepository = serviceOrderRepository;
             _serviceRepository = serviceRepository;
-            _carRepository = carRepository;
             _taxService = taxService;
         }
 
@@ -51,11 +48,11 @@ namespace Application.ServiceOrder.Services
             DomainModel.Owner.Owner owner = DomainModel.Owner.Owner.CreateOwner(serviceOrder.Car.Owner.Id, serviceOrder.Car.Owner.Name, serviceOrder.Car.Owner.Cpf, serviceOrder.Car.Owner.BirthDate, serviceOrder.Car.Owner.Gender);
             DomainModel.Owner.Car car = DomainModel.Owner.Car.CreateCar(serviceOrder.Car.Plate, serviceOrder.Car.Brand, serviceOrder.Car.Model,
                 serviceOrder.Car.Color, serviceOrder.Car.Year, owner);
-            List<Service> services = serviceOrder.Service
-                .Select(x => Service.CreateService(x.Name, x.Description, x.Value)).ToList();
+            List<DomainModel.Service.Service> services = serviceOrder.Service
+                .Select(x => DomainModel.Service.Service.CreateService(x.Name, x.Description, x.Value)).ToList();
 
             var domain = DomainModel.ServiceOrder.ServiceOrder.CreateServiceOrder(serviceOrder.Id, car, services);
-            foreach (Service service in services)
+            foreach (DomainModel.Service.Service service in services)
             {
                 domain.AddService(service);
             }
@@ -68,11 +65,11 @@ namespace Application.ServiceOrder.Services
             DomainModel.Owner.Owner owner = DomainModel.Owner.Owner.CreateOwner(dto.Car.Owner.Id, dto.Car.Owner.Name, dto.Car.Owner.Cpf, dto.Car.Owner.BirthDate, dto.Car.Owner.Gender);
             DomainModel.Owner.Car car = DomainModel.Owner.Car.CreateCar(dto.Car.Plate, dto.Car.Brand, dto.Car.Model,
                 dto.Car.Color, dto.Car.Year, owner);
-            List<Service> services = dto.Services
-                .Select(x => Service.CreateService(x.Name, x.Description, x.Value)).ToList();
+            List<DomainModel.Service.Service> services = dto.Services
+                .Select(x => DomainModel.Service.Service.CreateService(x.Name, x.Description, x.Value)).ToList();
 
             var domain = DomainModel.ServiceOrder.ServiceOrder.CreateServiceOrder(car, services);
-            foreach (Service service in services)
+            foreach (DomainModel.Service.Service service in services)
             {
                 domain.AddService(service);
             }
@@ -89,11 +86,11 @@ namespace Application.ServiceOrder.Services
             DomainModel.Owner.Owner owner = DomainModel.Owner.Owner.CreateOwner(dto.Car.Owner.Id, dto.Car.Owner.Name, dto.Car.Owner.Cpf, dto.Car.Owner.BirthDate, dto.Car.Owner.Gender);
             DomainModel.Owner.Car car = DomainModel.Owner.Car.CreateCar(dto.Car.Plate, dto.Car.Brand, dto.Car.Model,
                 dto.Car.Color, dto.Car.Year, owner);
-            List<Service> services = dto.Services
-                .Select(x => Service.CreateService(x.Name, x.Description, x.Value)).ToList();
+            List<DomainModel.Service.Service> services = dto.Services
+                .Select(x => DomainModel.Service.Service.CreateService(x.Name, x.Description, x.Value)).ToList();
 
             var domain = DomainModel.ServiceOrder.ServiceOrder.CreateServiceOrder(dto.Id, car, services);
-            foreach (Service service in services)
+            foreach (DomainModel.Service.Service service in services)
             {
                 domain.UpdateService(service);
             }

@@ -1,6 +1,6 @@
 ﻿using Helpers.Domain;
 
-namespace DomainModel.ServiceOrder.Events
+namespace DomainModel.Service.Events
 {
     public class ServiceCreated : DomainEvent
     {

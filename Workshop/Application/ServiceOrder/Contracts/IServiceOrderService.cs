@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Application.Service.DTOs;
 using Application.ServiceOrder.DTOs;
 
 namespace Application.ServiceOrder.Contracts

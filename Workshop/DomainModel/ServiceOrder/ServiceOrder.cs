@@ -10,18 +10,18 @@ namespace DomainModel.ServiceOrder
 {
     public class ServiceOrder : IAggregateRoot
     {
-        private List<Service> _services;
-        public virtual ReadOnlyCollection<Service> Services => _services.AsReadOnly();
+        private List<Service.Service> _services;
+        public virtual ReadOnlyCollection<Service.Service> Services => _services.AsReadOnly();
 
         public Guid Id { get; private set; }
         public Car Car { get; private set; }
 
-        public static ServiceOrder CreateServiceOrder(Car car, List<Service> services)
+        public static ServiceOrder CreateServiceOrder(Car car, List<Service.Service> services)
         {
             return CreateServiceOrder(Guid.NewGuid(), car, services);
         }
 
-        public static ServiceOrder CreateServiceOrder(Guid id, Car car, List<Service> services)
+        public static ServiceOrder CreateServiceOrder(Guid id, Car car, List<Service.Service> services)
         {
             var serviceOrder = new ServiceOrder { Id = id, Car = car, _services = services };
 
@@ -30,12 +30,12 @@ namespace DomainModel.ServiceOrder
             return serviceOrder;
         }
 
-        public void AddService(Service service)
+        public void AddService(Service.Service service)
         {
             _services.Add(service);
         }
 
-        public void UpdateService(Service service)
+        public void UpdateService(Service.Service service)
         {
             var serviceToUpdate = _services.First(x => x.Id == service.Id);
             serviceToUpdate = service;

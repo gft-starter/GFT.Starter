@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Application.ServiceOrder.DTOs;
+using Application.Service.DTOs;
 
-namespace Application.ServiceOrder.Contracts
+namespace Application.Service.Contracts
 {
     public interface IServiceService
     {

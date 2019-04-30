@@ -1,8 +1,8 @@
 ﻿using System;
-using DomainModel.ServiceOrder.Events;
+using DomainModel.Service.Events;
 using Helpers.Domain;
 
-namespace DomainModel.ServiceOrder
+namespace DomainModel.Service
 {
     public class Service : IAggregateRoot
     {

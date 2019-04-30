@@ -1,8 +1,8 @@
-﻿using DomainModel.ServiceOrder.Events;
+﻿using DomainModel.Service.Events;
 using Helpers.Domain;
 using Helpers.Service;
 
-namespace DomainModel.ServiceOrder.Handlers
+namespace DomainModel.Service.Handlers
 {
     public class ServiceCreatedHandler : IHandles<ServiceCreated>
     {

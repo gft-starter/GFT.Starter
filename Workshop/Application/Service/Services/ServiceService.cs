@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Application.ServiceOrder.Contracts;
-using Application.ServiceOrder.DTOs;
+using Application.Service.Contracts;
+using Application.Service.DTOs;
 using AutoMapper;
-using DomainModel.ServiceOrder;
 using DomainModel.Services;
 using Helpers.Repository;
 
-namespace Application.ServiceOrder.Services
+namespace Application.Service.Services
 {
     public class ServiceService : IServiceService
     {
@@ -36,7 +35,7 @@ namespace Application.ServiceOrder.Services
 
         public void Add(ServiceDto dto)
         {
-            Service service = Service.CreateService(dto.Name, dto.Description, dto.Value);
+            DomainModel.Service.Service service = DomainModel.Service.Service.CreateService(dto.Name, dto.Description, dto.Value);
             _serviceRepository.Add(Mapper.Map<Infrastructure.Models.Service>(service));
         }
 
@@ -47,7 +46,7 @@ namespace Application.ServiceOrder.Services
 
         public void Update(ServiceDto dto)
         {
-            Service service = Service.CreateService(dto.Id, dto.Name, dto.Description, dto.Value);
+            DomainModel.Service.Service service = DomainModel.Service.Service.CreateService(dto.Id, dto.Name, dto.Description, dto.Value);
             _serviceRepository.Add(Mapper.Map<Infrastructure.Models.Service>(service));
         }
 

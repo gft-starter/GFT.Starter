@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Application.Owner.DTOs;
+using Application.Service.DTOs;
 
 namespace Application.ServiceOrder.DTOs
 {

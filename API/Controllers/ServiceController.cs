@@ -1,4 +1,6 @@
 ﻿using System;
+using Application.Service.Contracts;
+using Application.Service.DTOs;
 using Application.ServiceOrder.Contracts;
 using Application.ServiceOrder.DTOs;
 using Application.ServiceOrder.Services;

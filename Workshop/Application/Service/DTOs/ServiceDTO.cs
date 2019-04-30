@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.ServiceOrder.DTOs
+namespace Application.Service.DTOs
 {
     public class ServiceDto
     {
