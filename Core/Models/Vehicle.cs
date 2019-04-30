@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace APIPRojeto.Models
+namespace GFT.Starter.Core.Models
 {
-    public class Car
+    public abstract class Vehicle
     {
         public Guid Id { get; set; }
         public string Plate { get; set; }
@@ -16,5 +12,7 @@ namespace APIPRojeto.Models
         public int Year { get; set; }
         public Guid OwnerId { get; set; }
         public virtual Owner Owner { get; set; }
+
+        public abstract void ChangeFourTires();
     }
 }
