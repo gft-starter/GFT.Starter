@@ -13,7 +13,8 @@ namespace GFT.Starter.Application
 
         private static ServiceFactory serviceFactory = null;
 
-        private static ServiceOrderFactory serviceOrderFactory;
+        private static ServiceOrderFactory serviceOrderFactory = null;
+
 
         public static ServiceOrderFactory ServiceOrderFactory
         {

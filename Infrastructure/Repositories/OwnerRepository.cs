@@ -17,6 +17,8 @@ namespace GFT.Starter.Infrastructure.Repositories
             _db = db;
         }
 
+
+
         public IEnumerable<Owner> Get() => _db
             .Owners
             .ToList();

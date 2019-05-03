@@ -7,5 +7,6 @@ namespace GFT.Starter.Infrastructure.Repositories.Contracts
     {
         T Find(Guid id);
         IEnumerable<T> Get();
+
     }
 }
