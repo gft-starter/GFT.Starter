@@ -5,9 +5,9 @@ namespace GFT.Starter.Infrastructure.Services
 {
     public class UpgradePartsService : IUpgradePartsService
     {
-        public void ChangeTires(Vehicle vehicle)
+        public void ChangeTires(Car vehicle)
         {
-            vehicle.ChangeTires();
+            //vehicle.ChangeTires();
         }
     }
 }

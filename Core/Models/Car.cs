@@ -1,31 +1,18 @@
-﻿namespace GFT.Starter.Core.Models
+﻿using System;
+
+namespace GFT.Starter.Core.Models
 {
-    public class Car : Vehicle
+    public class Car
     {
-        private void ChangeTire1()
-        {
-        }
-
-        private void ChangeTire2()
-        {
-        }
-
-        private void ChangeTire3()
-        {
-        }
-
-        private void ChangeTire4()
-        {
-        }
-
-        public override int PriceMultiplier { get; } = 2;
-
-        public override void ChangeTires()
-        {
-            ChangeTire1();
-            ChangeTire2();
-            ChangeTire3();
-            ChangeTire4();
-        }
+        public Guid Id { get; set; }
+        public string Plate { get; set; }
+        public string Brand { get; set; }
+        public string Model { get; set; }
+        public string Color { get; set; }
+        public int Year { get; set; }
+        public Guid OwnerId { get; set; }
+        public virtual Owner Owner { get; set; }
+        //public abstract int PriceMultiplier { get; }
+        //public abstract void ChangeTires();
     }
 }

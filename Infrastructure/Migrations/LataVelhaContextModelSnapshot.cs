@@ -19,6 +19,30 @@ namespace GFT.Starter.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("GFT.Starter.Core.Models.Car", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Brand");
+
+                    b.Property<string>("Color");
+
+                    b.Property<string>("Model");
+
+                    b.Property<Guid>("OwnerId");
+
+                    b.Property<string>("Plate");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Cars");
+                });
+
             modelBuilder.Entity("GFT.Starter.Core.Models.Owner", b =>
                 {
                     b.Property<Guid>("Id")
@@ -75,47 +99,12 @@ namespace GFT.Starter.Infrastructure.Migrations
                     b.ToTable("ServiceOrders");
                 });
 
-            modelBuilder.Entity("GFT.Starter.Core.Models.Vehicle", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Brand");
-
-                    b.Property<string>("Color");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Model");
-
-                    b.Property<Guid>("OwnerId");
-
-                    b.Property<string>("Plate");
-
-                    b.Property<int>("Year");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("Vehicles");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Vehicle");
-                });
-
             modelBuilder.Entity("GFT.Starter.Core.Models.Car", b =>
                 {
-                    b.HasBaseType("GFT.Starter.Core.Models.Vehicle");
-
-                    b.HasDiscriminator().HasValue("Car");
-                });
-
-            modelBuilder.Entity("GFT.Starter.Core.Models.Motorcycle", b =>
-                {
-                    b.HasBaseType("GFT.Starter.Core.Models.Vehicle");
-
-                    b.HasDiscriminator().HasValue("Motorcycle");
+                    b.HasOne("GFT.Starter.Core.Models.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("GFT.Starter.Core.Models.ServiceOrder", b =>
@@ -125,17 +114,9 @@ namespace GFT.Starter.Infrastructure.Migrations
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("GFT.Starter.Core.Models.Vehicle", "Vehicle")
+                    b.HasOne("GFT.Starter.Core.Models.Car", "Vehicle")
                         .WithMany()
                         .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("GFT.Starter.Core.Models.Vehicle", b =>
-                {
-                    b.HasOne("GFT.Starter.Core.Models.Owner", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GFT.Starter.Infrastructure.Migrations
 {
-    public partial class Initial_Create : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,7 +37,7 @@ namespace GFT.Starter.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vehicles",
+                name: "Cars",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -46,14 +46,13 @@ namespace GFT.Starter.Infrastructure.Migrations
                     Model = table.Column<string>(nullable: true),
                     Color = table.Column<string>(nullable: true),
                     Year = table.Column<int>(nullable: false),
-                    OwnerId = table.Column<Guid>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false)
+                    OwnerId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vehicles", x => x.Id);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehicles_Owners_OwnerId",
+                        name: "FK_Cars_Owners_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Owners",
                         principalColumn: "Id",
@@ -79,12 +78,17 @@ namespace GFT.Starter.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ServiceOrders_Vehicles_VehicleId",
+                        name: "FK_ServiceOrders_Cars_VehicleId",
                         column: x => x.VehicleId,
-                        principalTable: "Vehicles",
+                        principalTable: "Cars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cars_OwnerId",
+                table: "Cars",
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceOrders_ServiceId",
@@ -95,11 +99,6 @@ namespace GFT.Starter.Infrastructure.Migrations
                 name: "IX_ServiceOrders_VehicleId",
                 table: "ServiceOrders",
                 column: "VehicleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_OwnerId",
-                table: "Vehicles",
-                column: "OwnerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -111,7 +110,7 @@ namespace GFT.Starter.Infrastructure.Migrations
                 name: "Services");
 
             migrationBuilder.DropTable(
-                name: "Vehicles");
+                name: "Cars");
 
             migrationBuilder.DropTable(
                 name: "Owners");

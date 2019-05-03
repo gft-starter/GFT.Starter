@@ -29,8 +29,6 @@ namespace GFT.Starter.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IReadOnlyRepository<Car>, CarRepository>();
             services.AddScoped<IWriteRepository<Car>, CarRepository>();
-            services.AddScoped<IReadOnlyRepository<Motorcycle>, MotorcycleRepository>();
-            services.AddScoped<IWriteRepository<Motorcycle>, MotorcycleRepository>();
             services.AddScoped<IReadOnlyRepository<Owner>, OwnerRepository>();
             services.AddScoped<IWriteRepository<Owner>, OwnerRepository>();
             services.AddScoped<IReadOnlyRepository<Service>, ServiceRepository>();

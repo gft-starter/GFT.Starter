@@ -4,6 +4,6 @@ namespace GFT.Starter.Infrastructure.Services.Contracts
 {
     public interface IUpgradePartsService
     {
-        void ChangeTires(Vehicle vehicle);
+        void ChangeTires(Car vehicle);
     }
 }

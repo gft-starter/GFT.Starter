@@ -18,12 +18,12 @@ namespace GFT.Starter.Infrastructure.Repositories
         }
 
         public IEnumerable<Car> Get() => _db
-            .Vehicles.OfType<Car>()
+            .Cars.OfType<Car>()
             .Include(c => c.Owner)
             .ToList();
 
         public Car Find(Guid id) => _db
-            .Vehicles.OfType<Car>()
+            .Cars.OfType<Car>()
             .Include(c => c.Owner)
             .FirstOrDefault(c => c.Id == id);
 

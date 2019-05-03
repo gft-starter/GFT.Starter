@@ -7,7 +7,8 @@ namespace GFT.Starter.Infrastructure.Services
     {
         public float CalculateTotalPrice(ServiceOrder serviceOrder)
         {
-            return serviceOrder.Quantity * serviceOrder.Service.Value * serviceOrder.Vehicle.PriceMultiplier;
+            //return serviceOrder.Quantity * serviceOrder.Service.Value * serviceOrder.Vehicle.PriceMultiplier;
+            return 0;
         }
     }
 }

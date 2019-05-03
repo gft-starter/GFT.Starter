@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace GFT.Starter.Core.Models
 {
@@ -8,6 +9,8 @@ namespace GFT.Starter.Core.Models
         public string Name { get; set; }
         public string CPF { get; set; }
         public DateTime BirthDate { get; set; }
+        [Required]
+        [MinLength(1)]
         public char Gender { get; set; }
     }
 }

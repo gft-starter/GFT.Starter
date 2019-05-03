@@ -7,7 +7,7 @@ namespace GFT.Starter.Infrastructure.Configuration
     {
         public LataVelhaContext(DbContextOptions<LataVelhaContext> options) : base(options) { }
 
-        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Car> Cars { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<ServiceOrder> ServiceOrders { get; set; }
@@ -19,7 +19,6 @@ namespace GFT.Starter.Infrastructure.Configuration
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Car>();
-            builder.Entity<Motorcycle>();
             builder.Entity<Owner>();
             builder.Entity<Service>();
             builder.Entity<ServiceOrder>();
