@@ -1,6 +1,7 @@
 ﻿using System;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories;
+using GFT.Starter.Infrastructure.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GFT.Starter.API.Controllers
@@ -9,18 +10,20 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
-        private readonly OwnerRepository _ownerRepository;
+        private readonly IReadOnlyRepository<Owner> _ownerReadOnlyRepository;
+        private readonly IWriteRepository<Owner> _ownerWriteRepository;
 
-        public OwnerController()
+        public OwnerController(IReadOnlyRepository<Owner> ownerReadOnlyRepository, IWriteRepository<Owner> ownerWriteRepository)
         {
-            _ownerRepository = new OwnerRepository();
+            _ownerReadOnlyRepository = ownerReadOnlyRepository;
+            _ownerWriteRepository = ownerWriteRepository;
         }
 
         // GET: api/Owner
         [HttpGet]
         public IActionResult Owners()
         {
-            return Ok(_ownerRepository.Get());
+            return Ok(_ownerReadOnlyRepository.Get());
         }
 
         // GET: api/Owner/5
@@ -34,7 +37,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostOwner([FromBody] Owner owner)
         {
-            _ownerRepository.Add(owner);
+            _ownerWriteRepository.Add(owner);
 
             return Ok(owner);
         }
@@ -56,14 +59,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindOwner(id);
 
             if (obj != null)
-                return Ok(_ownerRepository.Remove(obj));
+                return Ok(_ownerWriteRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Owner FindOwner(Guid id)
         {
-            return _ownerRepository.Find(id);
+            return _ownerReadOnlyRepository.Find(id);
         }
     }
 }

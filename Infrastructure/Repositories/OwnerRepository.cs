@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using GFT.Starter.Core.Models;
+using GFT.Starter.Infrastructure.Configuration;
+using GFT.Starter.Infrastructure.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace GFT.Starter.Infrastructure.Repositories
 {
-    public class OwnerRepository : BaseRepository
+    public class OwnerRepository : IReadOnlyRepository<Owner>, IWriteRepository<Owner>
     {
-        public IEnumerable<Owner> Get() => Db
+        private readonly LataVelhaContext _db;
+
+        public OwnerRepository(LataVelhaContext db)
+        {
+            _db = db;
+        }
+
+        public IEnumerable<Owner> Get() => _db
             .Owners
             .ToList();
 
-        public Owner Find(Guid id) => Db
+        public Owner Find(Guid id) => _db
             .Owners
             .Include(o => o.Id == id)
             .FirstOrDefault();
@@ -21,8 +30,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (owner != null)
             {
-                Db.Add(owner);
-                Db.SaveChanges();
+                _db.Add(owner);
+                _db.SaveChanges();
             }
         }
 
@@ -30,8 +39,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (owner != null)
             {
-                Db.Remove(owner);
-                Db.SaveChanges();
+                _db.Remove(owner);
+                _db.SaveChanges();
             }
             return owner;
         }
@@ -40,8 +49,8 @@ namespace GFT.Starter.Infrastructure.Repositories
         {
             if (owner != null)
             {
-                Db.Update(owner);
-                Db.SaveChanges();
+                _db.Update(owner);
+                _db.SaveChanges();
             }
             return owner;
         }

@@ -1,19 +1,13 @@
-﻿using System;
-using GFT.Starter.Core.Models;
+﻿using GFT.Starter.Core.Models;
+using GFT.Starter.Infrastructure.Services.Contracts;
 
 namespace GFT.Starter.Infrastructure.Services
 {
-    public class ServiceOrderCalculator
+    public class ServiceOrderCalculator : IServiceOrderCalculator
     {
         public float CalculateTotalPrice(ServiceOrder serviceOrder)
         {
-            if (serviceOrder.Car is Car)
-            {
-                return serviceOrder.Quantity * serviceOrder.Service.Value * 2;
-            }
-
-
-            throw new InvalidOperationException("Invalid Car type");
+            return serviceOrder.Quantity * serviceOrder.Service.Value * serviceOrder.Vehicle.PriceMultiplier;
         }
     }
 }

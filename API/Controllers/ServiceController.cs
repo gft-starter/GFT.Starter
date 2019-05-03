@@ -1,6 +1,7 @@
 ﻿using System;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories;
+using GFT.Starter.Infrastructure.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GFT.Starter.API.Controllers
@@ -9,18 +10,19 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        private readonly ServiceRepository _serviceRepository;
+        private readonly IReadOnlyRepository<Service> _serviceReadOnlyRepository;
+        private readonly IWriteRepository<Service> _serviceWriteRepository;
 
-        public ServiceController()
+        public ServiceController(IReadOnlyRepository<Service> serviceReadOnlyRepository, IWriteRepository<Service> serviceWriteRepository)
         {
-            _serviceRepository = new ServiceRepository();
+            _serviceReadOnlyRepository = serviceReadOnlyRepository;
+            _serviceWriteRepository = serviceWriteRepository;
         }
-
 
         [HttpGet]
         public IActionResult Services()
         {
-            return Ok(_serviceRepository.Get());
+            return Ok(_serviceReadOnlyRepository.Get());
         }
 
 
@@ -34,7 +36,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostService([FromBody] Service service)
         {
-            _serviceRepository.Add(service);
+            _serviceWriteRepository.Add(service);
 
             return Ok(service);
         }
@@ -56,14 +58,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindService(id);
 
             if (obj != null)
-                return Ok(_serviceRepository.Remove(obj));
+                return Ok(_serviceWriteRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Service FindService(Guid id)
         {
-            return _serviceRepository.Find(id);
+            return _serviceReadOnlyRepository.Find(id);
         }
     }
 }
