@@ -2,8 +2,7 @@
 using GFT.Starter.Infrastructure.Configuration;
 using GFT.Starter.Infrastructure.Repositories;
 using GFT.Starter.Infrastructure.Repositories.Contracts;
-using GFT.Starter.Infrastructure.Services;
-using GFT.Starter.Infrastructure.Services.Contracts;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -29,17 +28,12 @@ namespace GFT.Starter.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IReadOnlyRepository<Car>, CarRepository>();
             services.AddScoped<IWriteRepository<Car>, CarRepository>();
-            services.AddScoped<IReadOnlyRepository<Motorcycle>, MotorcycleRepository>();
-            services.AddScoped<IWriteRepository<Motorcycle>, MotorcycleRepository>();
             services.AddScoped<IReadOnlyRepository<Owner>, OwnerRepository>();
             services.AddScoped<IWriteRepository<Owner>, OwnerRepository>();
             services.AddScoped<IReadOnlyRepository<Service>, ServiceRepository>();
             services.AddScoped<IWriteRepository<Service>, ServiceRepository>();
             services.AddScoped<IReadOnlyRepository<ServiceOrder>, ServiceOrderRepository>();
             services.AddScoped<IWriteRepository<ServiceOrder>, ServiceOrderRepository>();
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IServiceOrderCalculator, ServiceOrderCalculator>();
-            services.AddScoped<IUpgradePartsService, UpgradePartsService>();
             services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             ConfigureSwagger(services);

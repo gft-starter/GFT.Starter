@@ -19,6 +19,30 @@ namespace GFT.Starter.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("GFT.Starter.Core.Models.Car", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Brand");
+
+                    b.Property<string>("Color");
+
+                    b.Property<string>("Model");
+
+                    b.Property<Guid>("OwnerId");
+
+                    b.Property<string>("Plate");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Cars");
+                });
+
             modelBuilder.Entity("GFT.Starter.Core.Models.Owner", b =>
                 {
                     b.Property<Guid>("Id")
@@ -60,75 +84,19 @@ namespace GFT.Starter.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("CarId");
+
                     b.Property<int>("Quantity");
 
                     b.Property<Guid>("ServiceId");
 
-                    b.Property<Guid>("CarId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ServiceId");
 
                     b.HasIndex("CarId");
 
+                    b.HasIndex("ServiceId");
+
                     b.ToTable("ServiceOrders");
-                });
-
-            modelBuilder.Entity("GFT.Starter.Core.Models.Car", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Brand");
-
-                    b.Property<string>("Color");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Model");
-
-                    b.Property<Guid>("OwnerId");
-
-                    b.Property<string>("Plate");
-
-                    b.Property<int>("Year");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("Cars");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Car");
-                });
-
-            modelBuilder.Entity("GFT.Starter.Core.Models.Car", b =>
-                {
-                    b.HasBaseType("GFT.Starter.Core.Models.Car");
-
-                    b.HasDiscriminator().HasValue("Car");
-                });
-
-            modelBuilder.Entity("GFT.Starter.Core.Models.Motorcycle", b =>
-                {
-                    b.HasBaseType("GFT.Starter.Core.Models.Car");
-
-                    b.HasDiscriminator().HasValue("Motorcycle");
-                });
-
-            modelBuilder.Entity("GFT.Starter.Core.Models.ServiceOrder", b =>
-                {
-                    b.HasOne("GFT.Starter.Core.Models.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("GFT.Starter.Core.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("GFT.Starter.Core.Models.Car", b =>
@@ -136,6 +104,19 @@ namespace GFT.Starter.Infrastructure.Migrations
                     b.HasOne("GFT.Starter.Core.Models.Owner", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("GFT.Starter.Core.Models.ServiceOrder", b =>
+                {
+                    b.HasOne("GFT.Starter.Core.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("GFT.Starter.Core.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

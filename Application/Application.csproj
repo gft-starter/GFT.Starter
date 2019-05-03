@@ -6,4 +6,8 @@
     <RootNamespace>GFT.Starter.Application</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
 </Project>

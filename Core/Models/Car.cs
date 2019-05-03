@@ -2,7 +2,7 @@
 
 namespace GFT.Starter.Core.Models
 {
-    public abstract class Car
+    public class Car
     {
         public Guid Id { get; set; }
         public string Plate { get; set; }
@@ -12,6 +12,5 @@ namespace GFT.Starter.Core.Models
         public int Year { get; set; }
         public Guid OwnerId { get; set; }
         public virtual Owner Owner { get; set; }
-
     }
 }
