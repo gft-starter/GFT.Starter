@@ -12,5 +12,15 @@ namespace GFT.Starter.Core.Models
         public int Year { get; set; }
         public Guid OwnerId { get; set; }
         public virtual Owner Owner { get; set; }
+
+        public Car(Car carToCopy)
+        {
+            Id = carToCopy.Id;
+            Plate = carToCopy.Plate;
+            Brand = carToCopy.Brand;
+            Model = carToCopy.Model;
+            Color = carToCopy.Color;
+            Color = carToCopy.Color;
+        }
     }
 }

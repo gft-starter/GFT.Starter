@@ -4,7 +4,7 @@ using GFT.Starter.Core.Models;
 using NUnit.Framework;
 using System;
 
-namespace Tests
+namespace UnitTests
 {
     public class ServiceTest
     {

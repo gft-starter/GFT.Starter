@@ -2,7 +2,7 @@ using GFT.Starter.Application;
 using NUnit.Framework;
 using System;
 
-namespace Tests
+namespace UnitTests
 {
     public class CarTest
     {
@@ -34,5 +34,6 @@ namespace Tests
             Assert.AreEqual(car.Color, color);
             Assert.AreEqual(car.Plate, plate);
         }
+        
     }
 }
