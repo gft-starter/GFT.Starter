@@ -14,7 +14,7 @@ namespace GFT.Starter.API.Controllers
         //private readonly IWriteRepository<Owner> _ownerWriteRepository;
 
         private readonly FacadeRepository _facadeRepository;
-        
+
 
         //public OwnerController(IReadOnlyRepository<Owner> ownerReadOnlyRepository, IWriteRepository<Owner> ownerWriteRepository)
         //{
@@ -22,16 +22,17 @@ namespace GFT.Starter.API.Controllers
         //    _ownerWriteRepository = ownerWriteRepository;
         //}
 
-        public OwnerController()
+
+        public OwnerController(FacadeRepository facadeRepository)
         {
-            _facadeRepository = new FacadeRepository();
+            _facadeRepository = facadeRepository;
         }
 
         // GET: api/Owner
         [HttpGet]
         public IActionResult Owners()
         {
-            return Ok(_facadeRepository.ReadAll(OwnerController owner));
+            return Ok(_facadeRepository.ReadAllOwner());
         }
 
         // GET: api/Owner/5
@@ -45,7 +46,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostOwner([FromBody] Owner owner)
         {
-            _facadeRepository.OwnerWrite.Add(owner);
+            _facadeRepository.AddOwner(owner);
 
             return Ok(owner);
         }
@@ -67,14 +68,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindOwner(id);
 
             if (obj != null)
-                return Ok(_facadeRepository.OwnerWrite.Remove(obj));
+                return Ok(_facadeRepository.RemoveOwner(obj));
 
             return NotFound(obj);
         }
 
         private Owner FindOwner(Guid id)
         {
-            return _facadeRepository.OwnerRead.Find(id);
+            return _facadeRepository.ReadOwner(id);
         }
     }
 }

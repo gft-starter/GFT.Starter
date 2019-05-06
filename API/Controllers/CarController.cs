@@ -10,20 +10,27 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class CarController : ControllerBase
     {
-        private readonly IReadOnlyRepository<Car> _carReadOnlyRepository;
-        private readonly IWriteRepository<Car> _carWriteRepository;
+        //private readonly IReadOnlyRepository<Car> _carReadOnlyRepository;
+        //private readonly IWriteRepository<Car> _carWriteRepository;
 
-        public CarController(IReadOnlyRepository<Car> carReadOnlyRepository, IWriteRepository<Car> carWriteRepository)
+        //public CarController(IReadOnlyRepository<Car> carReadOnlyRepository, IWriteRepository<Car> carWriteRepository)
+        //{
+        //    _carReadOnlyRepository = carReadOnlyRepository;
+        //    _carWriteRepository = carWriteRepository;
+
+        //}
+
+        private readonly FacadeRepository _facadeRepository;
+
+        public CarController(FacadeRepository facadeRepository)
         {
-            _carReadOnlyRepository = carReadOnlyRepository;
-            _carWriteRepository = carWriteRepository;
-           
+            _facadeRepository = facadeRepository;
         }
 
         [HttpGet]
         public IActionResult Cars()
         {
-            return Ok(_carReadOnlyRepository.Get());
+            return Ok(_facadeRepository.ReadAllCar());
         }
 
         [HttpGet("{id}")]
@@ -36,7 +43,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostCar([FromBody] Car car)
         {
-            _carWriteRepository.Add(car);
+            _facadeRepository.AddCar(car);
             return Ok(car);
         }
 
@@ -48,7 +55,7 @@ namespace GFT.Starter.API.Controllers
             obj.Year = car.Year;
             obj.Color = car.Color;
 
-            return Ok(_carWriteRepository.Update(obj));
+            return Ok(_facadeRepository.UpdateCar(obj));
         }
 
         [HttpPut("changetires/{id}")]
@@ -64,14 +71,14 @@ namespace GFT.Starter.API.Controllers
             var obj = FindCar(id);
 
             if (obj != null)
-                return Ok(_carWriteRepository.Remove(obj));
+                return Ok(_facadeRepository.RemoveCar(obj));
 
             return NotFound(obj);
         }
 
         private Car FindCar(Guid id)
         {
-            return _carReadOnlyRepository.Find(id);
+            return _facadeRepository.ReadCar(id);
         }
     }
 }

@@ -34,6 +34,7 @@ namespace GFT.Starter.API
             services.AddScoped<IWriteRepository<Service>, ServiceRepository>();
             services.AddScoped<IReadOnlyRepository<ServiceOrder>, ServiceOrderRepository>();
             services.AddScoped<IWriteRepository<ServiceOrder>, ServiceOrderRepository>();
+            services.AddScoped<FacadeRepository>();
             services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             ConfigureSwagger(services);
