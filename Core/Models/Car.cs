@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace APIPRojeto.Models
+namespace Core.Models
 {
     public class Car
     {
@@ -15,5 +12,6 @@ namespace APIPRojeto.Models
         public int Year { get; set; }
         public Guid OwnerId { get; set; }
         public virtual Owner Owner { get; set; }
+
     }
 }

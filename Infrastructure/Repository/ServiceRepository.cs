@@ -1,12 +1,9 @@
-﻿using APIPRojeto.Models;
-using APIPRojeto.Repository.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace APIPRojeto.Repository
+namespace Infrastructure.Repository
 {
     public class ServiceRepository : BaseRepository
     {

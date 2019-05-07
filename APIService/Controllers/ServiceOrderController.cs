@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using APIPRojeto.Models;
-using APIPRojeto.Repository;
-using Microsoft.AspNetCore.Http;
+using Core.Models;
+using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 
-namespace APIPRojeto.Controllers
+namespace APIService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

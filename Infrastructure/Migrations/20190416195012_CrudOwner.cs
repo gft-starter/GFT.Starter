@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace APIPRojeto.Migrations
+namespace Infrastructure.Migrations
 {
     public partial class CrudOwner : Migration
     {

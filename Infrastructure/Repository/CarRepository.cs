@@ -1,12 +1,10 @@
-﻿using APIPRojeto.Models;
-using APIPRojeto.Repository;
-using APIPRojeto.Repository.Configuration;
+﻿using Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace APIPRojeto.Controllers
+namespace Infrastructure.Repository
 {
     public class CarRepository : BaseRepository
     {

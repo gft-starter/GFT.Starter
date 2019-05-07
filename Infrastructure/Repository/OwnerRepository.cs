@@ -1,18 +1,15 @@
-﻿using APIPRojeto.Models;
-using APIPRojeto.Repository;
-using APIPRojeto.Repository.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace APIPRojeto.Controllers
+namespace Infrastructure.Repository
 {
     public class OwnerRepository : BaseRepository
     {
         public IEnumerable<Owner> Get() => Db
-     .Owners
-     .ToList();
+            .Owners
+            .ToList();
 
         public Owner Find(Guid id) => Db
             .Owners

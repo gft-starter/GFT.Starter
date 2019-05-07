@@ -1,7 +1,7 @@
-﻿using APIPRojeto.Repository.Configuration;
+﻿using Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 
-namespace APIPRojeto.Repository
+namespace Infrastructure.Repository
 {
     public class BaseRepository
     {

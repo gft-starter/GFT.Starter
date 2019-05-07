@@ -1,7 +1,7 @@
-﻿using APIPRojeto.Models;
+﻿using Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace APIPRojeto.Repository.Configuration
+namespace Infrastructure.Configuration
 {
     public sealed class LataVelhaContext : DbContext
     {
