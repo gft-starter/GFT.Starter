@@ -26,14 +26,8 @@ namespace GFT.Starter.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddScoped<IReadOnlyRepository<Car>, CarRepository>();
-            services.AddScoped<IWriteRepository<Car>, CarRepository>();
             services.AddScoped<IReadOnlyRepository<Owner>, OwnerRepository>();
             services.AddScoped<IWriteRepository<Owner>, OwnerRepository>();
-            services.AddScoped<IReadOnlyRepository<Service>, ServiceRepository>();
-            services.AddScoped<IWriteRepository<Service>, ServiceRepository>();
-            services.AddScoped<IReadOnlyRepository<ServiceOrder>, ServiceOrderRepository>();
-            services.AddScoped<IWriteRepository<ServiceOrder>, ServiceOrderRepository>();
             services.AddScoped<FacadeRepository>();
             services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 

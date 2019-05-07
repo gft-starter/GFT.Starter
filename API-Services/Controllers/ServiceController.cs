@@ -1,7 +1,6 @@
 ﻿using System;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories;
-using GFT.Starter.Infrastructure.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GFT.Starter.API.Controllers
@@ -10,19 +9,18 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        private readonly IReadOnlyRepository<Service> _serviceReadOnlyRepository;
-        private readonly IWriteRepository<Service> _serviceWriteRepository;
 
-        public ServiceController(IReadOnlyRepository<Service> serviceReadOnlyRepository, IWriteRepository<Service> serviceWriteRepository)
+        private readonly FacadeRepository _facadeRepository;
+
+        public ServiceController(FacadeRepository facadeRepository)
         {
-            _serviceReadOnlyRepository = serviceReadOnlyRepository;
-            _serviceWriteRepository = serviceWriteRepository;
+            _facadeRepository = facadeRepository;
         }
 
         [HttpGet]
         public IActionResult Services()
         {
-            return Ok(_serviceReadOnlyRepository.Get());
+            return Ok(_facadeRepository.ReadAllCar());
         }
 
 
@@ -36,7 +34,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostService([FromBody] Service service)
         {
-            _serviceWriteRepository.Add(service);
+            //_facadeRepository.AddServiceOrder(service);
 
             return Ok(service);
         }
@@ -58,14 +56,17 @@ namespace GFT.Starter.API.Controllers
             var obj = FindService(id);
 
             if (obj != null)
-                return Ok(_serviceWriteRepository.Remove(obj));
+                //return Ok(_facadeRepository.RemoveServiceOrder(obj));
+                return Ok(obj);
+
 
             return NotFound(obj);
         }
 
         private Service FindService(Guid id)
         {
-            return _serviceReadOnlyRepository.Find(id);
+            //return _facadeRepository.ReadServiceOrder(id);
+            return new Service();
         }
     }
 }

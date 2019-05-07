@@ -22,5 +22,9 @@ namespace GFT.Starter.Core.Models
             Color = carToCopy.Color;
             Color = carToCopy.Color;
         }
+        public Car()
+        {
+
+        }
     }
 }

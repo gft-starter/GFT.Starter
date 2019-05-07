@@ -65,10 +65,10 @@ namespace GFT.Starter.API
         {
             app.UseSwagger();
 
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GFT Starter Workshop V1");
-            });
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "GFT Starter Workshop V1");
+            //});
         }
     }
 }
