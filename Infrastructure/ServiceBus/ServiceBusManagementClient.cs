@@ -79,7 +79,7 @@ namespace GFT.Starter.Infrastructure.ServiceBus
                 await _managementClient.CreateSubscriptionAsync(topicDescription);
             }
 
-            if (filters != null)
+            if (filters != null && filters.Any())
             {
                 IList<RuleDescription> rules = await _managementClient.GetRulesAsync(topicName, subscriptionName);
 

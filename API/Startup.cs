@@ -2,6 +2,8 @@
 using GFT.Starter.Infrastructure.Configuration;
 using GFT.Starter.Infrastructure.Repositories;
 using GFT.Starter.Infrastructure.Repositories.Contracts;
+using GFT.Starter.Infrastructure.ServiceBus;
+using GFT.Starter.Infrastructure.ServiceBus.IoC;
 using GFT.Starter.Infrastructure.Services;
 using GFT.Starter.Infrastructure.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
@@ -41,7 +43,9 @@ namespace GFT.Starter.API
             services.AddScoped<IServiceOrderCalculator, ServiceOrderCalculator>();
             services.AddScoped<IUpgradePartsService, UpgradePartsService>();
             services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-
+            services.ConfigureServiceBus(new ServiceBusSettings(
+                Configuration["ServiceBus:DefaultConnection"], Configuration["ServiceBus:QueueName"],
+                Configuration["ServiceBus:TopicName"], Configuration["ServiceBus:SubscriptionName"]));
             ConfigureSwagger(services);
         }
 

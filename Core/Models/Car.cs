@@ -1,4 +1,6 @@
-﻿namespace GFT.Starter.Core.Models
+﻿using System;
+
+namespace GFT.Starter.Core.Models
 {
     public class Car : Vehicle
     {

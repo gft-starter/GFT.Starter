@@ -1,8 +1,8 @@
 ﻿using System;
 using GFT.Starter.Core.Models;
-using GFT.Starter.Infrastructure.Repositories;
+using GFT.Starter.Core.Models.Commands;
 using GFT.Starter.Infrastructure.Repositories.Contracts;
-using GFT.Starter.Infrastructure.Services;
+using GFT.Starter.Infrastructure.ServiceBus.Contracts;
 using GFT.Starter.Infrastructure.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,13 +16,15 @@ namespace GFT.Starter.API.Controllers
         private readonly IWriteRepository<Car> _carWriteRepository;
         private readonly IUpgradePartsService _vehicleService;
         private readonly IEmailService _emailService;
+        private readonly IServiceBusClient _busClient;
 
-        public CarController(IReadOnlyRepository<Car> carReadOnlyRepository, IWriteRepository<Car> carWriteRepository, IUpgradePartsService vehicleService, IEmailService emailService)
+        public CarController(IReadOnlyRepository<Car> carReadOnlyRepository, IWriteRepository<Car> carWriteRepository, IUpgradePartsService vehicleService, IEmailService emailService, IServiceBusClient busClient)
         {
             _carReadOnlyRepository = carReadOnlyRepository;
             _carWriteRepository = carWriteRepository;
             _vehicleService = vehicleService;
             _emailService = emailService;
+            _busClient = busClient;
         }
 
         [HttpGet]
@@ -41,8 +43,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostVehicle([FromBody] Car car)
         {
-            _carWriteRepository.Add(car);
-            _emailService.SendEmail($"Car {car.Id} created successfully!", $"Car {car.Id} created successfully!");
+            _busClient.SendMessageToQueue(new CreateCar(car));
             return Ok(car);
         }
 
