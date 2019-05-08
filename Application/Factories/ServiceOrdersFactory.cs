@@ -4,23 +4,23 @@ using System;
 
 namespace Application.Factories
 {
-    public class ServiceOrdersFactory : IFactory<ServiceOrderValue>
+    public class ServiceOrdersFactory : IFactory<ServiceOrder>
     {
        
-        public ServiceOrderValue Create()
+        public ServiceOrder Create()
         {
             throw new NotImplementedException();
         }
 
-        public ServiceOrderValue Create(int quantity, Guid idCar, Guid idService)
+        public ServiceOrder Create(int quantity, Guid idCar, Guid idService)
         {
-            var serviceOrder = new ServiceOrderValue();
+            var serviceOrder = new ServiceOrder();
             serviceOrder.Id = Guid.NewGuid();
             serviceOrder.CarId = idCar;
             serviceOrder.ServiceId = idService;
 
 
-            return new ServiceOrderValue();
+            return new ServiceOrder();
         }
     }
 }

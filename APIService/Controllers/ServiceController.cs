@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Core.Models;
 using Infrastructure.Repository;
-using Microsoft.AspNetCore.Http;
+using Infrastructure.Repository.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIService.Controllers
@@ -11,19 +11,20 @@ namespace APIService.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
-        static List<Service> services = new List<Service>();
-        private readonly ServiceRepository serviceRepository;
+        private readonly IReadOnlyRepository<Service> _serviceReadOnlyRepository;
+        private readonly IWriteRepository<Service> _serviceWriteRepository;
 
-        public ServiceController()
+        public ServiceController(IReadOnlyRepository<Service> serviceReadOnlyRepository, IWriteRepository<Service> serviceWriteRepository)
         {
-            serviceRepository = new ServiceRepository();
+            _serviceReadOnlyRepository = serviceReadOnlyRepository;
+            _serviceWriteRepository = serviceWriteRepository;
         }
 
-        
+
         [HttpGet]
         public IActionResult Services()
         {
-            return Ok(serviceRepository.Get());
+            return Ok(_serviceReadOnlyRepository.Get());
         }
 
         
@@ -37,7 +38,7 @@ namespace APIService.Controllers
         [HttpPost]
         public IActionResult PostService([FromBody] Service service)
         {
-            serviceRepository.Add(service);
+            _serviceWriteRepository.Add(service);
 
             return Ok(service);
         }
@@ -59,14 +60,14 @@ namespace APIService.Controllers
             var obj = FindService(Id);
 
             if (obj != null)
-                return Ok(serviceRepository.Remove(obj));
+                return Ok(_serviceWriteRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Service FindService(Guid Id)
         {
-            return serviceRepository.Find(Id);
+            return _serviceReadOnlyRepository.Find(Id);
         }
     }
 }

@@ -2,16 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.Repository.Contracts;
+using Infrastructure.Configuration;
 
 namespace Infrastructure.Repository
 {
-    public class OwnerRepository : BaseRepository
+    public class OwnerRepository : IReadOnlyRepository<Owner>, IWriteRepository<Owner>
     {
-        public IEnumerable<Owner> Get() => Db
+        private readonly LataVelhaContext _db;
+
+        public OwnerRepository(LataVelhaContext db)
+        {
+            _db = db;
+        }
+
+        public IEnumerable<Owner> Get() => _db
             .Owners
             .ToList();
 
-        public Owner Find(Guid id) => Db
+        public Owner Find(Guid id) => _db
             .Owners
             .FirstOrDefault(o => o.Id == id);
 
@@ -19,8 +28,8 @@ namespace Infrastructure.Repository
         {
             if (owner != null)
             {
-                Db.Add(owner);
-                Db.SaveChanges();
+                _db.Add(owner);
+                _db.SaveChanges();
             }
         }
 
@@ -28,8 +37,8 @@ namespace Infrastructure.Repository
         {
             if (owner != null)
             {
-                Db.Remove(owner);
-                Db.SaveChanges();
+                _db.Remove(owner);
+                _db.SaveChanges();
             }
             return owner;
         }
@@ -38,8 +47,8 @@ namespace Infrastructure.Repository
         {
             if (owner != null)
             {
-                Db.Update(owner);
-                Db.SaveChanges();
+                _db.Update(owner);
+                _db.SaveChanges();
             }
             return owner;
         }

@@ -3,20 +3,31 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.Repository.Contracts;
+using Infrastructure.Configuration;
 
 namespace Infrastructure.Repository
 {
-    public class CarRepository : BaseRepository
+    public class CarRepository : IReadOnlyRepository<Car>, IWriteRepository<Car>
     {
-        
+        private readonly LataVelhaContext _db;
 
-        public IEnumerable<Car> Get() => Db
-            .Cars
+        public int Count => throw new NotImplementedException();
+
+        public CarRepository(LataVelhaContext db)
+        {
+            _db = db;
+        }
+
+        public CarRepository(){}
+
+        public IEnumerable<Car> Get() => _db
+            .Cars.OfType<Car>()
             .Include(c => c.Owner)
             .ToList();
 
-        public Car Find(Guid id) => Db
-            .Cars
+        public Car Find(Guid id) => _db
+            .Cars.OfType<Car>()
             .Include(c => c.Owner)
             .FirstOrDefault(c => c.Id == id);
 
@@ -24,8 +35,8 @@ namespace Infrastructure.Repository
         {
             if (car != null)
             {
-                Db.Add(car);
-                Db.SaveChanges();
+                _db.Add(car);
+                _db.SaveChanges();
             }
         }
 
@@ -33,8 +44,8 @@ namespace Infrastructure.Repository
         {
             if (car != null)
             {
-                Db.Remove(car);
-                Db.SaveChanges();
+                _db.Remove(car);
+                _db.SaveChanges();
             }
             return car;
         }
@@ -43,10 +54,12 @@ namespace Infrastructure.Repository
         {
             if (car != null)
             {
-                Db.Update(car);
-                Db.SaveChanges();
+                _db.Update(car);
+                _db.SaveChanges();
             }
             return car;
         }
+
+        
     }
 }

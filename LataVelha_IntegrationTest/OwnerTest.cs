@@ -2,13 +2,14 @@ using Core.Models;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace IntegrationTests
 {
     public class OwnerTest
     {
 
-        private const string url = "http://localhost:54451/api/owner";
+        private const string url = "https://localhost:44362/api/Owner";
         private HttpClient client;
 
         [SetUp]
@@ -17,7 +18,7 @@ namespace IntegrationTests
         }
 
         [Test]
-        public async void WhenRequestOwnerControllerUsingGet_ThenICanReceiveOwnersObjects()
+        public async Task WhenRequestOwnerControllerUsingGet_ThenICanReceiveOwnersObjects()
         {
             //arrange
             client = new HttpClient();

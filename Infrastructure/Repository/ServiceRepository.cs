@@ -2,16 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.Repository.Contracts;
+using Infrastructure.Configuration;
 
 namespace Infrastructure.Repository
 {
-    public class ServiceRepository : BaseRepository
+    public class ServiceRepository : IReadOnlyRepository<Service>, IWriteRepository<Service>
     {
-        public IEnumerable<Service> Get() => Db
+        private readonly LataVelhaContext _db;
+
+        public ServiceRepository(LataVelhaContext db)
+        {
+            _db = db;
+        }
+
+        public IEnumerable<Service> Get() => _db
             .Services
             .ToList();
 
-        public Service Find(Guid id) => Db
+        public Service Find(Guid id) => _db
             .Services
             .FirstOrDefault(s => s.Id == id);
 
@@ -19,8 +28,8 @@ namespace Infrastructure.Repository
         {
             if(service != null)
             {
-                Db.Add(service);
-                Db.SaveChanges();
+                _db.Add(service);
+                _db.SaveChanges();
             }
         }
 
@@ -28,8 +37,8 @@ namespace Infrastructure.Repository
         {
             if(service != null)
             {
-                Db.Remove(service);
-                Db.SaveChanges();
+                _db.Remove(service);
+                _db.SaveChanges();
             }
             return service;
         }
@@ -38,8 +47,8 @@ namespace Infrastructure.Repository
         {
             if(service != null)
             {
-                Db.Update(service);
-                Db.SaveChanges();
+                _db.Update(service);
+                _db.SaveChanges();
             }
             return service;
         }

@@ -16,4 +16,10 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="GFT.Starter.Infrastructure">
+      <HintPath>..\..\Users\aera\Desktop\GFT.Starter-d2f092b53b2df67972d5ee5e51ef3e2d496c40b0\Infrastructure\bin\Debug\netcoreapp2.2\GFT.Starter.Infrastructure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

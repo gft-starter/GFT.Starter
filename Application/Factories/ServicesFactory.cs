@@ -11,13 +11,13 @@ namespace Application.Factories
             var service = new Service();
             service.Name = "Martelinho de ouro";
             service.Description = "Reparo de lataria";
-            service.Value = 1000.00;
+            service.Value = "1000.00";
 
             return new Service();
 
         }
 
-        public Service Create(string name, string description, Double value)
+        public Service Create(string name, string description, string value)
         {
             var service = new Service();
             service.Id = Guid.NewGuid();

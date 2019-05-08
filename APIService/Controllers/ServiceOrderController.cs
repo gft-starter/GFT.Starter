@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Core.Models;
 using Infrastructure.Repository;
+using Infrastructure.Repository.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIService.Controllers
@@ -10,19 +11,21 @@ namespace APIService.Controllers
     [ApiController]
     public class ServiceOrderController : ControllerBase
     {
-        static List<ServiceOrder> serviceOrders = new List<ServiceOrder>();
-        private readonly ServiceOrderRepository serviceOrderRepository;
-
-        public ServiceOrderController()
+        private readonly IReadOnlyRepository<ServiceOrder> _serviceOrdeReadOnlyRepository;
+        private readonly IWriteRepository<ServiceOrder> _serviceOrderWriteRepository;
+        
+        public ServiceOrderController(IReadOnlyRepository<ServiceOrder> serviceOrdeReadOnlyRepository, IWriteRepository<ServiceOrder> serviceOrderWriteRepository)
         {
-            serviceOrderRepository = new ServiceOrderRepository();
+            _serviceOrdeReadOnlyRepository = serviceOrdeReadOnlyRepository;
+            _serviceOrderWriteRepository = serviceOrderWriteRepository;
+            
         }
 
-        
+
         [HttpGet]
         public IActionResult ServiceOrders()
         {
-            return Ok(serviceOrderRepository.Get());
+            return Ok(_serviceOrdeReadOnlyRepository.Get());
         }
 
         
@@ -36,7 +39,7 @@ namespace APIService.Controllers
         [HttpPost]
         public IActionResult PostServiceOrder([FromBody] ServiceOrder serviceOrder)
         {
-            serviceOrderRepository.Add(serviceOrder);
+            _serviceOrderWriteRepository.Add(serviceOrder);
 
             return Ok(serviceOrder);
         }
@@ -53,7 +56,7 @@ namespace APIService.Controllers
 
         private ServiceOrder FindServiceOrder(Guid Id)
         {
-            return serviceOrderRepository.Find(Id);
+            return _serviceOrdeReadOnlyRepository.Find(Id);
         }
     }
 }

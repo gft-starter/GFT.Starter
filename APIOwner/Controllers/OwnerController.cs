@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Core.Models;
 using Infrastructure.Repository;
+using Infrastructure.Repository.Contracts;
 
 namespace APIOwner.Controllers
 {
@@ -10,19 +11,20 @@ namespace APIOwner.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
-        static List<Owner> owners = new List<Owner>();
-        private readonly OwnerRepository ownerRepository;
+        private readonly IReadOnlyRepository<Owner> _ownerReadOnlyRepository;
+        private readonly IWriteRepository<Owner> _ownerWriteRepository;
 
-        public OwnerController()
+        public OwnerController(IReadOnlyRepository<Owner> ownerReadOnlyRepository, IWriteRepository<Owner> ownerWriteRepository)
         {
-            ownerRepository = new OwnerRepository();
+            _ownerReadOnlyRepository = ownerReadOnlyRepository;
+            _ownerWriteRepository = ownerWriteRepository;
         }
 
         // GET: api/Owner
         [HttpGet]
         public IActionResult Owners()
         {
-            return Ok(ownerRepository.Get());
+            return Ok(_ownerReadOnlyRepository.Get());
         }
 
         // GET: api/Owner/5
@@ -36,7 +38,7 @@ namespace APIOwner.Controllers
         [HttpPost]
         public IActionResult PostOwner([FromBody] Owner owner)
         {
-            ownerRepository.Add(owner);
+            _ownerWriteRepository.Add(owner);
 
             return Ok(owner);
         }
@@ -58,14 +60,14 @@ namespace APIOwner.Controllers
             var obj = FindOwner(Id);
 
             if (obj != null)
-                return Ok(ownerRepository.Remove(obj));
+                return Ok(_ownerWriteRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Owner FindOwner(Guid Id)
         {
-            return ownerRepository.Find(Id);
+            return _ownerReadOnlyRepository.Find(Id);
         }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Models;
-using Infrastructure.Repository;
+using Infrastructure.Services.Contracts;
+using Infrastructure.Repository.Contracts;
+using Infrastructure.SeviceBus.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Core.Models.Commands;
 
 namespace APICar.Controllers
 {
@@ -10,18 +13,24 @@ namespace APICar.Controllers
     [ApiController]
     public class CarController : ControllerBase
     {
-        static List<Car> cars = new List<Car>();
-        private readonly CarRepository carRepository;
+        private readonly IReadOnlyRepository<Car> _carReadOnlyRepository;
+        private readonly IWriteRepository<Car> _carWriteRepository;
+        private readonly IEmailService _emailService;
+        private readonly IServiceBusClient _busClient;
 
-        public CarController()
+
+        public CarController(IReadOnlyRepository<Car> carReadOnlyRepository, IWriteRepository<Car> carWriteRepository, IEmailService emailService, IServiceBusClient busClient)
         {
-            carRepository = new CarRepository();
+            _carReadOnlyRepository = carReadOnlyRepository;
+            _carWriteRepository = carWriteRepository;
+            _emailService = emailService;
+            _busClient = busClient;
         }
 
         [HttpGet]
         public IActionResult Cars()
         {
-            return Ok(carRepository.Get());
+            return Ok(_carReadOnlyRepository.Get());
         }
 
         [HttpGet("{id}")]
@@ -34,8 +43,7 @@ namespace APICar.Controllers
         [HttpPost]
         public IActionResult PostCar([FromBody] Car car)
         {
-            carRepository.Add(car);
-
+            _busClient.SendMessageToQueue(new CreateCar(car));
             return Ok(car);
         }
 
@@ -47,7 +55,8 @@ namespace APICar.Controllers
             obj.Year = car.Year;
             obj.Color = car.Color;
 
-            return Ok(carRepository.Update(obj));
+            _emailService.SendEmail($"Car {obj.Id} created successfully!", $"Car {obj.Id} created successfully!");
+            return Ok(_carWriteRepository.Update(obj));
         }
 
         [HttpDelete("{id}")]
@@ -56,14 +65,14 @@ namespace APICar.Controllers
             var obj = FindCar(Id);
 
             if (obj != null)
-                return Ok(carRepository.Remove(obj));
+                return Ok(_carWriteRepository.Remove(obj));
 
             return NotFound(obj);
         }
 
         private Car FindCar(Guid Id)
         {
-            return carRepository.Find(Id);
+            return _carReadOnlyRepository.Find(Id);
         }
     }
 }

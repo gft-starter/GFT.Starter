@@ -1,7 +1,8 @@
 ﻿using Application.Interfaces;
+using Core.Models;
 using System;
 
-namespace Core.Models
+namespace wpf.Models
 {
     public class ServiceOrderValue : IServiceOrder
     {
@@ -14,9 +15,8 @@ namespace Core.Models
 
         public void CalculatorValue(int quantity, double value)
         {
-            double TotalPay = 0.00;
-
-            TotalPay =  Service.Value * 0.10; 
+          
         }
+
     }
 }
