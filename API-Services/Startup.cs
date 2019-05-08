@@ -31,6 +31,7 @@ namespace API_Services
             services.AddScoped<IWriteRepository<Service>, ServiceRepository>();
             services.AddScoped<IReadOnlyRepository<ServiceOrder>, ServiceOrderRepository>();
             services.AddScoped<IWriteRepository<ServiceOrder>, ServiceOrderRepository>();
+
             services.AddScoped<FacadeRepository>();
             services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
@@ -67,10 +68,10 @@ namespace API_Services
         {
             app.UseSwagger();
 
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "GFT Starter Workshop V1");
-            //});
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GFT Starter Workshop V1");
+            });
         }
     }
 }
