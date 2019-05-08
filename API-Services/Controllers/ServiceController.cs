@@ -1,6 +1,7 @@
 ﻿using System;
 using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories;
+using GFT.Starter.Infrastructure.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GFT.Starter.API.Controllers
@@ -9,18 +10,19 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class ServiceController : ControllerBase
     {
+        private readonly IWriteRepository<Service> _serviceWriteRepository;
+        private readonly IReadOnlyRepository<Service> _serviceReadOnlyRepository;
 
-        private readonly FacadeRepository _facadeRepository;
-
-        public ServiceController(FacadeRepository facadeRepository)
+        public ServiceController(IWriteRepository<Service> seriviceWriteRepository, IReadOnlyRepository<Service> seriviceReadonlyRepository)
         {
-            _facadeRepository = facadeRepository;
+            _serviceWriteRepository = seriviceWriteRepository;
+            _serviceReadOnlyRepository = seriviceReadonlyRepository;
         }
 
         [HttpGet]
         public IActionResult Services()
         {
-            return Ok(_facadeRepository.ReadAllCar());
+            return Ok(_serviceReadOnlyRepository.Get());
         }
 
 
@@ -34,7 +36,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostService([FromBody] Service service)
         {
-            //_facadeRepository.AddServiceOrder(service);
+            _serviceWriteRepository.Add(service);
 
             return Ok(service);
         }
@@ -56,8 +58,7 @@ namespace GFT.Starter.API.Controllers
             var obj = FindService(id);
 
             if (obj != null)
-                //return Ok(_facadeRepository.RemoveServiceOrder(obj));
-                return Ok(obj);
+                return Ok(_serviceWriteRepository.Remove(obj));
 
 
             return NotFound(obj);
@@ -65,8 +66,7 @@ namespace GFT.Starter.API.Controllers
 
         private Service FindService(Guid id)
         {
-            //return _facadeRepository.ReadServiceOrder(id);
-            return new Service();
+            return _serviceReadOnlyRepository.Find(id);
         }
     }
 }

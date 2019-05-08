@@ -1,8 +1,7 @@
-﻿using System;
-using GFT.Starter.Core.Models;
-using GFT.Starter.Infrastructure.Repositories;
+﻿using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace GFT.Starter.API.Controllers
 {
@@ -10,22 +9,20 @@ namespace GFT.Starter.API.Controllers
     [ApiController]
     public class ServiceOrderController : ControllerBase
     {
-        //private readonly IReadOnlyRepository<ServiceOrder> _serviceOrdeReadOnlyRepository;
-        //private readonly IWriteRepository<ServiceOrder> _serviceOrderWriteRepository;
+        private readonly IReadOnlyRepository<ServiceOrder> _serviceOrdeReadOnlyRepository;
+        private readonly IWriteRepository<ServiceOrder> _serviceOrderWriteRepository;
 
-
-        private readonly FacadeRepository _facadeRepository;
-
-        public ServiceOrderController(FacadeRepository facadeRepository)
+        public ServiceOrderController(IReadOnlyRepository<ServiceOrder> serviceOrderReadOnlyRepository, IWriteRepository<ServiceOrder> serviceOrderWriteRepository)
         {
-            _facadeRepository = facadeRepository;
+            _serviceOrdeReadOnlyRepository = serviceOrderReadOnlyRepository;
+            _serviceOrderWriteRepository = serviceOrderWriteRepository;
         }
-       
+
 
         [HttpGet]
         public IActionResult ServiceOrders()
         {
-            return Ok(_facadeRepository.ReadAllServiceOrder());
+            return Ok(_serviceOrdeReadOnlyRepository.Get());
         }
 
 
@@ -39,7 +36,7 @@ namespace GFT.Starter.API.Controllers
         [HttpPost]
         public IActionResult PostServiceOrder([FromBody] ServiceOrder serviceOrder)
         {
-            _facadeRepository.AddServiceOrder(serviceOrder);
+            _serviceOrderWriteRepository.Add(serviceOrder);
 
             return Ok(serviceOrder);
         }
@@ -50,7 +47,7 @@ namespace GFT.Starter.API.Controllers
             var obj = FindServiceOrder(id);
 
             obj.Quantity = serviceOrder.Quantity;
-            _facadeRepository.UpdateServiceOrder(obj);
+            _serviceOrderWriteRepository.Update(obj);
 
             return Ok(obj);
         }
@@ -59,7 +56,7 @@ namespace GFT.Starter.API.Controllers
 
         private ServiceOrder FindServiceOrder(Guid id)
         {
-            return _facadeRepository.ReadServiceOrder(id);
+            return _serviceOrdeReadOnlyRepository.Find(id);
         }
     }
 }
