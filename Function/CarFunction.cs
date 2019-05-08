@@ -14,7 +14,6 @@ namespace GFT.Starter.Function
         public static void CreateCar([ServiceBusTrigger("%ServiceBusQueueName%", Connection = "ServiceBusConnectionString")]string createCar, ILogger log, [Inject]IServiceBusClient busClient)
         {
             var car = JsonConvert.DeserializeObject<CreateCar>(createCar);
-            log.LogInformation($"C# ServiceBus queue trigger function processed message: {car.Car.Model}");
             busClient.PublishMessageToTopic(new CarCreated(car.Car));
         }
 
