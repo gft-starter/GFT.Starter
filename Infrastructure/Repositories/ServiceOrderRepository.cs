@@ -19,19 +19,19 @@ namespace GFT.Starter.Infrastructure.Repositories
 
         public IEnumerable<ServiceOrder> Get() => _db
               .ServiceOrders
-              .Include(so => so.Vehicle)
+              .Include(so => so.Car)
               .Include(so => so.Service)
               .ToList();
 
         public ServiceOrder Find(Guid id) => _db
             .ServiceOrders
-            .Include(so => so.Vehicle)
+            .Include(so => so.Car)
             .Include(so => so.Service)
             .FirstOrDefault(so => so.Id == id);
 
         public ServiceOrder FidByVehicle(Guid id) => _db
             .ServiceOrders
-            .Include(so => so.Vehicle)
+            .Include(so => so.Car)
             .FirstOrDefault(so => so.VehicleId == id);
 
         public ServiceOrder FindByService(Guid id) => _db
