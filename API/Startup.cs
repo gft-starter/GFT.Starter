@@ -2,8 +2,6 @@
 using GFT.Starter.Infrastructure.Configuration;
 using GFT.Starter.Infrastructure.Repositories;
 using GFT.Starter.Infrastructure.Repositories.Contracts;
-using GFT.Starter.Infrastructure.Services;
-using GFT.Starter.Infrastructure.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +33,6 @@ namespace GFT.Starter.API
             services.AddScoped<IWriteRepository<Service>, ServiceRepository>();
             services.AddScoped<IReadOnlyRepository<ServiceOrder>, ServiceOrderRepository>();
             services.AddScoped<IWriteRepository<ServiceOrder>, ServiceOrderRepository>();
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IServiceOrderCalculator, ServiceOrderCalculator>();
-            services.AddScoped<IUpgradePartsService, UpgradePartsService>();
             services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             ConfigureSwagger(services);

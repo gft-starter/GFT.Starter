@@ -1,6 +1,5 @@
 ﻿using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories.Contracts;
-using GFT.Starter.Infrastructure.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -12,13 +11,11 @@ namespace API_Services.Controllers
     {
         private readonly IReadOnlyRepository<ServiceOrder> _serviceOrdeReadOnlyRepository;
         private readonly IWriteRepository<ServiceOrder> _serviceOrderWriteRepository;
-        private readonly IServiceOrderCalculator _serviceOrderCalculator;
 
-        public ServiceOrderController(IReadOnlyRepository<ServiceOrder> serviceOrdeReadOnlyRepository, IWriteRepository<ServiceOrder> serviceOrderWriteRepository, IServiceOrderCalculator serviceOrderCalculator)
+        public ServiceOrderController(IReadOnlyRepository<ServiceOrder> serviceOrdeReadOnlyRepository, IWriteRepository<ServiceOrder> serviceOrderWriteRepository)
         {
             _serviceOrdeReadOnlyRepository = serviceOrdeReadOnlyRepository;
             _serviceOrderWriteRepository = serviceOrderWriteRepository;
-            _serviceOrderCalculator = serviceOrderCalculator;
         }
 
         [HttpGet]
@@ -52,13 +49,6 @@ namespace API_Services.Controllers
             _serviceOrderWriteRepository.Update(obj);
 
             return Ok(obj);
-        }
-
-        [HttpGet("Calculate")]
-        public IActionResult CalculatePrice(Guid id)
-        {
-            var obj = FindServiceOrder(id);
-            return Ok(_serviceOrderCalculator.CalculateTotalPrice(obj));
         }
 
         private ServiceOrder FindServiceOrder(Guid id)

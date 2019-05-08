@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_Car", "API_Car\API_Car.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_Services", "API_Services\API_Services.csproj", "{AB8A45C4-2365-44BD-9C5F-A9D5EFA18799}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodigoIntegrationsTest", "CodigoIntegrationsTest\CodigoIntegrationsTest.csproj", "{987B5555-7411-4E67-BCEF-614EF8EB5B85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{AB8A45C4-2365-44BD-9C5F-A9D5EFA18799}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB8A45C4-2365-44BD-9C5F-A9D5EFA18799}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB8A45C4-2365-44BD-9C5F-A9D5EFA18799}.Release|Any CPU.Build.0 = Release|Any CPU
+		{987B5555-7411-4E67-BCEF-614EF8EB5B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{987B5555-7411-4E67-BCEF-614EF8EB5B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{987B5555-7411-4E67-BCEF-614EF8EB5B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{987B5555-7411-4E67-BCEF-614EF8EB5B85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{0527FC82-B385-4408-B18C-C99E8A004489} = {1AD879ED-5712-4542-9C4D-E5B4785928C0}
 		{BCF503A3-BAE0-4270-98A8-53376AE365B3} = {1AD879ED-5712-4542-9C4D-E5B4785928C0}
 		{AB8A45C4-2365-44BD-9C5F-A9D5EFA18799} = {1AD879ED-5712-4542-9C4D-E5B4785928C0}
+		{987B5555-7411-4E67-BCEF-614EF8EB5B85} = {64C8F9A9-52EC-4AB3-B7C6-F49B7CD4B55E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F6E239D8-6AC3-45C0-8238-89EC5023EA12}

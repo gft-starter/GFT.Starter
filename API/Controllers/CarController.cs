@@ -1,10 +1,7 @@
-﻿using System;
-using GFT.Starter.Core.Models;
-using GFT.Starter.Infrastructure.Repositories;
+﻿using GFT.Starter.Core.Models;
 using GFT.Starter.Infrastructure.Repositories.Contracts;
-using GFT.Starter.Infrastructure.Services;
-using GFT.Starter.Infrastructure.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace GFT.Starter.API.Controllers
 {
@@ -14,15 +11,11 @@ namespace GFT.Starter.API.Controllers
     {
         private readonly IReadOnlyRepository<Car> _carReadOnlyRepository;
         private readonly IWriteRepository<Car> _carWriteRepository;
-        private readonly IUpgradePartsService _vehicleService;
-        private readonly IEmailService _emailService;
 
-        public CarController(IReadOnlyRepository<Car> carReadOnlyRepository, IWriteRepository<Car> carWriteRepository, IUpgradePartsService vehicleService, IEmailService emailService)
+        public CarController(IReadOnlyRepository<Car> carReadOnlyRepository, IWriteRepository<Car> carWriteRepository)
         {
             _carReadOnlyRepository = carReadOnlyRepository;
             _carWriteRepository = carWriteRepository;
-            _vehicleService = vehicleService;
-            _emailService = emailService;
         }
 
         [HttpGet]
@@ -42,7 +35,6 @@ namespace GFT.Starter.API.Controllers
         public IActionResult PostVehicle([FromBody] Car car)
         {
             _carWriteRepository.Add(car);
-            _emailService.SendEmail($"Car {car.Id} created successfully!", $"Car {car.Id} created successfully!");
             return Ok(car);
         }
 
@@ -54,7 +46,6 @@ namespace GFT.Starter.API.Controllers
             obj.Year = car.Year;
             obj.Color = car.Color;
 
-            _emailService.SendEmail($"Car {obj.Id} created successfully!", $"Car {obj.Id} created successfully!");
             return Ok(_carWriteRepository.Update(obj));
         }
 
@@ -62,7 +53,6 @@ namespace GFT.Starter.API.Controllers
         public IActionResult ChangeTires(Guid id)
         {
             Car obj = FindCar(id);
-            _vehicleService.ChangeTires(obj);
             return Ok();
         }
 

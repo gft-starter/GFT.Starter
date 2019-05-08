@@ -21,16 +21,27 @@ namespace GFT.Starter.Application.Factories
             return car;
         }
 
-        //public Car Create(string cpf, string name, char gender, DateTime birthDate)
-        //{
-        //    var owner = new Owner();
-        //    owner.Id = Guid.NewGuid();
-        //    owner.CPF = cpf;
-        //    owner.Name = name;
-        //    owner.Gender = gender;
-        //    owner.BirthDate = birthDate;
+        public Car Create(string model, int year, string brand, string color, string plate, Guid ownerId)
+        {
+            var car = new Car();
+            car.Model = model;
+            car.Brand = brand;
+            car.Color = color;
+            car.Plate = plate;
+            car.OwnerId = ownerId;
 
-        //    return owner;
-        //}
+            return car;
+        }
+
+        public Car Update(Car car, string model, int year, string brand, string color, string plate, Guid ownerId)
+        {
+            car.Model = model;
+            car.Brand = brand;
+            car.Color = color;
+            car.Plate = plate;
+            car.OwnerId = ownerId;
+
+            return car;
+        }
     }
 }
