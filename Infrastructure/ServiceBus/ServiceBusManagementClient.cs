@@ -64,7 +64,7 @@ namespace GFT.Starter.Infrastructure.ServiceBus
             }
         }
 
-        public async Task CreateSubscription(string topicName, string subscriptionName, IEnumerable<Type> filters = null)
+        public async Task CreateSubscription(string topicName, string subscriptionName, IList<Type> filters = null)
         {
             if (!await _managementClient.SubscriptionExistsAsync(topicName, subscriptionName))
             {

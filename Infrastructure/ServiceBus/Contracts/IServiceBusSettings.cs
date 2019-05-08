@@ -9,6 +9,6 @@ namespace GFT.Starter.Infrastructure.ServiceBus.Contracts
         string QueueName { get; }
         string SubscriptionName { get; }
         string TopicName { get; }
-        IEnumerable<Type> Filters { get; }
+        IList<Type> Filters { get; }
     }
 }

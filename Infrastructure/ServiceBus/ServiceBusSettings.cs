@@ -6,7 +6,7 @@ namespace GFT.Starter.Infrastructure.ServiceBus
 {
     public class ServiceBusSettings : IServiceBusSettings
     {
-        public ServiceBusSettings(string connectionString, string queueName, string topicName, string subscriptionName, IEnumerable<Type> filters = null)
+        public ServiceBusSettings(string connectionString, string queueName, string topicName, string subscriptionName, IList<Type> filters = null)
         {
             ConnectionString = connectionString;
             QueueName = queueName;
@@ -19,6 +19,6 @@ namespace GFT.Starter.Infrastructure.ServiceBus
         public string QueueName { get; }
         public string TopicName { get; }
         public string SubscriptionName { get; }
-        public IEnumerable<Type> Filters { get; }
+        public IList<Type> Filters { get; }
     }
 }

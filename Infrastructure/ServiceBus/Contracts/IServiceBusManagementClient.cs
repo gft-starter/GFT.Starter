@@ -12,7 +12,7 @@ namespace GFT.Starter.Infrastructure.ServiceBus.Contracts
         Task DeleteQueue(string queueName);
         Task CreateTopic(string topicName);
         Task DeleteTopic(string topicName);
-        Task CreateSubscription(string topicName, string subscriptionName, IEnumerable<Type> filters = null);
+        Task CreateSubscription(string topicName, string subscriptionName, IList<Type> filters = null);
         Task DeleteSubscription(string topicName, string subscriptionName);
     }
 }
