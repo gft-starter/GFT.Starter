@@ -1,48 +1,38 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GFT.Starter.Function.IoC
 {
-    internal class InjectBinding : IBinding
+    public class InjectBindingProvider : IBindingProvider
     {
-        private readonly Type _type;
-        private readonly IServiceProvider _serviceProvider;
+        public readonly IServiceCollection ServiceCollection;
 
-        internal InjectBinding(IServiceProvider serviceProvider, Type type)
+        public InjectBindingProvider(IServiceCollection serviceProvider)
         {
-            _type = type;
-            _serviceProvider = serviceProvider;
+            ServiceCollection = serviceProvider;
+        }
+        public Task<IBinding> TryCreateAsync(BindingProviderContext context)
+        {
+            LoadConfiguredDependencies(context);
+
+            ServiceProvider serviceProvider = ServiceCollection.BuildServiceProvider(true);
+
+            IBinding binding = new InjectBinding(serviceProvider, context.Parameter.ParameterType);
+            return Task.FromResult(binding);
         }
 
-        public bool FromAttribute => true;
-
-        public Task<IValueProvider> BindAsync(object value, ValueBindingContext context) =>
-            Task.FromResult((IValueProvider)new InjectValueProvider(value));
-
-        public async Task<IValueProvider> BindAsync(BindingContext context)
+        private void LoadConfiguredDependencies(BindingProviderContext context)
         {
-            await Task.Yield();
-            var scope = IoC.Scopes.GetOrAdd(context.FunctionInstanceId, (_) => _serviceProvider.CreateScope());
-            var value = scope.ServiceProvider.GetRequiredService(_type);
-            return await BindAsync(value, context.ValueContext);
-        }
+            var implementationType = context.Parameter.Member.DeclaringType.Assembly.GetExportedTypes()
+                                            .SingleOrDefault(t => typeof(IDependencyConfiguration).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
+            if (implementationType == null)
+                return;
 
-        public ParameterDescriptor ToParameterDescriptor() => new ParameterDescriptor();
-
-        private class InjectValueProvider : IValueProvider
-        {
-            private readonly object _value;
-
-            public InjectValueProvider(object value) => _value = value;
-
-            public Type Type => _value.GetType();
-
-            public Task<object> GetValueAsync() => Task.FromResult(_value);
-
-            public string ToInvokeString() => _value.ToString();
+            var dependencyConfig = (IDependencyConfiguration)Activator.CreateInstance(implementationType);
+            dependencyConfig.RegisterServices(ServiceCollection);
         }
     }
 }

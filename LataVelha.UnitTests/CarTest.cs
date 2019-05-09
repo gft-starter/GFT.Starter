@@ -94,6 +94,9 @@ namespace Tests
             Assert.AreNotEqual(updateCar.Brand, car.Brand);
             Assert.AreNotEqual(updateCar.Color, car.Color);
             Assert.AreNotEqual(updateCar.Plate, car.Plate);
+
+            Assert.IsNotInstanceOf(typeof(Owner), updateCar);
+            Assert.AreNotEqual(typeof(Car), updateCar);
         }
     }
 }

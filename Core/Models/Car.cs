@@ -4,6 +4,17 @@ namespace GFT.Starter.Core.Models
 {
     public class Car
     {
+        public Car() { }
+        public Car(Car cartoCopy)
+        {
+            Id = cartoCopy.Id;
+            Plate = cartoCopy.Plate;
+            Brand = cartoCopy.Brand;
+            Model = cartoCopy.Model;
+            Color = cartoCopy.Color;
+            Year = cartoCopy.Year;
+            OwnerId = cartoCopy.OwnerId;
+        }
         public Guid Id { get; set; }
         public string Plate { get; set; }
         public string Brand { get; set; }

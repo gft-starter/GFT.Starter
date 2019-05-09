@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
+
+// ReSharper disable UnusedMember.Global
 
 namespace GFT.Starter.Infrastructure.ServiceBus.Contracts
 {

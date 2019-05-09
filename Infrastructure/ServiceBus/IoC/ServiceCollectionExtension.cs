@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GFT.Starter.Infrastructure.ServiceBus.Contracts;
+﻿using GFT.Starter.Infrastructure.ServiceBus.Contracts;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Management;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,13 +16,14 @@ namespace GFT.Starter.Infrastructure.ServiceBus.IoC
             services.AddSingleton<IQueueClient>(new QueueClient(settings.ConnectionString, settings.QueueName));
             services.AddSingleton<ITopicClient>(new TopicClient(settings.ConnectionString, settings.TopicName));
             services.AddSingleton<ISubscriptionClient>(new SubscriptionClient(settings.ConnectionString, settings.TopicName, settings.SubscriptionName));
+            services.AddSingleton<IServiceBusClient, ServiceBusClient>();
 
-            serviceBusManagementClient.CreateQueue(settings.QueueName).wait();
-            serviceBusManagementClient.CreateTopic(settings.TopicName).wait();
-            serviceBusManagementClient.CreateSubscription(settings.TopicName, settings.SubscriptionName).wait();
-
+            serviceBusManagementClient.CreateQueue(settings.QueueName).Wait();
+            serviceBusManagementClient.CreateTopic(settings.TopicName).Wait();
+            serviceBusManagementClient.CreateSubscription(settings.TopicName, settings.SubscriptionName, settings.Filters).Wait();
 
             return services;
         }
     }
+
 }

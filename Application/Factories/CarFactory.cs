@@ -25,25 +25,16 @@ namespace GFT.Starter.Application.Factories
         public Car Update(Car car, string model, int year, string brand, string color, string plate, Guid ownerId)
 
         {
-            car.Model = model;
-            car.Year = year;
-            car.Brand = brand;
-            car.Color = color;
-            car.Plate = plate;
-            car.OwnerId = ownerId;
-            return car;
+            var newCar = new Car(car);
+            newCar.Model = model;
+            newCar.Year = year;
+            newCar.Brand = brand;
+            newCar.Color = color;
+            newCar.Plate = plate;
+            newCar.OwnerId = ownerId;
+            return newCar;
         }
 
-        //public Car Create(string cpf, string name, char gender, DateTime birthDate)
-        //{
-        //    var owner = new Owner();
-        //    owner.Id = Guid.NewGuid();
-        //    owner.CPF = cpf;
-        //    owner.Name = name;
-        //    owner.Gender = gender;
-        //    owner.BirthDate = birthDate;
-
-        //    return owner;
-        //}
+        
     }
 }
