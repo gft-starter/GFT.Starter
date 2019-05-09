@@ -28,7 +28,6 @@ namespace GFT.Starter.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IReadOnlyRepository<Owner>, OwnerRepository>();
             services.AddScoped<IWriteRepository<Owner>, OwnerRepository>();
-            services.AddScoped<FacadeRepository>();
             services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             ConfigureSwagger(services);
