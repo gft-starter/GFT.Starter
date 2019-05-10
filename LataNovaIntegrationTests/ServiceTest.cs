@@ -30,7 +30,7 @@ namespace IntegrationTests
         }
 
         [Test]
-        public async Task WhenRequestOwnerControllerUsingPost_ThenVerifyIfThatOwnerExistsUsingGet()
+        public async Task WhenRequestServiceControllerUsingPost_ThenVerifyIfThatServiceExistsUsingGet()
         {
             //arrange
             client = new HttpClient();
@@ -58,63 +58,63 @@ namespace IntegrationTests
             Assert.AreEqual(service.Value, apiResponse.Value);
         }
 
+        //[Test]
+        //public async Task WhenRequestingServiceControllerUsingPut_ThenVerifyIfServiceWasUpdated()
+        //{
+        //    //arrange
+        //    client = new HttpClient();
+        //    Service service = new Service()
+        //    {
+        //        Id = Guid.NewGuid(),
+        //        Description = "Lavagem completa",
+        //        Name = "Teste",
+        //        Value = 50.00f
+        //    };
+
+        //    //act
+        //    var newService = new Service()
+        //    {
+        //        Id = service.Id,
+        //        Description = "Lavagem rápida",
+        //        Name = "Lava e seca",
+        //        Value = 25.00f
+        //    };
+
+        //    string objServicePost = JsonConvert.SerializeObject(service);
+        //    var contentPost = new StringContent(objServicePost, System.Text.Encoding.UTF8, "application/json");
+        //    var post = await client.PostAsync($"{url}", contentPost);
+
+        //    var get = await client.GetAsync($"{url}/{service.Id.ToString()}");
+        //    var apiResponsePost = JsonConvert.DeserializeObject<Service>(await get.Content.ReadAsStringAsync());
+
+        //    string objServicePut = JsonConvert.SerializeObject(newService);
+        //    var contentPut = new StringContent(objServicePut, System.Text.Encoding.UTF8, "application/json");
+        //    var put = await client.PutAsync($"{url}/{service.Id.ToString()}", contentPut);
+
+        //    var newGet = await client.GetAsync($"{url}/{newService.Id.ToString()}");
+        //    var apiResponsePut = JsonConvert.DeserializeObject<Service>(await newGet.Content.ReadAsStringAsync());
+
+
+        //    //assert
+        //    Assert.IsNotNull(apiResponsePost);
+
+        //    Assert.AreEqual(service.Id, apiResponsePost.Id);
+        //    Assert.AreEqual(service.Description, apiResponsePost.Description);
+        //    Assert.AreEqual(service.Name, apiResponsePost.Name);
+        //    Assert.AreEqual(service.Value, apiResponsePost.Value);
+
+        //    Assert.IsNotNull(put);
+
+        //    Assert.AreEqual(newService.Id, apiResponsePut.Id);
+        //    Assert.AreEqual(newService.Description, apiResponsePut.Description);
+        //    Assert.AreEqual(newService.Name, apiResponsePut.Name);
+        //    Assert.AreEqual(newService.Value, apiResponsePut.Value);
+
+
+        //}
+
         [Test]
-        public async Task WhenRequestingOwnerControllerUsingPut_ThenVerifyIfOwnerWasUpdated()
-        {
-            //arrange
-            client = new HttpClient();
-            Service service = new Service()
-            {
-                Id = Guid.NewGuid(),
-                Description = "Lavagem completa",
-                Name = "Teste",
-                Value = 50.00f
-            };
-
-            //act
-            var newService = new Service()
-            {
-                Id = service.Id,
-                Description = "Lavagem rápida",
-                Name = "Lava e seca",
-                Value = 25.00f
-            };
-
-            string objServicePost = JsonConvert.SerializeObject(service);
-            var contentPost = new StringContent(objServicePost, System.Text.Encoding.UTF8, "application/json");
-            var post = await client.PostAsync($"{url}", contentPost);
-
-            var get = await client.GetAsync($"{url}/{service.Id.ToString()}");
-            var apiResponsePost = JsonConvert.DeserializeObject<Service>(await get.Content.ReadAsStringAsync());
-
-            string objServicePut = JsonConvert.SerializeObject(newService);
-            var contentPut = new StringContent(objServicePut, System.Text.Encoding.UTF8, "application/json");
-            var put = await client.PutAsync($"{url}/{service.Id.ToString()}", contentPut);
-
-            var newGet = await client.GetAsync($"{url}/{newService.Id.ToString()}");
-            var apiResponsePut = JsonConvert.DeserializeObject<Service>(await newGet.Content.ReadAsStringAsync());
-
-
-            //assert
-            Assert.IsNotNull(apiResponsePost);
-
-            Assert.AreEqual(service.Id, apiResponsePost.Id);
-            Assert.AreEqual(service.Description, apiResponsePost.Description);
-            Assert.AreEqual(service.Name, apiResponsePost.Name);
-            Assert.AreEqual(service.Value, apiResponsePost.Value);
-
-            Assert.IsNotNull(put);
-
-            Assert.AreEqual(newService.Id, apiResponsePut.Id);
-            Assert.AreEqual(newService.Description, apiResponsePut.Description);
-            Assert.AreEqual(newService.Name, apiResponsePut.Name);
-            Assert.AreEqual(newService.Value, apiResponsePut.Value);
-
-
-        }
-
-        [Test]
-        public async Task WhenRequestingOwnerControllerUsingDelete_ThenVerifyIfOwnerWasDeleted()
+        public async Task WhenRequestingServiceControllerUsingDelete_ThenVerifyIfServiceWasDeleted()
         {
             //arrange
             client = new HttpClient();
