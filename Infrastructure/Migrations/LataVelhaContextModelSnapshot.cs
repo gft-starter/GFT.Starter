@@ -13,13 +13,12 @@ namespace Infrastructure.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("APIPRojeto.Models.Car", b =>
+            modelBuilder.Entity("Core.Models.Car", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -43,7 +42,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("APIPRojeto.Models.Owner", b =>
+            modelBuilder.Entity("Core.Models.Owner", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -63,7 +62,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Owners");
                 });
 
-            modelBuilder.Entity("APIPRojeto.Models.Service", b =>
+            modelBuilder.Entity("Core.Models.Service", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -79,7 +78,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Services");
                 });
 
-            modelBuilder.Entity("APIPRojeto.Models.ServiceOrder", b =>
+            modelBuilder.Entity("Core.Models.ServiceOrder", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -99,22 +98,22 @@ namespace Infrastructure.Migrations
                     b.ToTable("ServiceOrders");
                 });
 
-            modelBuilder.Entity("APIPRojeto.Models.Car", b =>
+            modelBuilder.Entity("Core.Models.Car", b =>
                 {
-                    b.HasOne("APIPRojeto.Models.Owner", "Owner")
+                    b.HasOne("Core.Models.Owner", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("APIPRojeto.Models.ServiceOrder", b =>
+            modelBuilder.Entity("Core.Models.ServiceOrder", b =>
                 {
-                    b.HasOne("APIPRojeto.Models.Car", "Car")
+                    b.HasOne("Core.Models.Car", "Car")
                         .WithMany()
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("APIPRojeto.Models.Service", "Service")
+                    b.HasOne("Core.Models.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade);

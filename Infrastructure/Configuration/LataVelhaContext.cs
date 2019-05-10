@@ -5,7 +5,7 @@ namespace Infrastructure.Configuration
 {
     public sealed class LataVelhaContext : DbContext
     {
-        public LataVelhaContext() { }
+        public LataVelhaContext(DbContextOptions<LataVelhaContext> options) : base(options) { }
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<Owner> Owners { get; set; }
@@ -14,11 +14,6 @@ namespace Infrastructure.Configuration
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var connectionString = @"Server=BRPC003891\SQLEXPRESS;Database=LataVelha;Trusted_Connection=True";
-                optionsBuilder.UseSqlServer(connectionString);
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

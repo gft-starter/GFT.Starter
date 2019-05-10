@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 namespace Infrastructure.Services
 {
-    class EmailService : IEmailService
+    public class EmailService : IEmailService
     {
         public void SendEmail(string subject, string body)
         {

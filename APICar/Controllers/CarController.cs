@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Core.Models;
 using Infrastructure.Services.Contracts;
 using Infrastructure.Repository.Contracts;

@@ -8,18 +8,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\APIOwner\APIOwner.csproj" />
     <ProjectReference Include="..\APIPRojeto\APIPRojeto.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="GFT.Starter.Infrastructure">
-      <HintPath>..\..\Users\aera\Desktop\GFT.Starter-d2f092b53b2df67972d5ee5e51ef3e2d496c40b0\Infrastructure\bin\Debug\netcoreapp2.2\GFT.Starter.Infrastructure.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
