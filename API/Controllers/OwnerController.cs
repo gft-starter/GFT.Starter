@@ -46,7 +46,7 @@ namespace GFT.Starter.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCar(Guid id, [FromBody] Owner owner)
+        public IActionResult UpdateOwner(Guid id, [FromBody] Owner owner)
         {
             var obj = FindOwner(id);
 

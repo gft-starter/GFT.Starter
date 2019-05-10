@@ -92,7 +92,7 @@ namespace IntegrationTests
             var put = await client.PutAsync($"{url}/{owner.Id.ToString()}", contentPut);
 
             var newGet = await client.GetAsync($"{url}/{newOwner.Id.ToString()}");
-            var apiResponsePut = JsonConvert.DeserializeObject<Owner>(await get.Content.ReadAsStringAsync());
+            var apiResponsePut = JsonConvert.DeserializeObject<Owner>(await newGet.Content.ReadAsStringAsync());
 
 
             //assert
@@ -107,13 +107,53 @@ namespace IntegrationTests
             Assert.IsNotNull(put);
 
             Assert.AreEqual(newOwner.Id, apiResponsePut.Id);
-
             Assert.AreEqual(newOwner.CPF, apiResponsePut.CPF);
             Assert.AreEqual(newOwner.Name, apiResponsePut.Name);
             Assert.AreEqual(newOwner.BirthDate, apiResponsePut.BirthDate);
             Assert.AreEqual(newOwner.Gender, apiResponsePut.Gender);
+
+
         }
 
-        
+        [Test]
+        public async Task WhenRequestingOwnerControllerUsingDelete_ThenVerifyIfOwnerWasDeleted()
+        {
+            //arrange
+            client = new HttpClient();
+            Owner owner = new Owner();
+            owner.Id = Guid.NewGuid();
+            owner.CPF = "1231561516";
+            owner.Name = "Teste";
+            owner.BirthDate = new DateTime();
+            owner.Gender = 'M';
+
+
+            //act
+            string objOwnerPost = JsonConvert.SerializeObject(owner);
+            var contentPost = new StringContent(objOwnerPost, System.Text.Encoding.UTF8, "application/json");
+            var post = await client.PostAsync($"{url}", contentPost);
+
+            var get = await client.GetAsync($"{url}/{owner.Id.ToString()}");
+            var apiResponsePost = JsonConvert.DeserializeObject<Owner>(await get.Content.ReadAsStringAsync());
+
+            var delete = await client.DeleteAsync($"{url}/{owner.Id.ToString()}");
+
+            var newGet = await client.GetAsync($"{url}/{owner.Id.ToString()}");
+            var apiResponseDelete = JsonConvert.DeserializeObject<Owner>(await newGet.Content.ReadAsStringAsync());
+
+            //assert
+            Assert.IsNotNull(apiResponsePost);
+
+            Assert.AreEqual(owner.Id, apiResponsePost.Id);
+            Assert.AreEqual(owner.CPF, apiResponsePost.CPF);
+            Assert.AreEqual(owner.Name, apiResponsePost.Name);
+            Assert.AreEqual(owner.BirthDate, apiResponsePost.BirthDate);
+            Assert.AreEqual(owner.Gender, apiResponsePost.Gender);
+
+            Assert.IsNull(apiResponseDelete);
+
+        }
+
+
     }
 }
