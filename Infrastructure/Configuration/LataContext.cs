@@ -1,11 +1,12 @@
 ﻿using GFT.Starter.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace GFT.Starter.Infrastructure.Configuration
 {
-    public sealed class LataVelhaContext : DbContext
+    public sealed class LataContext : DbContext
     {
-        public LataVelhaContext(DbContextOptions<LataVelhaContext> options) : base(options) { }
+        public LataContext(DbContextOptions<LataContext> options) : base(options) { Database.Migrate(); }
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<Owner> Owners { get; set; }
@@ -14,6 +15,7 @@ namespace GFT.Starter.Infrastructure.Configuration
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

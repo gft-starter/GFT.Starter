@@ -10,9 +10,9 @@ namespace GFT.Starter.Infrastructure.Repositories
 {
     public class ServiceOrderRepository : IReadOnlyRepository<ServiceOrder>, IWriteRepository<ServiceOrder>
     {
-        private readonly LataVelhaContext _db;
+        private readonly LataContext _db;
 
-        public ServiceOrderRepository(LataVelhaContext db)
+        public ServiceOrderRepository(LataContext db)
         {
             _db = db;
         }
@@ -29,10 +29,10 @@ namespace GFT.Starter.Infrastructure.Repositories
             .Include(so => so.Service)
             .FirstOrDefault(so => so.Id == id);
 
-        public ServiceOrder FidByVehicle(Guid id) => _db
+        public ServiceOrder FidByCar(Guid id) => _db
             .ServiceOrders
             .Include(so => so.Car)
-            .FirstOrDefault(so => so.VehicleId == id);
+            .FirstOrDefault(so => so.CarId == id);
 
         public ServiceOrder FindByService(Guid id) => _db
             .ServiceOrders

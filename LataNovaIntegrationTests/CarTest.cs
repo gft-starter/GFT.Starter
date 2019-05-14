@@ -21,12 +21,6 @@ namespace IntegrationTests
         }
 
         [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
-
-        [Test]
         public async Task WhenRequestOwnerControllerUsingGet_ThenICanReceiveOwnersObject()
         {
             //arrange

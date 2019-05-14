@@ -24,8 +24,8 @@ namespace GFT.Starter.API.Observer
         {
             foreach(IObserver<Car> car in Cars)
             {
-                Car.SetStatus(status);
-                car.OnNext(Car);
+                //Car.SetStatus(status);
+                //car.OnNext(Car);
             }
 
             return new Disposer(Cars, observer);

@@ -10,9 +10,9 @@ namespace GFT.Starter.Infrastructure.Repositories
 {
     public class CarRepository : IReadOnlyRepository<Car>, IWriteRepository<Car>
     {
-        private readonly LataVelhaContext _db;
+        private readonly LataContext _db;
 
-        public CarRepository(LataVelhaContext db)
+        public CarRepository(LataContext db)
         {
             _db = db;
         }

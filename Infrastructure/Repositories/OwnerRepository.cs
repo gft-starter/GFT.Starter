@@ -10,9 +10,9 @@ namespace GFT.Starter.Infrastructure.Repositories
 {
     public class OwnerRepository : IReadOnlyRepository<Owner>, IWriteRepository<Owner>
     {
-        private readonly LataVelhaContext _db;
+        private readonly LataContext _db;
 
-        public OwnerRepository(LataVelhaContext db)
+        public OwnerRepository(LataContext db)
         {
             _db = db;
         }
@@ -23,7 +23,7 @@ namespace GFT.Starter.Infrastructure.Repositories
 
         public Owner Find(Guid id) => _db
             .Owners
-            .Include(o => o.Id == id)
+            .Where(o => o.Id == id)
             .FirstOrDefault();
 
         public void Add(Owner owner)

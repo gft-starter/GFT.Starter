@@ -10,9 +10,9 @@ namespace GFT.Starter.Infrastructure.Repositories
 {
     public class ServiceRepository : IReadOnlyRepository<Service>, IWriteRepository<Service>
     {
-        private readonly LataVelhaContext _db;
+        private readonly LataContext _db;
 
-        public ServiceRepository(LataVelhaContext db)
+        public ServiceRepository(LataContext db)
         {
             _db = db;
         }

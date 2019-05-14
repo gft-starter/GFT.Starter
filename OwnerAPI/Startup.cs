@@ -36,7 +36,7 @@ namespace OwnerAPI
             services.AddScoped<IReadOnlyRepository<Owner>, OwnerRepository>();
             services.AddScoped<IWriteRepository<Owner>, OwnerRepository>();
            
-            services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddDbContext<LataContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             ConfigureSwagger(services);
         }

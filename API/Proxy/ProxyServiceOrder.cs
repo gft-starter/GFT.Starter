@@ -11,13 +11,14 @@ namespace GFT.Starter.API.Proxy
     public class ProxyServiceOrder : IServiceOrder
     {
 
-        private readonly IReadOnlyRepository<ServiceOrder> _serviceOrdeReadOnlyRepository;
+        //private readonly IReadOnlyRepository<ServiceOrder> _serviceOrdeReadOnlyRepository;
         public ServiceOrder ChangeStatus(ServiceOrderStatus status, Guid id)
         {
-            ServiceOrder ServiceOrder = _serviceOrdeReadOnlyRepository.Find(id);
+            //ServiceOrder ServiceOrder = _serviceOrdeReadOnlyRepository.Find(id);
+            ServiceOrder ServiceOrder = new ServiceOrder();
             if (ServiceOrder != null)
             {
-                ServiceOrder.ChangeStatus(status);
+                //ServiceOrder.ChangeStatus(status);
             }
             return ServiceOrder;
         }

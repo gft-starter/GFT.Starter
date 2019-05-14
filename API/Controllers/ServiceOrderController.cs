@@ -54,23 +54,23 @@ namespace GFT.Starter.API.Controllers
             return Ok(obj);
         }
 
-        [HttpPut("status/{id}")]
-        public IActionResult UpdateStatus(Guid id, [FromBody] ServiceOrderStatus status)
-        {
-            ProxyServiceOrder proxyServiceOrder = new ProxyServiceOrder();
+        //[HttpPut("status/{id}")]
+        //public IActionResult UpdateStatus(Guid id, [FromBody] ServiceOrderStatus status)
+        //{
+        //    ProxyServiceOrder proxyServiceOrder = new ProxyServiceOrder();
 
-            Car car = new Car();
+        //    Car car = new Car();
 
-            car.SetStatus(CarStatus.Free);
+        //    //car.SetStatus(CarStatus.Free);
 
-            StatusObserver statusObserver = new StatusObserver(car);
-            ServiceOrder serviceOrder = new ServiceOrder(statusObserver);
+        //    //StatusObserver statusObserver = new StatusObserver(car);
+        //    //ServiceOrder serviceOrder = new ServiceOrder(statusObserver);
 
-            serviceOrder = proxyServiceOrder.ChangeStatus(status, id);
-            _serviceOrderWriteRepository.Update(serviceOrder);
+        //    //serviceOrder = proxyServiceOrder.ChangeStatus(status, id);
+        //    //_serviceOrderWriteRepository.Update(serviceOrder);
 
-            return Ok(serviceOrder);
-        }
+        //    return Ok(serviceOrder);
+        //}
 
         private ServiceOrder FindServiceOrder(Guid id)
         {

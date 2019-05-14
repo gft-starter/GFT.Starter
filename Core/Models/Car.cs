@@ -14,6 +14,20 @@ namespace GFT.Starter.Core.Models
         public Owner Owner { get; set; }
         public bool Deleted { get; set; }
 
+        public Car(Car car)
+        {
+            Id = car.Id;
+            Plate = car.Plate;
+            Brand = car.Brand;
+            Model = car.Model;
+            Color = car.Color;
+            Year = car.Year;
+            OwnerId = car.OwnerId;
+            Owner = car.Owner;
+        }
+
+        public Car() { }
+
         public void Update(Person person)
         {
             Deleted = person.Deleted;

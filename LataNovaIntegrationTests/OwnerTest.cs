@@ -21,12 +21,6 @@ namespace IntegrationTests
         }
 
         [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
-
-        [Test]
         public async Task WhenRequestOwnerControllerUsingGet_ThenICanReceiveOwnersObject()
         {
             //arrange
@@ -41,88 +35,136 @@ namespace IntegrationTests
         }
 
         [Test]
-        public async Task WhenRequestOwnerControllerUsingPost_ThenICanCreateOwnersObject()
+        public async Task WhenRequestOwnerControllerUsingPost_ThenICanRequestOwnerObject()
         {
             //arrange
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             Owner owner = new Owner();
-            owner.Name = "Jonas";
-            owner.Gender = 'M';
+            owner.Name = "Elwing";
+            owner.Gender = 'F';
             owner.CPF = "123456789";
-            owner.BirthDate = DateTime.Now;
 
             //act
             var jsonContent = JsonConvert.SerializeObject(owner);
             var contentString = new StringContent(jsonContent, Encoding.UTF8, "application/json");
             contentString.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var response = await httpClient.PostAsync($"{url}", contentString);
-            var postApiResponse = JsonConvert.DeserializeObject<Owner>(await response.Content.ReadAsStringAsync());
-
+            var postResponse = await httpClient.PostAsync($"{url}", contentString);
+            var postApiResponse = JsonConvert.DeserializeObject<Owner>(await postResponse.Content.ReadAsStringAsync());
             var getResponse = await httpClient.GetAsync($"{url}/{postApiResponse.Id}");
-            var getApiResponse = JsonConvert.DeserializeObject<Owner>(await response.Content.ReadAsStringAsync());
+            var getApiResponse = JsonConvert.DeserializeObject<Owner>(await getResponse.Content.ReadAsStringAsync());
 
             //assert
             Assert.IsNotNull(postApiResponse);
             Assert.IsInstanceOf<Owner>(postApiResponse);
-            Assert.AreNotEqual(owner, postApiResponse);
+            Assert.AreEqual(owner.Name, getApiResponse.Name);
+            Assert.AreEqual(owner.Gender, getApiResponse.Gender);
+            Assert.AreEqual(owner.CPF, getApiResponse.CPF);
+            Assert.AreEqual(owner.BirthDate, getApiResponse.BirthDate);
         }
 
         [Test]
-        public async Task WhenRequestOwnerControllerUsingGetById_ThenICanReceiveAnOwnerObject()
-        {
-            //arrange
-            httpClient = new HttpClient();
-            Guid id = Guid.Parse("d388764d-c7cb-46a7-a16e-04e7dce940c4");
-
-            //act
-            var response = await httpClient.GetAsync($"{url}/{id}");
-            var apiResponse = JsonConvert.DeserializeObject<Owner>(await response.Content.ReadAsStringAsync());
-
-            //assert
-            Assert.IsInstanceOf<Owner>(apiResponse);
-            Assert.AreEqual(id, apiResponse.Id);
-        }
-
-        [Test]
-        public async Task WhenRequestOwnerControllerUsingPutById_ThenICanUpdateAnOwnerObject()
+        public async Task WhenRequestOwnerControllerUsingPost_ThenICanGetAnOwnerObjectById()
         {
             //arrange
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             Owner owner = new Owner();
-            Guid id = Guid.Parse("d388764d-c7cb-46a7-a16e-04e7dce940c4");
-            owner.Id = id;
-            owner.CPF = "123";
-            owner.BirthDate = DateTime.Now;
+            owner.Name = "Feanor";
             owner.Gender = 'M';
-            owner.Name = "Lucas";
+            owner.CPF = "987654321";
 
             //act
             var jsonContent = JsonConvert.SerializeObject(owner);
             var contentString = new StringContent(jsonContent, Encoding.UTF8, "application/json");
             contentString.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var response = await httpClient.PutAsync($"{url}/{id}", contentString);
+
+            var postResponse = await httpClient.PostAsync($"{url}", contentString);
+            var postApiResponse = JsonConvert.DeserializeObject<Owner>(await postResponse.Content.ReadAsStringAsync());
+
+            var response = await httpClient.GetAsync($"{url}/{postApiResponse.Id}");
             var apiResponse = JsonConvert.DeserializeObject<Owner>(await response.Content.ReadAsStringAsync());
 
             //assert
             Assert.IsInstanceOf<Owner>(apiResponse);
+            Assert.AreEqual(postApiResponse.Id, apiResponse.Id);
             Assert.AreEqual(owner.Name, apiResponse.Name);
+            Assert.AreEqual(owner.Gender, apiResponse.Gender);
+            Assert.AreEqual(owner.CPF, apiResponse.CPF);
+            Assert.AreEqual(owner.BirthDate, apiResponse.BirthDate);
         }
 
         [Test]
-        public async Task WhenRequestOwnerControllerUsingDeleteById_ThenICanDeleteAnOwnerObject()
+        public async Task WhenRequestOwnerControllerUsingPost_ThenICanUpdateAnOwnerObjectAndReceiveThatObject()
         {
             //arrange
             httpClient = new HttpClient();
-            Guid id = Guid.Parse("d388764d-c7cb-46a7-a16e-04e7dce940c4");
+            httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            Owner owner = new Owner();
+            owner.CPF = "123";
+            owner.BirthDate = DateTime.Now;
+            owner.Gender = 'M';
+            owner.Name = "Earendil";
 
             //act
-            var response = await httpClient.DeleteAsync($"{url}/{id}");
-            var apiResponse = JsonConvert.DeserializeObject<Owner>(await response.Content.ReadAsStringAsync());
+
+            var jsonContent = JsonConvert.SerializeObject(owner);
+            var contentString = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            contentString.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            var postResponse = await httpClient.PostAsync($"{url}", contentString);
+            var postApiResponse = JsonConvert.DeserializeObject<Owner>(await postResponse.Content.ReadAsStringAsync());
+
+            postApiResponse.Name = "Thorondor";
+
+            jsonContent = JsonConvert.SerializeObject(postApiResponse);
+            contentString = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            contentString.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            var putResponse = await httpClient.PutAsync($"{url}/{postApiResponse.Id}", contentString);
+            var putApiResponse = JsonConvert.DeserializeObject<Owner>(await putResponse.Content.ReadAsStringAsync());
+
+            var getResponse = await httpClient.GetAsync($"{url}/{postApiResponse.Id}");
+            var getApiResponse = JsonConvert.DeserializeObject<Owner>(await getResponse.Content.ReadAsStringAsync());
 
             //assert
-            Assert.IsInstanceOf<Owner>(apiResponse);
+            Assert.IsInstanceOf<Owner>(getApiResponse);
+            Assert.AreEqual(putApiResponse.Name, getApiResponse.Name);
+
+
+        }
+
+        [Test]
+        public async Task WhenRequestOwnerControllerUsingPostAndGet_ThenICanDeleteAnOwnerObjectById()
+        {
+            //arrange
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            Owner owner = new Owner();
+            owner.CPF = "123";
+            owner.Gender = 'M';
+            owner.Name = "Manwë";
+
+            //act
+            var jsonContent = JsonConvert.SerializeObject(owner);
+            var contentString = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            contentString.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            var postResponse = await httpClient.PostAsync($"{url}", contentString);
+            var postApiResponse = JsonConvert.DeserializeObject<Owner>(await postResponse.Content.ReadAsStringAsync());
+
+            var getResponse = await httpClient.GetAsync($"{url}/{postApiResponse.Id}");
+            var getApiResponse = JsonConvert.DeserializeObject<Owner>(await getResponse.Content.ReadAsStringAsync());
+
+            var deleteResponse = await httpClient.DeleteAsync($"{url}/{getApiResponse.Id}");
+            var deleteApiResponse = JsonConvert.DeserializeObject<Owner>(await deleteResponse.Content.ReadAsStringAsync());
+
+            //assert
+            Assert.IsInstanceOf<Owner>(deleteApiResponse);
+            Assert.AreEqual(owner.Name, deleteApiResponse.Name);
+            Assert.AreEqual(owner.CPF, deleteApiResponse.CPF);
+            Assert.AreEqual(owner.Gender, deleteApiResponse.Gender);
+            Assert.AreEqual(owner.BirthDate, deleteApiResponse.BirthDate);
         }
     }
 }
