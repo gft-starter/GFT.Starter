@@ -16,8 +16,8 @@ steps:
 - script: dotnet restore
   displayName: 'dotnet restore'
 
-- script: dotnet Clean
-  displayName: 'dotnet Clean'
+- script: dotnet clean
+  displayName: 'dotnet clean'
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
