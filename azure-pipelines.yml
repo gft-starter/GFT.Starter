@@ -13,32 +13,14 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- script: dotnet restore
+  displayName: 'dotnet restore'
+
+- script: dotnet Clean
+  displayName: 'dotnet Clean'
+
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    feedsToUse: 'select'
-    versioningScheme: 'off'
-  displayName: 'DotNetCoreCLI build'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    feedsToUse: 'select'
-    versioningScheme: 'off'
-  displayName: 'DotNetCoreCLI test'
-
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'VSTest'
-    testResultsFiles: '**/TEST-*.xml'
-  displayName: 'PublishTestResults'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-  displayName: 'PublishBuildArtifacts'
+- script: dotnet test
+  displayName: 'dotnet test'
