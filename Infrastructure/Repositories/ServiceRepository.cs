@@ -23,7 +23,7 @@ namespace GFT.Starter.Infrastructure.Repositories
 
         public Service Find(Guid id) => _db
             .Services
-            .Include(s => s.Id)
+            //.Include(s => s.Id)
             .FirstOrDefault(s => s.Id == id);
 
         public void Add(Service service)
