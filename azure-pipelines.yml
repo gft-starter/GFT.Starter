@@ -21,27 +21,32 @@ steps:
     command: 'build'
     feedsToUse: 'select'
     versioningScheme: 'off'
+  displayName: 'DotNetCoreCLI build'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     feedsToUse: 'select'
     versioningScheme: 'off'
+  displayName: 'DotNetCoreCLI test'
 
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'VSTest'
     testResultsFiles: '**/TEST-*.xml'
+  displayName: 'PublishTestResults'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
-    publishWebProjects: true
+    publishWebProjects: false
     feedsToUse: 'select'
     versioningScheme: 'off'
+  displayName: 'DotNetCoreCLI publish'
 
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+  displayName: 'PublishBuildArtifacts'
