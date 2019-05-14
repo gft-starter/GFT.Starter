@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GFT.Starter.Infrastructure.Migrations
 {
     [DbContext(typeof(LataVelhaContext))]
-    [Migration("20190503115408_Initial")]
-    partial class Initial
+    [Migration("20190513134450_Add-Migration")]
+    partial class AddMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,6 +86,8 @@ namespace GFT.Starter.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid?>("CarId");
+
                     b.Property<int>("Quantity");
 
                     b.Property<Guid>("ServiceId");
@@ -94,9 +96,9 @@ namespace GFT.Starter.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServiceId");
+                    b.HasIndex("CarId");
 
-                    b.HasIndex("VehicleId");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("ServiceOrders");
                 });
@@ -111,14 +113,13 @@ namespace GFT.Starter.Infrastructure.Migrations
 
             modelBuilder.Entity("GFT.Starter.Core.Models.ServiceOrder", b =>
                 {
+                    b.HasOne("GFT.Starter.Core.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId");
+
                     b.HasOne("GFT.Starter.Core.Models.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("GFT.Starter.Core.Models.Car", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

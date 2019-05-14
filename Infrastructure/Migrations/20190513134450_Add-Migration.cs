@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GFT.Starter.Infrastructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class AddMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,21 +66,22 @@ namespace GFT.Starter.Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     VehicleId = table.Column<Guid>(nullable: false),
                     ServiceId = table.Column<Guid>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
+                    Quantity = table.Column<int>(nullable: false),
+                    CarId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServiceOrders", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_ServiceOrders_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_ServiceOrders_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ServiceOrders_Cars_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Cars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -91,14 +92,14 @@ namespace GFT.Starter.Infrastructure.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ServiceOrders_CarId",
+                table: "ServiceOrders",
+                column: "CarId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ServiceOrders_ServiceId",
                 table: "ServiceOrders",
                 column: "ServiceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ServiceOrders_VehicleId",
-                table: "ServiceOrders",
-                column: "VehicleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -107,10 +108,10 @@ namespace GFT.Starter.Infrastructure.Migrations
                 name: "ServiceOrders");
 
             migrationBuilder.DropTable(
-                name: "Services");
+                name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Cars");
+                name: "Services");
 
             migrationBuilder.DropTable(
                 name: "Owners");

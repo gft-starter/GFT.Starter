@@ -10,7 +10,7 @@ namespace Tests
 {
     public class OwnerTest
     {
-        private const string url = "https://projetostarterpojn.azurewebsites.net/api/Owner";
+        private const string url = "https://localhost:44343/";
         private  HttpClient client;
         [SetUp]
         public void Setup()
@@ -39,6 +39,7 @@ namespace Tests
         {
             // arange
             client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             Owner owner = new Owner();
             owner.Name = "Paulo";
             owner.Gender = 'M';
@@ -60,7 +61,10 @@ namespace Tests
             //assert
             Assert.IsNotNull(postApiResponse);
             Assert.IsInstanceOf<Owner>(postApiResponse);
-
+            Assert.AreEqual(owner.Name, getApiResponse.Name);
+            Assert.AreEqual(owner.CPF, getApiResponse.CPF);
+            Assert.AreEqual(owner.Gender, getApiResponse.Gender);
+            Assert.AreEqual(owner.BirthDate, getApiResponse.BirthDate);
 
 
 
