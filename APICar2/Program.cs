@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace GFT.Starter.API
+namespace GFT.Starter.APICar
 {
     public class Program
     {

@@ -4,7 +4,7 @@ using GFT.Starter.Infrastructure.Repositories;
 using GFT.Starter.Infrastructure.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GFT.Starter.API.Controllers
+namespace GFT.Starter.APIOwner.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

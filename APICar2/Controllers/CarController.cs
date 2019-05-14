@@ -6,7 +6,7 @@ using GFT.Starter.Infrastructure.Services;
 using GFT.Starter.Infrastructure.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GFT.Starter.API.Controllers
+namespace GFT.Starter.APICar.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
