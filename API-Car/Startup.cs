@@ -28,7 +28,7 @@ namespace GFT.Starter.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IReadOnlyRepository<Car>, CarRepository>();
             services.AddScoped<IWriteRepository<Car>, CarRepository>();
-            services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddDbContext<LataVelhaContext>(options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
 
             ConfigureSwagger(services);
         }

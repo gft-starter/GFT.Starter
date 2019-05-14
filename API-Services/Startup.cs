@@ -32,7 +32,7 @@ namespace API_Services
             services.AddScoped<IReadOnlyRepository<ServiceOrder>, ServiceOrderRepository>();
             services.AddScoped<IWriteRepository<ServiceOrder>, ServiceOrderRepository>();
 
-            services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddDbContext<LataVelhaContext>(options => options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
 
             ConfigureSwagger(services);
         }
