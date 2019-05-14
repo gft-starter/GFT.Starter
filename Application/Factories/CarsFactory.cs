@@ -20,7 +20,7 @@ namespace Application.Factories
             return new Car();
         }
 
-        public Car Create(string brand, string plate, string color, int year, string model, Guid idowner)
+        public Car Create(Guid id, string brand, string plate, string color, int year, string model, Guid idowner)
         {
             var car = new Car();
             car.Id = Guid.NewGuid();

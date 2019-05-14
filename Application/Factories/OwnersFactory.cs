@@ -18,7 +18,7 @@ namespace Application.Factories
             return new Owner();
         }
 
-        public Owner Create(string name, string cpf, char gender, DateTime birthDate)
+        public Owner Create(Guid id,string name, string cpf, char gender, DateTime birthDate)
         {
             var owner = new Owner();
             owner.Id = Guid.NewGuid();

@@ -2,10 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Models;
+using Infrastructure.Configuration;
+using Infrastructure.Repository;
+using Infrastructure.Repository.Contracts;
+using Infrastructure.Services;
+using Infrastructure.Services.Contracts;
+using Infrastructure.SeviceBus;
+using Infrastructure.SeviceBus.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,6 +35,13 @@ namespace APIService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddScoped<IReadOnlyRepository<Service>, ServiceRepository>();
+            services.AddScoped<IWriteRepository<Service>, ServiceRepository>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["App:Database:ConnectionString"]));
+            services.ConfigureServiceBus(new ServiceBusSettings(
+                Configuration["ServiceBus:DefaultConnection"], Configuration["ServiceBus:QueueName"],
+                Configuration["ServiceBus:TopicName"], Configuration["ServiceBus:SubscriptionName"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

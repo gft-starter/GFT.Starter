@@ -25,7 +25,7 @@ namespace IntegrationTests
 
             //act
             var response = await client.GetAsync($"{url}");
-            var apiResponse = JsonConvert.DeserializeObject<Owner[]>(
+            var apiResponse = JsonConvert.DeserializeObject<ServiceOrder[]>(
                 await response.Content.ReadAsStringAsync());
 
             //assert

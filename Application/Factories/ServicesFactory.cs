@@ -17,7 +17,7 @@ namespace Application.Factories
 
         }
 
-        public Service Create(string name, string description, string value)
+        public Service Create(Guid id, string name, string description, string value)
         {
             var service = new Service();
             service.Id = Guid.NewGuid();
