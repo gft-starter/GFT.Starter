@@ -29,8 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API-Services", "API-Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LataNovaIntegrationTests", "LataNovaIntegrationTests\LataNovaIntegrationTests.csproj", "{77B1CE9E-F405-4B53-A70F-F28F5257E798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfCarList", "WpfCarList\WpfCarList.csproj", "{3448C7D2-69C2-4916-AF69-49ED4C93B7F0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,10 +67,6 @@ Global
 		{77B1CE9E-F405-4B53-A70F-F28F5257E798}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77B1CE9E-F405-4B53-A70F-F28F5257E798}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77B1CE9E-F405-4B53-A70F-F28F5257E798}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3448C7D2-69C2-4916-AF69-49ED4C93B7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3448C7D2-69C2-4916-AF69-49ED4C93B7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3448C7D2-69C2-4916-AF69-49ED4C93B7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3448C7D2-69C2-4916-AF69-49ED4C93B7F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,7 +80,6 @@ Global
 		{65D081A0-04DB-45EC-B40D-BCFEB9F0E2A5} = {1AD879ED-5712-4542-9C4D-E5B4785928C0}
 		{C48BBB79-D733-43E6-BAF5-1F3619C11394} = {1AD879ED-5712-4542-9C4D-E5B4785928C0}
 		{77B1CE9E-F405-4B53-A70F-F28F5257E798} = {55631607-DD6E-4050-BDBF-9A6E63538DCB}
-		{3448C7D2-69C2-4916-AF69-49ED4C93B7F0} = {1AD879ED-5712-4542-9C4D-E5B4785928C0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F6E239D8-6AC3-45C0-8238-89EC5023EA12}
