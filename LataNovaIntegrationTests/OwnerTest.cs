@@ -1,5 +1,4 @@
 using GFT.Starter.Core.Models;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
