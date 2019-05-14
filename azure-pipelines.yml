@@ -36,14 +36,6 @@ steps:
     testResultsFiles: '**/TEST-*.xml'
   displayName: 'PublishTestResults'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    feedsToUse: 'select'
-    versioningScheme: 'off'
-  displayName: 'DotNetCoreCLI publish'
-
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
