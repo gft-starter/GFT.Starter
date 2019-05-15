@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Core.Models;
-using Infrastructure.Repository;
 using Infrastructure.Repository.Contracts;
 using Microsoft.AspNetCore.Mvc;
 

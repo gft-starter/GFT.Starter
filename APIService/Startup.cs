@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Models;
+﻿using Core.Models;
 using Infrastructure.Configuration;
 using Infrastructure.Repository;
 using Infrastructure.Repository.Contracts;
@@ -12,13 +8,12 @@ using Infrastructure.SeviceBus;
 using Infrastructure.SeviceBus.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using System.IO;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace APIService
 {
@@ -37,11 +32,27 @@ namespace APIService
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IReadOnlyRepository<Service>, ServiceRepository>();
             services.AddScoped<IWriteRepository<Service>, ServiceRepository>();
+            services.AddScoped<IReadOnlyRepository<ServiceOrder>, ServiceOrderRepository>();
+            services.AddScoped<IWriteRepository<ServiceOrder>, ServiceOrderRepository>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddDbContext<LataVelhaContext>(options => options.UseSqlServer(Configuration["App:Database:ConnectionString"]));
             services.ConfigureServiceBus(new ServiceBusSettings(
                 Configuration["ServiceBus:DefaultConnection"], Configuration["ServiceBus:QueueName"],
                 Configuration["ServiceBus:TopicName"], Configuration["ServiceBus:SubscriptionName"]));
+
+            // build config
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false)
+                .AddEnvironmentVariables()
+                .Build();
+
+            services.AddOptions();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "AERA Services Lata Velha API", Version = "V1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +70,13 @@ namespace APIService
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AERA Service LataVelha v1");
+            });
         }
     }
 }

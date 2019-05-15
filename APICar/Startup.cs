@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Repository;
+using System.IO;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace APICar
 {
@@ -35,7 +37,21 @@ namespace APICar
             services.ConfigureServiceBus(new ServiceBusSettings(
                 Configuration["ServiceBus:DefaultConnection"], Configuration["ServiceBus:QueueName"],
                 Configuration["ServiceBus:TopicName"], Configuration["ServiceBus:SubscriptionName"]));
-            
+
+            // build config
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false)
+                .AddEnvironmentVariables()
+                .Build();
+
+            services.AddOptions();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "AERA Cars Lata Velha API", Version = "V1" });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +70,14 @@ namespace APICar
             app.UseHttpsRedirection();
             app.UseMvc();
 
-           
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AERA Cars LataVelha v1");
+            });
+
+
         }
 
     }

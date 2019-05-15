@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Core.Models;
 using Infrastructure.Configuration;
 using Infrastructure.Repository;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace APIOwner
 {
@@ -36,7 +38,20 @@ namespace APIOwner
             services.ConfigureServiceBus(new ServiceBusSettings(
                 Configuration["ServiceBus:DefaultConnection"], Configuration["ServiceBus:QueueName"],
                 Configuration["ServiceBus:TopicName"], Configuration["ServiceBus:SubscriptionName"]));
-            
+
+            // build config
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false)
+                .AddEnvironmentVariables()
+                .Build();
+
+            services.AddOptions();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "AERA Lata Velha API", Version = "V1" });
+            });
         }
 
         private void ConfigureSwagger(IServiceCollection services)
@@ -59,7 +74,14 @@ namespace APIOwner
 
             app.UseHttpsRedirection();
             app.UseMvc();
-          
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AERA Owner LataVelha v1");
+            });
+
         }
         
     }
