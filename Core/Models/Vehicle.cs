@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace APIPRojeto.Models
+namespace Core.Models
 {
-    public class Car
+    public class Vehicle
     {
         public Guid Id { get; set; }
         public string Plate { get; set; }
