@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GFT.Starter.Infrastructure.Migrations
 {
     [DbContext(typeof(LataVelhaContext))]
-    [Migration("20190508182645_inital")]
-    partial class inital
+    [Migration("20190515161407_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
