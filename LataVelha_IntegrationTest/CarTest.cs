@@ -66,7 +66,7 @@ namespace IntegrationTests
             var carcontent = new StringContent(objCar, System.Text.Encoding.UTF8, "application/json");
             var postCar = await client.PostAsync($"{url}", carcontent);
 
-            var getCar = await client.GetAsync($"{url}/{car.id.ToString()}");
+            var getCar = await client.GetAsync($"{url}/{car.Id.ToString()}");
             var apiResponse = JsonConvert.DeserializeObject<Car>(
                 await getCar.Content.ReadAsStringAsync());
 

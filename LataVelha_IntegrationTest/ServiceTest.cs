@@ -38,7 +38,8 @@ namespace IntegrationTests
         public async Task WhenCreateOwnerUsingPost_thenICanPostOwnerObject()
         {
             //arrenge
-            var id = Guid.Empty;
+            client = new HttpClient();
+            var id = Guid.NewGuid();
             var name = "Trocar pneus";
             var description = "troca do conjunto de pneus do veiculo";
             var value = 580.00;

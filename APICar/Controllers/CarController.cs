@@ -15,7 +15,7 @@ namespace APICar.Controllers
         private readonly IReadOnlyRepository<Car> _carReadOnlyRepository;
         private readonly IWriteRepository<Car> _carWriteRepository;
         private readonly IEmailService _emailService;
-        private readonly IServiceBusClient _busClient;
+       // private readonly IServiceBusClient _busClient;
 
 
         public CarController(IReadOnlyRepository<Car> carReadOnlyRepository, IWriteRepository<Car> carWriteRepository, IEmailService emailService, IServiceBusClient busClient)
@@ -23,7 +23,7 @@ namespace APICar.Controllers
             _carReadOnlyRepository = carReadOnlyRepository;
             _carWriteRepository = carWriteRepository;
             _emailService = emailService;
-            _busClient = busClient;
+           // _busClient = busClient;
         }
 
         [HttpGet]
@@ -42,7 +42,8 @@ namespace APICar.Controllers
         [HttpPost]
         public IActionResult PostCar([FromBody] Car car)
         {
-            _busClient.SendMessageToQueue(new CreateCar(car));
+            _carWriteRepository.Add(car);
+            //_busClient.SendMessageToQueue(new CreateCar(car));
             return Ok(car);
         }
 

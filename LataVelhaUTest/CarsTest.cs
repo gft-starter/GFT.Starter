@@ -35,28 +35,39 @@ namespace Tests
             Assert.AreEqual(car.Year, year);
             Assert.AreEqual(car.Brand, brand);
         }
-        //[Test]
-        //public void whenCreateVehicle_AndAssingAndOwner_ThenICanFindTheOwner()
-        //{
+        [Test]
+        public void whenCreateVehicle_AndAssingAndOwner_ThenICanFindTheOwner()
+        {
 
-        //    //arrenge
-        //    var model = "Palio";
-        //    var year = 2008;
-        //    var brand = "Fiat";
-        //    var color = "Black";
-        //    var plate = "DBZ-8000";
-        //    var idowner = Guid.NewGuid(Owner);
-        //    var ownerFactory = new OwnersFactory();
-        //    var carFactory = new CarsFactory();
-        //    var owner = ownerFactory.Create();
+            //arrenge
+            var idO = Guid.NewGuid();
+            var cpf = "123.456.789-11";
+            var name = "Joao";
+            var gender = 'M';
+            var birthDate = DateTime.Now;
+            var allFactory = new AllFactory();
+            var ownerFactory = allFactory.Create("owner");
+            //act Owner
+            var owner = ownerFactory.Create(idO, name, cpf, gender, birthDate);
 
-        //    //act
-        //    var car = carFactory.Create( brand, plate, color, year,  model);
+            //arrenge car
+            var id = Guid.NewGuid();
+            var model = "Palio";
+            var year = 2008;
+            var brand = "Fiat";
+            var color = "Black";
+            var plate = "DBZ-8000";
+            var idowner = idO ;
+            var carFactory = new CarsFactory();
 
-        //    //assert
-        //    Assert.AreEqual(car.OwnerId, owner.Id);
+            //act
+            
+            var car = carFactory.Create( id, brand, plate, color, year,  model, idowner);
 
-        //}
+            //assert
+            Assert.AreEqual(car.OwnerId, owner.Id);
+
+        }
 
     }
 }
