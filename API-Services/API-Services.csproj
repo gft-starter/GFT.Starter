@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>API_Services</RootNamespace>
+    <UserSecretsId>749cff7d-438c-4fd8-b1f8-72c07742e4c0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

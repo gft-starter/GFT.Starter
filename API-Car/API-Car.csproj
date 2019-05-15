@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>API_Car</RootNamespace>
+    <UserSecretsId>8f2a5ec5-6f71-4902-bfab-8a8ebaac4037</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
