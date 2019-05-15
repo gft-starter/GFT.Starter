@@ -41,7 +41,7 @@ namespace Tests
 
             Owner owner = new Owner();
             owner.Id = Guid.NewGuid();
-            owner.Name = "Vinicius";
+            owner.Name = "Teste";
             owner.CPF = "12345678952";
             owner.Gender = 'M';
             owner.BirthDate = new DateTime();
