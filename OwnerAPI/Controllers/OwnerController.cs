@@ -1,0 +1,74 @@
+﻿using Core.Models;
+using Infrastructure.Repositories.Contracts;
+using Microsoft.AspNetCore.Mvc;
+using System;
+
+namespace API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class OwnerController : ControllerBase
+    {
+        private readonly IReadOnlyRepository<Owner> _ownerReadOnlyRepository;
+        private readonly IWriteRepository<Owner> _ownerWriteRepository;
+
+        public OwnerController(IReadOnlyRepository<Owner> ownerReadOnlyRepository, IWriteRepository<Owner> ownerWriteRepository)
+        {
+            _ownerReadOnlyRepository = ownerReadOnlyRepository;
+            _ownerWriteRepository = ownerWriteRepository;
+        }
+
+        // GET: api/Owner
+        [HttpGet]
+        public IActionResult Owners()
+        {
+            return Ok(_ownerReadOnlyRepository.Get());
+        }
+
+        // GET: api/Owner/5
+        [HttpGet("{id}")]
+        public IActionResult Owner(Guid id)
+        {
+            var obj = FindOwner(id);
+            return Ok(obj);
+        }
+
+        [HttpPost]
+        public IActionResult PostOwner([FromBody] Owner owner)
+        {
+            _ownerWriteRepository.Add(owner);
+
+            return Ok(owner);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateOwner(Guid id, [FromBody] Owner owner)
+        {
+            var obj = FindOwner(id);
+
+            obj.Name = owner.Name;
+            obj.BirthDate = owner.BirthDate;
+            obj.Gender = owner.Gender;
+            obj.CPF = owner.CPF;
+
+            return Ok(_ownerWriteRepository.Update(obj));
+        }
+
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public IActionResult DeleteOwner(Guid id)
+        {
+            var obj = FindOwner(id);
+
+            if (obj != null)
+                return Ok(_ownerWriteRepository.Remove(obj));
+
+            return NotFound(obj);
+        }
+
+        private Owner FindOwner(Guid id)
+        {
+            return _ownerReadOnlyRepository.Find(id);
+        }
+    }
+}
