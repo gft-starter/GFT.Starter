@@ -6,7 +6,7 @@ namespace GFT.Starter.Infrastructure.Configuration
 {
     public sealed class LataContext : DbContext
     {
-        public LataContext(DbContextOptions<LataContext> options) : base(options) { Database.Migrate(); }
+        public LataContext(DbContextOptions<LataContext> options) : base(options) { }
 
         public DbSet<Car> Cars { get; set; }
         public DbSet<Owner> Owners { get; set; }

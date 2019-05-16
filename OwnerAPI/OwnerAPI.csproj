@@ -5,6 +5,7 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <AssemblyName>GFT.Starter.OwnerAPI</AssemblyName>
     <RootNamespace>GFT.Starter.OwnerAPI</RootNamespace>
+    <UserSecretsId>8a20f3c5-547d-4e41-88c4-83a282a04e95</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
