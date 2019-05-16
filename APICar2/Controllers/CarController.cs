@@ -28,7 +28,8 @@ namespace GFT.Starter.APICar.Controllers
         [HttpGet]
         public IActionResult Vehicles()
         {
-            return Ok(_carReadOnlyRepository.Get());
+            return Ok("teste ok");
+            //return Ok(_carReadOnlyRepository.Get());
         }
 
         [HttpGet("{id}")]
